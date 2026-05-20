@@ -1,0 +1,75 @@
+# ============================================================
+#  .gitignore – Avalonia / C# / .NET
+# ============================================================
+
+# ------ Build output ----------------------------------------
+[Bb]in/
+[Oo]bj/
+out/
+publish/
+
+# ------ .NET / MSBuild --------------------------------------
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+*.userprefs
+project.lock.json
+project.fragment.lock.json
+artifacts/
+
+# ------ NuGet -----------------------------------------------
+*.nupkg
+*.snupkg
+**/[Pp]ackages/
+!**/[Pp]ackages/build/
+*.nuget.props
+*.nuget.targets
+nuget.config          # keep if you customise feeds; remove this line then
+
+# ------ Visual Studio / Rider / VS Code ---------------------
+.vs/
+.idea/
+.vscode/
+*.rsuser
+*.DotSettings.user
+_ReSharper*/
+*.ReSharper
+*.sou
+
+# ------ Rider hot-reload ------------------------------------
+__Avalonia*/
+
+# ------ Avalonia designer cache ----------------------------
+**/.avalonia/
+
+# ------ Test results ----------------------------------------
+[Tt]est[Rr]esult*/
+[Bb]uild[Ll]og.*
+*.trx
+*.coverage
+*.coveragexml
+coverage*/
+TestResults/
+
+# ------ OS cruft --------------------------------------------
+.DS_Store
+Thumbs.db
+desktop.ini
+*~
+
+# ------ Logs & temp -----------------------------------------
+*.log
+*.tmp
+*.temp
+*.cache
+
+# ------ Publish profiles ------------------------------------
+**/Properties/PublishProfiles/
+
+# ------ Secrets / environment -------------------------------
+.env
+.env.*
+!.env.example
+appsettings.Development.json
+secrets.json
