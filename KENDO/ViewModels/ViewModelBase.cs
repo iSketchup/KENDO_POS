@@ -1,6 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 
-namespace testing.ViewModels;
+namespace Main.ViewModels;
 
 public abstract class ViewModelBase : ObservableObject
 {

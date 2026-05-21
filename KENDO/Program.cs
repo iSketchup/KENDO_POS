@@ -1,7 +1,7 @@
 ﻿using Avalonia;
 using System;
 
-namespace testing;
+namespace Main;
 
 sealed class Program
 {

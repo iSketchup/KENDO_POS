@@ -1,4 +1,4 @@
-﻿namespace testing.ViewModels;
+﻿namespace Main.ViewModels;
 
 public partial class MainWindowViewModel : ViewModelBase
 {

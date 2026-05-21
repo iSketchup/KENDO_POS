@@ -1,6 +1,6 @@
 namespace Main.ViewModels;
 
-public class ShaderRendererVIewModel
+public class ShaderRendererVIewModel : ViewModelBase
 {
     
 }
