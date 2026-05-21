@@ -1,0 +1,32 @@
+[1mdiff --git a/KENDO/Main.csproj b/KENDO/Main.csproj[m
+[1mindex 11e6f6c..b2f1d0f 100644[m
+[1m--- a/KENDO/Main.csproj[m
+[1m+++ b/KENDO/Main.csproj[m
+[36m@@ -8,19 +8,20 @@[m
+     </PropertyGroup>[m
+ [m
+     <ItemGroup>[m
+[31m-        <Folder Include="Models\"/>[m
+[31m-        <AvaloniaResource Include="Assets\**"/>[m
+[32m+[m[32m        <Folder Include="Models\" />[m
+[32m+[m[32m        <AvaloniaResource Include="Assets\**" />[m
+     </ItemGroup>[m
+ [m
+     <ItemGroup>[m
+[31m-        <PackageReference Include="Avalonia" Version="12.0.3"/>[m
+[31m-        <PackageReference Include="Avalonia.Desktop" Version="12.0.3"/>[m
+[31m-        <PackageReference Include="Avalonia.Themes.Fluent" Version="12.0.3"/>[m
+[31m-        <PackageReference Include="Avalonia.Fonts.Inter" Version="12.0.3"/>[m
+[32m+[m[32m        <PackageReference Include="Avalonia" Version="12.0.3" />[m
+[32m+[m[32m        <PackageReference Include="Avalonia.Desktop" Version="12.0.3" />[m
+[32m+[m[32m        <PackageReference Include="Avalonia.Themes.Fluent" Version="12.0.3" />[m
+[32m+[m[32m        <PackageReference Include="Avalonia.Fonts.Inter" Version="12.0.3" />[m
+         <PackageReference Include="AvaloniaUI.DiagnosticsSupport" Version="2.2.1">[m
+             <IncludeAssets Condition="'$(Configuration)' != 'Debug'">None</IncludeAssets>[m
+             <PrivateAssets Condition="'$(Configuration)' != 'Debug'">All</PrivateAssets>[m
+         </PackageReference>[m
+[31m-        <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.1"/>[m
+[32m+[m[32m        <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.1" />[m
+[32m+[m[32m        <PackageReference Include="OpenTK" Version="4.9.4" />[m
+     </ItemGroup>[m
+ </Project>[m
