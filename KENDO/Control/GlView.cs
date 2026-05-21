@@ -55,20 +55,27 @@ public class GlView : OpenGlControlBase
         string vertexShaderSource = """
                                     #version 330 core
                                     layout (location = 0) in vec3 aPosition;
-
+                                    out vec2 pos;
                                     void main()
                                     {
+                                        pos = aPosition.xy;
                                         gl_Position = vec4(aPosition, 1.0);
                                     }
                                     """;
 
         string fragmentShaderSource = """
                                       #version 330 core
+                                      
+                                      in vec2 pos;
+                                      
                                       out vec4 FragColor;
-
+                                      
                                       void main()
                                       {
-                                          FragColor = vec4(1.0f, 0.5f, 0.2f, 1.0f);
+                                          float r = (pos.x + 1.0) * 0.5;
+                                          float g = (pos.y + 1.0) * 0.5;
+                                      
+                                          FragColor = vec4(r, g, 1.0 - r, 1.0);
                                       }
                                       """;
         
