@@ -76,8 +76,6 @@ public class GlView : OpenGlControlBase
         
         // Fehler output
         GL.GetShader(vertexShader, ShaderParameter.CompileStatus, out int vStatus);
-        if (vStatus == 0)
-            Console.WriteLine("Vertex shader error: " + GL.GetShaderInfoLog(vertexShader));
         
         
         int fragmentShader = GL.CreateShader(ShaderType.FragmentShader);
@@ -86,15 +84,19 @@ public class GlView : OpenGlControlBase
         
         // Fehler output
         GL.GetProgram(shaderProgram, GetProgramParameterName.LinkStatus, out int lStatus);
-        if (lStatus == 0)
-            Console.WriteLine("Link error: " + GL.GetProgramInfoLog(shaderProgram));
-        
         shaderProgram = GL.CreateProgram();
-
+        
         GL.AttachShader(shaderProgram, vertexShader);
         GL.AttachShader(shaderProgram, fragmentShader);
 
         GL.LinkProgram(shaderProgram);
+        
+        
+        if (vStatus == 0)
+            Console.WriteLine("Vertex shader error: " + GL.GetShaderInfoLog(vertexShader));
+        if (lStatus == 0)
+            Console.WriteLine("Link error: " + GL.GetProgramInfoLog(shaderProgram));
+
         
         Console.WriteLine("OpenGL initialized");
     }
@@ -106,6 +108,9 @@ public class GlView : OpenGlControlBase
 
     protected override void OnOpenGlRender(GlInterface gl, int fb)
     {
+        GL.BindFramebuffer(FramebufferTarget.Framebuffer, fb);
+        
+        GL.Viewport(0, 0, (int)Bounds.Width, (int)Bounds.Height);
         GL.ClearColor(0f, 0f, 0f, 1f);
         GL.Clear(ClearBufferMask.ColorBufferBit);
 
