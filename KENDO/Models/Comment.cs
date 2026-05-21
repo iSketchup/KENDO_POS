@@ -1,7 +1,33 @@
-﻿namespace Main.Models;
+﻿using System;
+using System.Collections.Generic;
+
+namespace Main.Models;
 
 public class Comment
 {
-    public string Text { get; set; }
-    public string Author { get; set; }
+    public int Id { get; private set; }
+    public string Text { get; private set; }
+    public string Author { get; private set; }
+    
+    
+    public Comment(string text, string author)
+    {
+        Text = text;
+        Author = author;
+    }
+    
+    public Comment(string text, string author, int id) 
+    {
+        Id = id;
+    }
+
+    public override string ToString()
+    {
+        return $"{Author}: {Text}";
+    }
+
+    public static List<Comment> LoadComments(int ShaderID)
+    {
+        throw new NotImplementedException();
+    }
 }

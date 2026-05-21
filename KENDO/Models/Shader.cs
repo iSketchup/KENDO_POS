@@ -4,9 +4,16 @@ namespace Main.Models;
 
 public class Shader
 {
-    public int Id { get; set; }
+    public int Id { get; private set; }
     public string Code { get; set; }
-    public int Likes { get; set; }
+    public int ShaderLikes { get;private set; }
     public List<Comment> Comments { get; set; }
-    public List<Tags> Tags { get; set; }
+    public List<string> ShaderTags { get; set; }
+
+    public void LoadShader()
+    {
+        Comments = Comment.LoadComments(Id);
+        ShaderTags = Tags.LoadByShader(Id);
+        ShaderLikes = Likes.GetLikesAmount(Id);
+    }
 }
