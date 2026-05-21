@@ -1,4 +1,5 @@
 using System;
+using Avalonia.Controls;
 using Avalonia.OpenGL;
 using Avalonia.OpenGL.Controls;
 using OpenTK;
@@ -10,119 +11,141 @@ public class GlView : OpenGlControlBase
 {
     private float[] vertices =
     {
-        0.0f,  0.5f, 0.0f,
-        -0.5f, -0.5f, 0.0f,
-        0.5f, -0.5f, 0.0f
+        -1f,  1f, 0.0f,
+        -1f, -1f, 0.0f,
+         1f, -1f, 0.0f,
+         
+         -1f,  1f, 0.0f,
+          1f, 1f, 0.0f,
+          1f, -1f, 0.0f
     };
-    private int vao;
-    private int vbo;
-    private int shaderProgram;
+
+    private int vertexBufferObject;
+    private int vertexArrayObject;
+
+    private int shaderProgramm;
     
     protected override void OnOpenGlInit(GlInterface gl)
     {
+        
         GL.LoadBindings(new AvaloniaBindingsContext(gl));
         
+        GL.ClearColor(0.2f, 0.3f, 0.3f, 1.0f);
         
-        vao = GL.GenVertexArray();
-        vbo = GL.GenBuffer();
+        vertexArrayObject = GL.GenVertexArray();
+        GL.BindVertexArray(vertexArrayObject);
         
+        vertexBufferObject = GL.GenBuffer();
+        GL.BindBuffer(BufferTarget.ArrayBuffer, vertexBufferObject);
         
-        GL.BindVertexArray(vao);
-        GL.BindBuffer(BufferTarget.ArrayBuffer, vbo);
         
         GL.BufferData(
-            BufferTarget.ArrayBuffer,
-            vertices.Length * sizeof(float),
-            vertices,
-            BufferUsageHint.StaticDraw);
+            BufferTarget.ArrayBuffer, 
+            vertices.Length * sizeof(float), 
+            vertices, 
+            BufferUsageHint.StaticDraw); 
+        // ToDo: dynamic draw for hot reloads later
         
-        GL.VertexAttribPointer(
-            0,
-            3,
-            VertexAttribPointerType.Float,
-            false,
-            3 * sizeof(float),
-            0);
         
+        
+        GL.VertexAttribPointer(0, 3, VertexAttribPointerType.Float, false, 3 * sizeof(float), 0);
         GL.EnableVertexAttribArray(0);
-        
-        string vertexShaderSource =
-            """
-            #version 330 core
 
-            layout (location = 0) in vec3 aPos;
 
-            void main()
-            {
-                gl_Position = vec4(aPos, 1.0);
-            }
-            """;
-        
-        string fragmentShaderSource =
-            """
-            #version 330 core
+        string vertexShaderSource = """
+                                    #version 330 core
+                                    layout (location = 0) in vec3 aPosition;
 
-            out vec4 FragColor;
+                                    void main()
+                                    {
+                                        gl_Position = vec4(aPosition, 1.0);
+                                    }
+                                    """;
 
-            void main()
-            {
-                FragColor = vec4(1.0, 1.0, 0.0, 1.0);
-            }
-            """;
-        
-        int vertexShader = GL.CreateShader(ShaderType.VertexShader);
-        GL.ShaderSource(vertexShader, vertexShaderSource);
-        GL.CompileShader(vertexShader);
-        
-        GL.GetShader(vertexShader, ShaderParameter.CompileStatus, out int vStatus);
-        
-        
-        int fragmentShader = GL.CreateShader(ShaderType.FragmentShader);
-        GL.ShaderSource(fragmentShader, fragmentShaderSource);
-        GL.CompileShader(fragmentShader);
-        
-        GL.GetProgram(shaderProgram, GetProgramParameterName.LinkStatus, out int lStatus);
-        shaderProgram = GL.CreateProgram();
-        
-        GL.AttachShader(shaderProgram, vertexShader);
-        GL.AttachShader(shaderProgram, fragmentShader);
+        string fragmentShaderSource = """
+                                      #version 330 core
+                                      out vec4 FragColor;
 
-        GL.LinkProgram(shaderProgram);
+                                      void main()
+                                      {
+                                          FragColor = vec4(1.0f, 0.5f, 0.2f, 1.0f);
+                                      }
+                                      """;
         
+        int VertexShader = GL.CreateShader(ShaderType.VertexShader);
+        GL.ShaderSource(VertexShader, vertexShaderSource);
         
-        if (vStatus == 0)
-            Console.WriteLine("Vertex shader error: " + GL.GetShaderInfoLog(vertexShader));
-        if (lStatus == 0)
-            Console.WriteLine("Link error: " + GL.GetProgramInfoLog(shaderProgram));
+        int FragmentShader = GL.CreateShader(ShaderType.FragmentShader);
+        GL.ShaderSource(FragmentShader, fragmentShaderSource);
+        
+        GL.CompileShader(VertexShader);
 
+        GL.GetShader(VertexShader, ShaderParameter.CompileStatus, out int vsuccess);
+        if (vsuccess == 0)
+        {
+            string infoLog = GL.GetShaderInfoLog(VertexShader);
+            Console.WriteLine(infoLog);
+        }
+
+        GL.CompileShader(FragmentShader);
+
+        GL.GetShader(FragmentShader, ShaderParameter.CompileStatus, out int fsuccess);
+        if (fsuccess == 0)
+        {
+            string infoLog = GL.GetShaderInfoLog(FragmentShader);
+            Console.WriteLine(infoLog);
+        }
+        
+        shaderProgramm = GL.CreateProgram();
+        GL.AttachShader(shaderProgramm, VertexShader);
+        GL.AttachShader(shaderProgramm, FragmentShader);
+        
+        GL.LinkProgram(shaderProgramm);
+        
+        GL.GetProgram(shaderProgramm, GetProgramParameterName.LinkStatus, out int success);
+        if (success == 0)
+        {
+            string infoLog = GL.GetProgramInfoLog(shaderProgramm);
+            Console.WriteLine(infoLog);
+        }
+        
+        GL.DetachShader(shaderProgramm, VertexShader);
+        GL.DetachShader(shaderProgramm, FragmentShader);
+        GL.DeleteShader(FragmentShader);
+        GL.DeleteShader(VertexShader);
+        
         
         Console.WriteLine("OpenGL initialized");
     }
 
     protected override void OnOpenGlDeinit(GlInterface gl)
     {
+        
+        GL.DeleteBuffer(vertexBufferObject);
+        GL.DeleteVertexArray(vertexArrayObject);
+        GL.DeleteProgram(shaderProgramm);
+
         Console.WriteLine("OpenGL destroyed");
+        
+       
     }
 
     protected override void OnOpenGlRender(GlInterface gl, int fb)
     {
-        GL.BindFramebuffer(FramebufferTarget.Framebuffer, fb);
         
         GL.Viewport(0, 0, (int)Bounds.Width, (int)Bounds.Height);
-        GL.ClearColor(0f, 0f, 0f, 1f);
         GL.Clear(ClearBufferMask.ColorBufferBit);
 
-        GL.UseProgram(shaderProgram);
+        GL.UseProgram(shaderProgramm);
 
-        GL.BindVertexArray(vao);
+        GL.BindVertexArray(vertexArrayObject);
 
-        GL.DrawArrays(
-            PrimitiveType.Triangles,
-            0,
-            3);
+        GL.DrawArrays(PrimitiveType.Triangles, 0, 6);
+
         
-        RequestNextFrameRendering();
     }
+
+    
 }
 
 
