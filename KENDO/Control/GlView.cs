@@ -66,7 +66,7 @@ public class GlView : OpenGlControlBase
 
             void main()
             {
-                FragColor = vec4(1.0, 0.0, 0.0, 1.0);
+                FragColor = vec4(1.0, 1.0, 0.0, 1.0);
             }
             """;
         
@@ -74,7 +74,6 @@ public class GlView : OpenGlControlBase
         GL.ShaderSource(vertexShader, vertexShaderSource);
         GL.CompileShader(vertexShader);
         
-        // Fehler output
         GL.GetShader(vertexShader, ShaderParameter.CompileStatus, out int vStatus);
         
         
@@ -82,7 +81,6 @@ public class GlView : OpenGlControlBase
         GL.ShaderSource(fragmentShader, fragmentShaderSource);
         GL.CompileShader(fragmentShader);
         
-        // Fehler output
         GL.GetProgram(shaderProgram, GetProgramParameterName.LinkStatus, out int lStatus);
         shaderProgram = GL.CreateProgram();
         
