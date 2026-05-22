@@ -9,19 +9,22 @@ namespace Main.Control;
 
 public class GlView : OpenGlControlBase
 {
-    private float[] vertices =
+    float[] vertices = {
+        0.5f,  0.5f, 0.0f,  // top right
+        0.5f, -0.5f, 0.0f,  // bottom right
+        -0.5f, -0.5f, 0.0f,  // bottom left
+        -0.5f,  0.5f, 0.0f   // top left
+    };
+
+    private uint[] indicies =
     {
-        -1f,  1f, 0.0f,
-        -1f, -1f, 0.0f,
-         1f, -1f, 0.0f,
-         
-         -1f,  1f, 0.0f,
-          1f, 1f, 0.0f,
-          1f, -1f, 0.0f
+        0, 1, 2,
+        0, 2, 3,
     };
 
     private int vertexBufferObject;
     private int vertexArrayObject;
+    private int elementBufferObject;
 
     private int shaderProgramm;
     
@@ -36,16 +39,25 @@ public class GlView : OpenGlControlBase
         GL.BindVertexArray(vertexArrayObject);
         
         vertexBufferObject = GL.GenBuffer();
-        GL.BindBuffer(BufferTarget.ArrayBuffer, vertexBufferObject);
-        
-        
+        GL.BindBuffer(BufferTarget.ArrayBuffer, vertexBufferObject); 
         GL.BufferData(
             BufferTarget.ArrayBuffer, 
             vertices.Length * sizeof(float), 
             vertices, 
             BufferUsageHint.StaticDraw); 
         // ToDo: dynamic draw for hot reloads later
+
         
+        elementBufferObject =  GL.GenBuffer();
+        GL.BindBuffer(BufferTarget.ElementArrayBuffer, elementBufferObject); 
+        GL.BufferData(
+            BufferTarget.ElementArrayBuffer, 
+            indicies.Length * sizeof(uint), 
+            indicies, 
+            BufferUsageHint.StaticDraw); 
+        // ToDo: dynamic draw for hot reloads later
+
+       
         
         
         GL.VertexAttribPointer(0, 3, VertexAttribPointerType.Float, false, 3 * sizeof(float), 0);
@@ -147,8 +159,7 @@ public class GlView : OpenGlControlBase
 
         GL.BindVertexArray(vertexArrayObject);
 
-        GL.DrawArrays(PrimitiveType.Triangles, 0, 6);
-
+        GL.DrawElements(PrimitiveType.Triangles, indicies.Length, DrawElementsType.UnsignedInt, 0);
         
     }
 
