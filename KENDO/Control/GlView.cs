@@ -57,7 +57,7 @@ public class GlView : OpenGlControlBase
             BufferUsageHint.StaticDraw); 
         // ToDo: dynamic draw for hot reloads later
 
-       
+      
         
         
         GL.VertexAttribPointer(0, 3, VertexAttribPointerType.Float, false, 3 * sizeof(float), 0);
@@ -151,6 +151,7 @@ public class GlView : OpenGlControlBase
 
     protected override void OnOpenGlRender(GlInterface gl, int fb)
     {
+        GL.BindFramebuffer(FramebufferTarget.Framebuffer, fb);
         
         GL.Viewport(0, 0, (int)Bounds.Width, (int)Bounds.Height);
         GL.Clear(ClearBufferMask.ColorBufferBit);

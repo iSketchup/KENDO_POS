@@ -5,7 +5,10 @@
              xmlns:local="using:Main.Control"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="Main.Views.ShaderRenderer">
-    
-    <local:GlView></local:GlView>
-    
+    <Canvas>
+        <local:GlView Width="800" Height="450"></local:GlView>
+        
+    </Canvas>
+     
+        
 </UserControl>
