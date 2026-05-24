@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics;
 using Avalonia.Controls;
 using Avalonia.OpenGL;
 using Avalonia.OpenGL.Controls;
@@ -9,6 +10,11 @@ namespace Main.Control;
 
 public class GlView : OpenGlControlBase
 {
+    private Stopwatch _timer = new Stopwatch();
+    
+    // unioforms:
+    private int uTime;
+    
     float[] vertices = {
         0.5f,  0.5f, 0.0f,  // top right
         0.5f, -0.5f, 0.0f,  // bottom right
@@ -30,7 +36,6 @@ public class GlView : OpenGlControlBase
     
     protected override void OnOpenGlInit(GlInterface gl)
     {
-        
         GL.LoadBindings(new AvaloniaBindingsContext(gl));
         
         GL.ClearColor(0.2f, 0.3f, 0.3f, 1.0f);
@@ -62,6 +67,7 @@ public class GlView : OpenGlControlBase
         
         GL.VertexAttribPointer(0, 3, VertexAttribPointerType.Float, false, 3 * sizeof(float), 0);
         GL.EnableVertexAttribArray(0);
+        
 
 
         string vertexShaderSource = """
@@ -80,14 +86,18 @@ public class GlView : OpenGlControlBase
                                       
                                       in vec2 pos;
                                       
+                                      uniform float uTime;
+                                      
                                       out vec4 FragColor;
                                       
                                       void main()
                                       {
+                                          float pulse = sin(uTime) * 0.5 + 0.5;
+                                      
                                           float r = (pos.x + 1.0) * 0.5;
                                           float g = (pos.y + 1.0) * 0.5;
                                       
-                                          FragColor = vec4(r, g, 1.0 - r, 1.0);
+                                          FragColor = vec4(r * pulse, g * pulse, pulse, 1.0);
                                       }
                                       """;
         
@@ -134,6 +144,10 @@ public class GlView : OpenGlControlBase
         GL.DeleteShader(VertexShader);
         
         
+        uTime = GL.GetUniformLocation(shaderProgramm, "uTime");
+        
+        _timer.Start();
+
         Console.WriteLine("OpenGL initialized");
     }
 
@@ -157,10 +171,15 @@ public class GlView : OpenGlControlBase
         GL.Clear(ClearBufferMask.ColorBufferBit);
 
         GL.UseProgram(shaderProgramm);
-
+        
+        float timeValue = (float)_timer.Elapsed.TotalSeconds;
+        GL.Uniform1(uTime, timeValue);
+        
         GL.BindVertexArray(vertexArrayObject);
 
         GL.DrawElements(PrimitiveType.Triangles, indicies.Length, DrawElementsType.UnsignedInt, 0);
+        
+        RequestNextFrameRendering();
         
     }
 
