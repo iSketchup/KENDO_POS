@@ -4,9 +4,9 @@ using Avalonia.Markup.Xaml;
 
 namespace Main.Views;
 
-public partial class ShaderRenderer : UserControl
+public partial class EditorView : UserControl
 {
-    public ShaderRenderer()
+    public EditorView()
     {
         InitializeComponent();
     }

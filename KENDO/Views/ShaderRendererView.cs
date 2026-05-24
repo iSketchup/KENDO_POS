@@ -3,12 +3,13 @@ using System.Diagnostics;
 using Avalonia.Controls;
 using Avalonia.OpenGL;
 using Avalonia.OpenGL.Controls;
+using Main.ViewModels;
 using OpenTK;
 using OpenTK.Graphics.OpenGL4;
 
 namespace Main.Control;
 
-public class GlView : OpenGlControlBase
+public class ShaderRendererView : OpenGlControlBase
 {
     private Stopwatch _timer = new Stopwatch();
     
@@ -97,7 +98,7 @@ public class GlView : OpenGlControlBase
                                           float r = (pos.x + 1.0) * 0.5;
                                           float g = (pos.y + 1.0) * 0.5;
                                       
-                                          FragColor = vec4(r * pulse, g * pulse, pulse, 1.0);
+                                          FragColor = vec4(r * pulse, g * pulse, 0.9 - r * pulse, 1.0);
                                       }
                                       """;
         

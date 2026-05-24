@@ -16,7 +16,19 @@
              to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
         <vm:MainWindowViewModel/>
     </Design.DataContext>
-        <views:ShaderRenderer></views:ShaderRenderer>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*"></ColumnDefinition>
+            <ColumnDefinition Width="3*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
         
+        <ContentControl Grid.Column="0" Grid.Row="0" Content="{}"></ContentControl>
+        <ContentControl Grid.Column="1" Grid.Row="0" Content="{Binding Editor}"></ContentControl>
+        
+    </Grid>
    
 </Window>

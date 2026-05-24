@@ -1,6 +1,14 @@
-﻿namespace Main.ViewModels;
+﻿using Main.Control;
+
+namespace Main.ViewModels;
 
 public partial class MainWindowViewModel : ViewModelBase
 {
-    public string Greeting { get; } = "Welcome to Avalonia!";
+    public EditorViewModel Editor { get; } = new();
+    public ShaderRendererViewModel ShaderRenderer { get; } = new ();
+
+    public MainWindowViewModel()
+    {
+        ShaderRenderer.ChangeCode(Editor.Code);
+    }
 }
