@@ -1,5 +1,6 @@
 using System;
 using System.Diagnostics;
+using Avalonia;
 using Avalonia.Controls;
 using Avalonia.OpenGL;
 using Avalonia.OpenGL.Controls;
@@ -7,10 +8,19 @@ using Main.ViewModels;
 using OpenTK;
 using OpenTK.Graphics.OpenGL4;
 
-namespace Main.Control;
+namespace Main.Views;
 
-public class ShaderRendererView : OpenGlControlBase
+public class GLView : OpenGlControlBase
 {
+    public static readonly StyledProperty<string> FragmentShaderInProperty =
+        AvaloniaProperty.Register<GLView, string>(nameof(FragmentShaderIn));
+
+    public string FragmentShaderIn
+    {
+        get => GetValue(FragmentShaderInProperty);
+        set => SetValue(FragmentShaderInProperty, value);
+    }
+    
     private Stopwatch _timer = new Stopwatch();
     
     // unioforms:
@@ -37,6 +47,9 @@ public class ShaderRendererView : OpenGlControlBase
     
     protected override void OnOpenGlInit(GlInterface gl)
     {
+
+        
+
         GL.LoadBindings(new AvaloniaBindingsContext(gl));
         
         GL.ClearColor(0.2f, 0.3f, 0.3f, 1.0f);
@@ -82,25 +95,7 @@ public class ShaderRendererView : OpenGlControlBase
                                     }
                                     """;
 
-        string fragmentShaderSource = """
-                                      #version 330 core
-                                      
-                                      in vec2 pos;
-                                      
-                                      uniform float uTime;
-                                      
-                                      out vec4 FragColor;
-                                      
-                                      void main()
-                                      {
-                                          float pulse = sin(uTime) * 0.5 + 0.5;
-                                      
-                                          float r = (pos.x + 1.0) * 0.5;
-                                          float g = (pos.y + 1.0) * 0.5;
-                                      
-                                          FragColor = vec4(r * pulse, g * pulse, 0.9 - r * pulse, 1.0);
-                                      }
-                                      """;
+        string fragmentShaderSource = FragmentShaderIn;
         
         int VertexShader = GL.CreateShader(ShaderType.VertexShader);
         GL.ShaderSource(VertexShader, vertexShaderSource);

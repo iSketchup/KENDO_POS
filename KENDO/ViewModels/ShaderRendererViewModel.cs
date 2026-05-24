@@ -2,10 +2,11 @@ using System;
 
 namespace Main.ViewModels;
 
-public class ShaderRendererViewModel
+public class ShaderRendererViewModel : ViewModelBase
 {
+    public string Code { get; set; } = "";
     public void ChangeCode(string code)
     {
-        throw new NotImplementedException();
+        Code = code;
     }
 }
