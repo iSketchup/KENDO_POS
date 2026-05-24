@@ -11,5 +11,9 @@ public partial class MainWindowViewModel : ViewModelBase
     {
         ShaderRenderer.ChangeCode(Editor.Code);
     }
-    
+
+    public void RelaunchCode()
+    {
+        ShaderRenderer.ChangeCode(Editor.Code);
+    }
 }
