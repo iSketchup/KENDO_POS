@@ -12,6 +12,8 @@ namespace Main.Views;
 
 public class GLView : OpenGlControlBase
 {
+    private bool _glInitialzed;
+    private bool _needsReload;
     public static readonly StyledProperty<string> FragmentShaderInProperty =
         AvaloniaProperty.Register<GLView, string>(nameof(FragmentShaderIn));
 
@@ -19,6 +21,15 @@ public class GLView : OpenGlControlBase
     {
         get => GetValue(FragmentShaderInProperty);
         set => SetValue(FragmentShaderInProperty, value);
+    }
+    protected override void OnPropertyChanged(AvaloniaPropertyChangedEventArgs change)
+    {
+        base.OnPropertyChanged(change);
+
+        if (change.Property == FragmentShaderInProperty)
+        {
+            queNewReload();
+        }
     }
     
     private Stopwatch _timer = new Stopwatch();
@@ -43,6 +54,17 @@ public class GLView : OpenGlControlBase
     private int vertexArrayObject;
     private int elementBufferObject;
 
+    private string vertexShaderSource = """
+                                #version 330 core
+                                layout (location = 0) in vec3 aPosition;
+                                out vec2 pos;
+                                void main()
+                                {
+                                    pos = aPosition.xy;
+                                    gl_Position = vec4(aPosition, 1.0);
+                                }
+                                """;
+    
     private int shaderProgramm;
     
     protected override void OnOpenGlInit(GlInterface gl)
@@ -84,65 +106,10 @@ public class GLView : OpenGlControlBase
         
 
 
-        string vertexShaderSource = """
-                                    #version 330 core
-                                    layout (location = 0) in vec3 aPosition;
-                                    out vec2 pos;
-                                    void main()
-                                    {
-                                        pos = aPosition.xy;
-                                        gl_Position = vec4(aPosition, 1.0);
-                                    }
-                                    """;
+        _glInitialzed = true;
 
-        string fragmentShaderSource = FragmentShaderIn;
+        Reload();
         
-        int VertexShader = GL.CreateShader(ShaderType.VertexShader);
-        GL.ShaderSource(VertexShader, vertexShaderSource);
-        
-        int FragmentShader = GL.CreateShader(ShaderType.FragmentShader);
-        GL.ShaderSource(FragmentShader, fragmentShaderSource);
-        
-        GL.CompileShader(VertexShader);
-
-        GL.GetShader(VertexShader, ShaderParameter.CompileStatus, out int vsuccess);
-        if (vsuccess == 0)
-        {
-            string infoLog = GL.GetShaderInfoLog(VertexShader);
-            Console.WriteLine(infoLog);
-        }
-
-        GL.CompileShader(FragmentShader);
-
-        GL.GetShader(FragmentShader, ShaderParameter.CompileStatus, out int fsuccess);
-        if (fsuccess == 0)
-        {
-            string infoLog = GL.GetShaderInfoLog(FragmentShader);
-            Console.WriteLine(infoLog);
-        }
-        
-        shaderProgramm = GL.CreateProgram();
-        GL.AttachShader(shaderProgramm, VertexShader);
-        GL.AttachShader(shaderProgramm, FragmentShader);
-        
-        GL.LinkProgram(shaderProgramm);
-        
-        GL.GetProgram(shaderProgramm, GetProgramParameterName.LinkStatus, out int success);
-        if (success == 0)
-        {
-            string infoLog = GL.GetProgramInfoLog(shaderProgramm);
-            Console.WriteLine(infoLog);
-        }
-        
-        GL.DetachShader(shaderProgramm, VertexShader);
-        GL.DetachShader(shaderProgramm, FragmentShader);
-        GL.DeleteShader(FragmentShader);
-        GL.DeleteShader(VertexShader);
-        
-        
-        uTime = GL.GetUniformLocation(shaderProgramm, "uTime");
-        
-        _timer.Start();
 
         Console.WriteLine("OpenGL initialized");
     }
@@ -161,6 +128,13 @@ public class GLView : OpenGlControlBase
 
     protected override void OnOpenGlRender(GlInterface gl, int fb)
     {
+        
+        if (_needsReload)
+        {
+            _needsReload = false;
+            Reload();
+        }
+        
         GL.BindFramebuffer(FramebufferTarget.Framebuffer, fb);
         
         GL.Viewport(0, 0, (int)Bounds.Width, (int)Bounds.Height);
@@ -179,7 +153,74 @@ public class GLView : OpenGlControlBase
         
     }
 
+    private void Reload()
+    {
+        if (!_glInitialzed) return;
+
+        string fragmentShaderSource = FragmentShaderIn;
+        
+        int vertexShader = GL.CreateShader(ShaderType.VertexShader);
+        GL.ShaderSource(vertexShader, vertexShaderSource);
+        
+        int fragmentShader = GL.CreateShader(ShaderType.FragmentShader);
+        GL.ShaderSource(fragmentShader, fragmentShaderSource);
+        
+        GL.CompileShader(vertexShader);
+
+        GL.GetShader(vertexShader, ShaderParameter.CompileStatus, out int vsuccess);
+        if (vsuccess == 0)
+        {
+            string infoLog = GL.GetShaderInfoLog(vertexShader);
+            Console.WriteLine(infoLog);
+        }
+
+        GL.CompileShader(fragmentShader);
+
+        GL.GetShader(fragmentShader, ShaderParameter.CompileStatus, out int fsuccess);
+        if (fsuccess == 0)
+        {
+            string infoLog = GL.GetShaderInfoLog(fragmentShader);
+            Console.WriteLine(infoLog);
+        }
+        
+
+        int newProgram = GL.CreateProgram();
+        
+        GL.AttachShader(newProgram, vertexShader);
+        GL.AttachShader(newProgram, fragmentShader);
+        
+        GL.LinkProgram(newProgram);
+
+        GL.GetProgram(newProgram, GetProgramParameterName.LinkStatus, out int success);
+        if (success == 0)
+        {
+            GL.DeleteProgram(newProgram); 
+            return;                       
+        }
+
+        if (shaderProgramm != 0)
+            GL.DeleteProgram(shaderProgramm);
     
+        
+        
+        shaderProgramm = newProgram;
+
+        GL.DetachShader(newProgram, vertexShader);
+        GL.DetachShader(newProgram, fragmentShader);
+        GL.DeleteShader(vertexShader);
+        GL.DeleteShader(fragmentShader);
+        
+        uTime = GL.GetUniformLocation(shaderProgramm, "uTime");
+        _timer.Restart();
+    }
+
+    private void queNewReload()
+    {
+        
+        if (!_glInitialzed) return;
+        _needsReload = true;
+        RequestNextFrameRendering();
+    }
 }
 
 

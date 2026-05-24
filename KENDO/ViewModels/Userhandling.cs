@@ -9,6 +9,9 @@ namespace Main.ViewModels;
 
 public static class Userhandling
 {
+    
+    
+    
     private static HttpClient client = new HttpClient()
     {
         BaseAddress = new Uri("http://127.0.0.1:8000/")
