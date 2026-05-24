@@ -21,7 +21,7 @@ public class ApiService
     
     public async Task<List<User>> GetUserInfo()
     {
-        List<User>? response = await _client.GetFromJsonAsync<List<User>>("user");
+        List<User>? response = await _client.GetFromJsonAsync<List<User>>("user/");
 
         // Neue Liste wird erzeugt, falls der User nicht geholt werden kann.
         return response ?? new List<User>();
@@ -30,7 +30,7 @@ public class ApiService
     public async Task CreateUser(User user)
     {
         // Bevor man etwas einfügt, wird auf eine Antwort der API gewartet
-        HttpResponseMessage result = await _client.PostAsJsonAsync("user", user);
+        HttpResponseMessage result = await _client.PostAsJsonAsync("user/", user);
         result.EnsureSuccessStatusCode();
     }
 }
