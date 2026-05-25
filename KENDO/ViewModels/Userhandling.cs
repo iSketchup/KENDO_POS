@@ -16,9 +16,10 @@ public static class Userhandling
 
     private static ApiService apiService = new ApiService(client);
     
-    public static void AddUser(string name, string pswd)
+    public async static Task AddUser(string name, string pswd)
     {
-        new User { UserName = name, passwd = pswd };
+        User user =  new User { UserName = name, passwd = pswd };
+        await apiService.CreateUser(user);
     }
 
     public async static Task<User?> VaidateLogin(string name, string pswd)
