@@ -4,9 +4,11 @@ using Avalonia;
 using Avalonia.Controls;
 using Avalonia.OpenGL;
 using Avalonia.OpenGL.Controls;
-using Main.ViewModels;
+using Avalonia.Platform;
 using OpenTK;
 using OpenTK.Graphics.OpenGL4;
+using StbImageSharp;
+using PixelFormat = OpenTK.Graphics.OpenGL4.PixelFormat;
 
 namespace Main.Views;
 
@@ -37,11 +39,13 @@ public class GLView : OpenGlControlBase
     // unioforms:
     private int uTime;
     
-    float[] vertices = {
-        0.5f,  0.5f, 0.0f,  // top right
-        0.5f, -0.5f, 0.0f,  // bottom right
-        -0.5f, -0.5f, 0.0f,  // bottom left
-        -0.5f,  0.5f, 0.0f   // top left
+    float[] vertices =
+    {
+        //Position          Texture coordinates
+        1f,  1f, 1f, 1.0f, 1.0f, // top right
+        1f, -1f, 0.0f, 1.0f, 0.0f, // bottom right
+        -1f, -1f, 0.0f, 0.0f, 0.0f, // bottom left
+        -1f,  1f, 0.0f, 0.0f, 1.0f  // top left
     };
 
     private uint[] indicies =
@@ -50,6 +54,8 @@ public class GLView : OpenGlControlBase
         0, 2, 3,
     };
 
+    private Texture tex;
+
     private int vertexBufferObject;
     private int vertexArrayObject;
     private int elementBufferObject;
@@ -57,10 +63,11 @@ public class GLView : OpenGlControlBase
     private string vertexShaderSource = """
                                 #version 330 core
                                 layout (location = 0) in vec3 aPosition;
-                                out vec2 pos;
+                                layout (location = 1) in vec2 aTexCoord;
+                                out vec2 TexCoord;
                                 void main()
                                 {
-                                    pos = aPosition.xy;
+                                    TexCoord = aTexCoord;
                                     gl_Position = vec4(aPosition, 1.0);
                                 }
                                 """;
@@ -69,9 +76,6 @@ public class GLView : OpenGlControlBase
     
     protected override void OnOpenGlInit(GlInterface gl)
     {
-
-        
-
         GL.LoadBindings(new AvaloniaBindingsContext(gl));
         
         GL.ClearColor(0.2f, 0.3f, 0.3f, 1.0f);
@@ -101,11 +105,16 @@ public class GLView : OpenGlControlBase
       
         
         
-        GL.VertexAttribPointer(0, 3, VertexAttribPointerType.Float, false, 3 * sizeof(float), 0);
+        GL.VertexAttribPointer(0, 3, VertexAttribPointerType.Float, false, 5 * sizeof(float), 0);
         GL.EnableVertexAttribArray(0);
+        int texCoordLocation = 1;  // shaderProgramm.GetAttribLocation("aTexCoord");
+        GL.EnableVertexAttribArray(texCoordLocation);
+        GL.VertexAttribPointer(texCoordLocation, 2, VertexAttribPointerType.Float, false, 5 * sizeof(float), 3 * sizeof(float));
         
-
-
+        
+        // Texturegekoche
+        tex = new Texture(new Uri("avares://Main/Assets/TEXtuffesbild.jpg"));
+        
         _glInitialzed = true;
 
         Reload();
@@ -128,7 +137,6 @@ public class GLView : OpenGlControlBase
 
     protected override void OnOpenGlRender(GlInterface gl, int fb)
     {
-        
         if (_needsReload)
         {
             _needsReload = false;
@@ -141,6 +149,8 @@ public class GLView : OpenGlControlBase
         GL.Clear(ClearBufferMask.ColorBufferBit);
 
         GL.UseProgram(shaderProgramm);
+        
+        tex.Use();
         
         float timeValue = (float)_timer.Elapsed.TotalSeconds;
         GL.Uniform1(uTime, timeValue);
@@ -194,8 +204,12 @@ public class GLView : OpenGlControlBase
         GL.GetProgram(newProgram, GetProgramParameterName.LinkStatus, out int success);
         if (success == 0)
         {
-            GL.DeleteProgram(newProgram); 
-            return;                       
+            string infoLog = GL.GetProgramInfoLog(newProgram);
+            Console.WriteLine("Program link error:");
+            Console.WriteLine(infoLog);
+
+            GL.DeleteProgram(newProgram);
+            return;
         }
 
         if (shaderProgramm != 0)
@@ -210,6 +224,13 @@ public class GLView : OpenGlControlBase
         GL.DeleteShader(vertexShader);
         GL.DeleteShader(fragmentShader);
         
+        GL.UseProgram(shaderProgramm);
+
+        int texLocation =
+            GL.GetUniformLocation(shaderProgramm, "texture0");
+
+        GL.Uniform1(texLocation, 0);
+        
         uTime = GL.GetUniformLocation(shaderProgramm, "uTime");
         _timer.Restart();
     }
@@ -223,6 +244,56 @@ public class GLView : OpenGlControlBase
     }
 }
 
+public class Texture
+{
+    public int Handle { get; }
+
+    public Texture(Uri Path)
+    {
+        Handle = GL.GenTexture();
+        Use();
+        
+        GL.TexParameter(
+            TextureTarget.Texture2D,
+            TextureParameterName.TextureWrapS,
+            (int)TextureWrapMode.ClampToBorder);
+
+        GL.TexParameter(
+            TextureTarget.Texture2D,
+            TextureParameterName.TextureWrapT,
+            (int)TextureWrapMode.ClampToBorder);
+        
+        
+        float[] borderColor = { 1.0f, 1.0f, 0.0f, 1.0f };
+        GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureBorderColor, borderColor); 
+        GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMagFilter, (int)TextureMagFilter.Linear);
+        GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMinFilter, (int)TextureMinFilter.LinearMipmapLinear);
+        
+        StbImage.stbi_set_flip_vertically_on_load(1);
+
+        ImageResult image = ImageResult.FromStream(AssetLoader.Open(Path), ColorComponents.RedGreenBlueAlpha);
+        
+        GL.TexImage2D(
+            TextureTarget.Texture2D,
+            0,
+            PixelInternalFormat.Rgba,
+            image.Width,
+            image.Height,
+            0,
+            PixelFormat.Rgba,
+            PixelType.UnsignedByte,
+            image.Data);
+        
+        
+        
+        GL.GenerateMipmap(GenerateMipmapTarget.Texture2D);
+    }
+    public void Use(TextureUnit unit = TextureUnit.Texture0)
+    {
+        GL.ActiveTexture(unit);
+        GL.BindTexture(TextureTarget.Texture2D, Handle);
+    }
+}
 
 public class AvaloniaBindingsContext : IBindingsContext
 {
