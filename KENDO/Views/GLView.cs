@@ -1,5 +1,7 @@
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.OpenGL;
@@ -39,6 +41,9 @@ public class GLView : OpenGlControlBase
     // unioforms:
     private int uTime;
     
+    private Uri[] texUris = {new Uri("avares://Main/Assets/TEXtuffesbild.jpg"), new("avares://Main/Assets/TEXTuffAssMinion.jpg") };
+    private List<Texture> textures = new();
+    
     float[] vertices =
     {
         //Position          Texture coordinates
@@ -54,7 +59,6 @@ public class GLView : OpenGlControlBase
         0, 2, 3,
     };
 
-    private Texture tex;
 
     private int vertexBufferObject;
     private int vertexArrayObject;
@@ -113,7 +117,10 @@ public class GLView : OpenGlControlBase
         
         
         // Texturegekoche
-        tex = new Texture(new Uri("avares://Main/Assets/TEXtuffesbild.jpg"));
+        for( int i =0; i  < texUris.Length; i++)
+        {
+            textures.Add(new Texture(texUris[i], i));
+        } 
         
         _glInitialzed = true;
 
@@ -121,6 +128,7 @@ public class GLView : OpenGlControlBase
         
 
         Console.WriteLine("OpenGL initialized");
+        
     }
 
     protected override void OnOpenGlDeinit(GlInterface gl)
@@ -149,8 +157,13 @@ public class GLView : OpenGlControlBase
         GL.Clear(ClearBufferMask.ColorBufferBit);
 
         GL.UseProgram(shaderProgramm);
+
+        for( int i =0; i  < textures.Count; i++)
+        {
+            textures[i].Use(TextureUnit.Texture0 + i);
+        } 
         
-        tex.Use();
+
         
         float timeValue = (float)_timer.Elapsed.TotalSeconds;
         GL.Uniform1(uTime, timeValue);
@@ -166,6 +179,7 @@ public class GLView : OpenGlControlBase
     private void Reload()
     {
         if (!_glInitialzed) return;
+        Console.WriteLine("Reloading...");
 
         string fragmentShaderSource = FragmentShaderIn;
         
@@ -225,11 +239,15 @@ public class GLView : OpenGlControlBase
         GL.DeleteShader(fragmentShader);
         
         GL.UseProgram(shaderProgramm);
+        
+        for( int i =0; i  < textures.Count; i++)
+        {
+            int texLocation =
+                GL.GetUniformLocation(shaderProgramm, $"texture{i}");
 
-        int texLocation =
-            GL.GetUniformLocation(shaderProgramm, "texture0");
-
-        GL.Uniform1(texLocation, 0);
+            GL.Uniform1(texLocation, i);
+        } 
+        
         
         uTime = GL.GetUniformLocation(shaderProgramm, "uTime");
         _timer.Restart();
@@ -248,10 +266,10 @@ public class Texture
 {
     public int Handle { get; }
 
-    public Texture(Uri Path)
+    public Texture(Uri Path, int unit)
     {
         Handle = GL.GenTexture();
-        Use();
+        Use(TextureUnit.Texture0 +unit);
         
         GL.TexParameter(
             TextureTarget.Texture2D,
@@ -293,6 +311,7 @@ public class Texture
         GL.ActiveTexture(unit);
         GL.BindTexture(TextureTarget.Texture2D, Handle);
     }
+
 }
 
 public class AvaloniaBindingsContext : IBindingsContext
