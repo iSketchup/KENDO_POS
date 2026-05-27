@@ -6,6 +6,7 @@ namespace Main.ViewModels;
 public partial class MainWindowViewModel : ViewModelBase
 {
     public ShaderRendererViewModel ShaderRenderer { get; } 
+    public CommentListViewModel Comments { get; }
 
     public MainWindowViewModel()
     {
