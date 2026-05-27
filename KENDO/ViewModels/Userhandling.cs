@@ -4,14 +4,12 @@ using Main.Models;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Linq;
+using BCrypt.Net;
 
 namespace Main.ViewModels;
 
 public static class Userhandling
 {
-    
-    
-    
     private static HttpClient client = new HttpClient()
     {
         BaseAddress = new Uri("http://127.0.0.1:8000/")
@@ -21,7 +19,10 @@ public static class Userhandling
     
     public async static Task AddUser(string name, string pswd)
     {
+        string hashed = BCrypt.Net.BCrypt.HashPassword(pswd);
         User user =  new User { UserName = name, passwd = pswd };
+        
+
         await apiService.CreateUser(user);
     }
 

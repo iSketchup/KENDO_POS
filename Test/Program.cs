@@ -9,15 +9,15 @@ if (result1 != null)
     Console.WriteLine("Login erfolgreich");
 }
 
-var user = new User()
-{
-    UserName = "Test",
-    passwd = "Hallo123"
-};
+//var user = new user()
+//{
+//    username = "test",
+//    passwd = "hallo123"
+//};
 
-await Userhandling.AddUser(user.UserName, user.passwd);
+//await Userhandling.AddUser(user.UserName, user.passwd);
 
-var result2 = await Userhandling.VaidateLogin("Walser", "DanHTLWal");
+User? result2 = await Userhandling.VaidateLogin("Test","hallo123");
 if (result2 != null)
 {
     Console.WriteLine("Login erfolgreich");
