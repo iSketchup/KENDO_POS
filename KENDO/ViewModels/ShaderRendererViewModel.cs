@@ -5,15 +5,13 @@ using Main.Models;
 
 namespace Main.ViewModels;
 
-public partial class ShaderRendererViewModel : ObservableObject
+public partial class ShaderRendererViewModel : ViewModelBase
 {
     [ObservableProperty] 
     private Shader _context; 
 
-
-
-    public ShaderRendererViewModel(Shader shader)
+    public void setShader(Shader s)
     {
-        Context = shader;
+        Context = s;
     }
 }

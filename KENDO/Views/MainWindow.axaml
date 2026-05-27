@@ -25,8 +25,9 @@
             <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
         
-        <views:ShaderRendererView Grid.Column="0" Grid.Row="0"></views:ShaderRendererView>
-        <views:EditorView Grid.Column="1" Grid.Row="0"></views:EditorView>
+        <views:EditorView Grid.Column="1" Grid.Row="0" DataContext="{Binding ShaderRenderer}"></views:EditorView>
+        
+        <ContentControl Grid.Column="0" Grid.Row="0" Content="{Binding ShaderRenderer}"></ContentControl>
         
         <ContentControl Grid.Column="0" Grid.Row="1"  Content="{Binding Comments}"></ContentControl>
     </Grid>

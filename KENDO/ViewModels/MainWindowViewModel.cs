@@ -5,11 +5,11 @@ namespace Main.ViewModels;
 
 public partial class MainWindowViewModel : ViewModelBase
 {
-    public ShaderRendererViewModel ShaderRenderer { get; } 
+    public ShaderRendererViewModel ShaderRenderer { get; } = new ();
     public CommentListViewModel Comments { get; } = new CommentListViewModel();
 
     public MainWindowViewModel()
     {
-        ShaderRenderer =new( new Shader());
+        ShaderRenderer.setShader(new Shader());
     }
 }
