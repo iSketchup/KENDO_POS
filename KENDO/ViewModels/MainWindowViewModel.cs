@@ -10,6 +10,6 @@ public partial class MainWindowViewModel : ViewModelBase
 
     public MainWindowViewModel()
     {
-        ShaderRenderer.setShader(new Shader());
+        ShaderRenderer.SetShader(new Shader());
     }
 }

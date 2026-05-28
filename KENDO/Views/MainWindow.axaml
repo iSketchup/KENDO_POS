@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:views="clr-namespace:Main.Views"
+        xmlns:avaloniaEdit="https://github.com/avaloniaui/avaloniaedit"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="Main.Views.MainWindow"
         x:DataType="vm:MainWindowViewModel"
@@ -27,6 +28,7 @@
         
         <views:EditorView Grid.Column="1" Grid.Row="0" DataContext="{Binding ShaderRenderer}"></views:EditorView>
         
+       
         <ContentControl Grid.Column="0" Grid.Row="0" Content="{Binding ShaderRenderer}"></ContentControl>
         
         <ContentControl Grid.Column="0" Grid.Row="1"  Content="{Binding Comments}"></ContentControl>
