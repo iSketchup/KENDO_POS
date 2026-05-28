@@ -1,11 +1,15 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using Avalonia.Controls;
+using CommunityToolkit.Mvvm.Input;
 using Main.Models;
 
 namespace Main.ViewModels;
 
-public class CommentListViewModel : ViewModelBase
+public partial class CommentListViewModel : ViewModelBase
 {
+    public Shader? Shader { get; private set; }
+    
     public ObservableCollection<Comment> comments { get; set; }
 
     public CommentListViewModel()
@@ -16,4 +20,20 @@ public class CommentListViewModel : ViewModelBase
             new Comment("Test2", "Test2"),
         };
     }
+    
+    public CommentListViewModel(Shader shader)
+    {
+        shader = shader;
+    }
+    
+    
+    
+    [RelayCommand]
+    public void AddComment(TextBox textBox)
+    {
+        string? commentText = textBox.Text;
+        comments.Add(new Comment($"{commentText}", $"fehlt"));
+        textBox.Clear();
+    }
+    
 }
