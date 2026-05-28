@@ -25,11 +25,11 @@
             <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
         
+        <views:EditorView Grid.Column="1" Grid.Row="0" DataContext="{Binding ShaderRenderer}"></views:EditorView>
+        
         <ContentControl Grid.Column="0" Grid.Row="0" Content="{Binding ShaderRenderer}"></ContentControl>
-        <ContentControl Grid.Column="1" Grid.Row="0" Content="{Binding Editor}"></ContentControl>
         
-        <Button Grid.Column="1" Grid.Row="1" Name="BtnSubmittCode" MinHeight="50" MinWidth="100" VerticalAlignment="Top" HotKey="Ctrl+Enter" Command="{Binding RelaunchCode}"></Button>
-        
+        <ContentControl Grid.Column="0" Grid.Row="1"  Content="{Binding Comments}"></ContentControl>
     </Grid>
    
 </Window>

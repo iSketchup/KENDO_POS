@@ -1,16 +1,17 @@
 using System;
 using System.ComponentModel;
 using CommunityToolkit.Mvvm.ComponentModel;
+using Main.Models;
 
 namespace Main.ViewModels;
 
 public partial class ShaderRendererViewModel : ViewModelBase
-{   
-    [ObservableProperty]
-    private string _code;
-    public void ChangeCode(string code)
+{
+    [ObservableProperty] 
+    private Shader _context; 
+
+    public void setShader(Shader s)
     {
-        // TODO: make this reload the shader itself
-        Code = code;
+        Context = s;
     }
 }

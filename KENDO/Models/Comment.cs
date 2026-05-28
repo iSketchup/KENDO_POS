@@ -16,7 +16,7 @@ public class Comment
         Author = author;
     }
     
-    public Comment(string text, string author, int id) 
+    public Comment(string text, string author, int id) : base()
     {
         Id = id;
     }
