@@ -41,7 +41,7 @@ public class GLView : OpenGlControlBase
     // unioforms:
     private int uTime;
     
-    private Uri[] texUris = {new Uri("avares://Main/Assets/TEXtuffesbild.jpg"), new("avares://Main/Assets/TEXTuffAssMinion.jpg") };
+    private Uri[] texUris = {new Uri("avares://Main/Assets/TEXTuffAssDino.jpg"), new("avares://Main/Assets/TEXTuffAssMinion.jpg"), new("avares://Main/Assets/TEXTuffAsWorm.jpg")};
     private List<Texture> textures = new();
     
     float[] vertices =
