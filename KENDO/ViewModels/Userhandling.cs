@@ -20,7 +20,7 @@ public static class Userhandling
     public async static Task AddUser(string name, string pswd)
     {
         string hashed = BCrypt.Net.BCrypt.HashPassword(pswd);
-        User user =  new User { UserName = name, passwd = pswd };
+        User user =  new User { UserName = name, passwd = hashed };
         
 
         await apiService.CreateUser(user);
@@ -28,10 +28,14 @@ public static class Userhandling
 
     public async static Task<User?> VaidateLogin(string name, string pswd)
     {
-        List<User> users = await apiService.GetUserInfo(); // echte API
-
+        User? user = await apiService.GetUserInfo(name, pswd);
+        
         // Das FirstOrDefault holt sich den ersten Wert von der DB, bei welcher
         // der Name und das Passwort zueinander passen.
-        return users.FirstOrDefault(u => u.UserName == name && u.passwd == pswd);
+        //var user = users.FirstOrDefault(u => u.UserName == name);
+        if (user == null) return null;
+
+        bool ok = BCrypt.Net.BCrypt.Verify(pswd, user.passwd);
+        return ok ? user : null; // falls ok dann user falls !ok => null
     }
 }
