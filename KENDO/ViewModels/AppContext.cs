@@ -4,17 +4,25 @@ namespace Main.ViewModels;
 
 public class AppContext
 {
-    public User CurrentUser { get; set; }
-    public Shader CurrentShader { get; set; } 
+    public User User { get; set; }
+    public Shader Shader { get; set; } 
 
     public AppContext(User? currentUser)
     {
         // TODO: noch zu implementieren
-        CurrentUser = currentUser;
+        User = currentUser;
+    }
+
+    public void CreatNewShader()
+    {
+        // ToDo: save old stuff
+        
+        Shader = new Shader();
+        
     }
 
     public void switchShader(Shader shader)
     {
-        CurrentShader = shader;
+        Shader = shader;
     }
 }

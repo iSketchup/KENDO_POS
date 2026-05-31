@@ -7,9 +7,15 @@ public partial class MainWindowViewModel : ViewModelBase
 {
     public ShaderRendererViewModel ShaderRenderer { get; } = new ();
     public CommentListViewModel Comments { get; } = new CommentListViewModel();
+    
+    public AppContext AppContext { get; }
 
     public MainWindowViewModel()
     {
-        ShaderRenderer.SetShader(new Shader());
+        // ToDo: give this a user
+        AppContext = new AppContext(null); 
+        AppContext.CreatNewShader();
+        
+        ShaderRenderer.SetContext(AppContext);
     }
 }
