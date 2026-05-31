@@ -25,6 +25,7 @@ public class ShaderPageViewModel : ViewModelBase
         AppContext.CreatNewShader();
         
         ShaderRenderer.SetContext(AppContext);
+        Comments.SetContext(AppContext);
     }
 
 }

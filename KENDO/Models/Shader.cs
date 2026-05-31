@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace Main.Models;
@@ -28,8 +29,8 @@ public partial class Shader : ObservableObject
                             """;
 
     public int ShaderLikes { get;  set; }
-    public List<Comment> Comments { get; set; }
-    public List<string> ShaderTags { get; set; }
+    public ObservableCollection<Comment> Comments { get; set; } = new ObservableCollection<Comment>();
+    public ObservableCollection<string> ShaderTags { get; set; } = new ObservableCollection<string>();
 
     public void LoadShader()
     {

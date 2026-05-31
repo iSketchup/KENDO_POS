@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace Main.Models;
 
@@ -26,7 +27,7 @@ public class Comment
         return $"{Author}: {Text}";
     }
 
-    public static List<Comment> LoadComments(int ShaderID)
+    public static ObservableCollection<Comment> LoadComments(int ShaderID)
     {
         throw new NotImplementedException();
     }

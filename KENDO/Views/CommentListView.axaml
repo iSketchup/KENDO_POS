@@ -10,8 +10,40 @@
              x:DataType="vm:CommentListViewModel">
     
     
-    <DockPanel Margin="10 15 10 10">
-        <Grid DockPanel.Dock="Top">
+    <DockPanel Margin="10 5 10 10">
+        <StackPanel Orientation="Horizontal" DockPanel.Dock="Top" MaxHeight="24" Margin="0 0 0 5" >
+            <TextBox FontSize="8" MaxHeight="15" MaxWidth="50" 
+                     Margin="0 0 5 0" Name="TagTextBox"/>
+            <Button Content="Add" FontSize="8" Margin="0 0 5 0"
+                    Command="{Binding AddTagCommand}" 
+                    CommandParameter="{Binding ElementName=TagTextBox }"
+                    HorizontalAlignment="Center" VerticalAlignment="Center"  />
+            <ScrollViewer HorizontalScrollBarVisibility="Auto" >
+                <ItemsRepeater ItemsSource="{Binding Shader.ShaderTags}">
+                    <ItemsRepeater.Layout>
+                        <StackLayout Spacing="5"
+                                     Orientation="Horizontal" />
+                    </ItemsRepeater.Layout>
+                    <ItemsRepeater.ItemTemplate>
+                        <DataTemplate x:DataType="x:String">
+                            <Border Margin="0,0,0,0"
+                                    CornerRadius="5"
+                                    BorderBrush="Gray" BorderThickness="1"
+                                    Padding="3">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="{Binding  }" FontSize="10" />
+                                    <Button Content="X" MaxWidth="15" MaxHeight="15"
+                                            Command="{Binding}" 
+                                            CommandParameter="{Binding  }"/>
+                                </StackPanel>
+                            </Border>
+                        </DataTemplate>
+                    </ItemsRepeater.ItemTemplate>
+                </ItemsRepeater>
+            </ScrollViewer>
+        </StackPanel>
+        
+        <Grid DockPanel.Dock="Top" Margin="0 5 0 0 ">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="3*" />
                 <ColumnDefinition Width="*" />
@@ -27,27 +59,25 @@
             Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center"/>
         </Grid>
        
-        <TextBlock DockPanel.Dock="Top" Margin="10 10 10 10" FontSize="17">Comments:</TextBlock>
+        <TextBlock DockPanel.Dock="Top" Margin="10 10 10 0" FontSize="17">Comments:</TextBlock>
         
-        <Panel DockPanel.Dock="Top" Margin="0 0 0 0">
-            
-            <ScrollViewer VerticalScrollBarVisibility="Auto">
-                <ItemsRepeater ItemsSource="{Binding comments}">
-                    <ItemsRepeater.ItemTemplate>
-                        <DataTemplate>
-                            <Border Margin="0,10,0,0"
-                                    CornerRadius="5"
-                                    BorderBrush="Blue" BorderThickness="1"
-                                    Padding="5">
-                                <StackPanel>
-                                    <TextBlock Text="{Binding Author}" FontSize="18" MaxWidth="200000" Margin="10,1,1,1"  />
-                                    <TextBlock Text="{Binding Text}" FontSize="15" />
-                                </StackPanel>
-                            </Border>
-                        </DataTemplate>
-                    </ItemsRepeater.ItemTemplate>
-                </ItemsRepeater>
-            </ScrollViewer>
-        </Panel>
+        <ScrollViewer VerticalScrollBarVisibility="Auto" DockPanel.Dock="Top">
+            <ItemsRepeater ItemsSource="{Binding Shader.Comments}">
+                <ItemsRepeater.ItemTemplate>
+                    <DataTemplate>
+                        <Border Margin="5,10,5,0"
+                                CornerRadius="5"
+                                BorderBrush="Blue" BorderThickness="1"
+                                Padding="5">
+                            <StackPanel>
+                                <TextBlock Text="{Binding Author}" FontSize="18" MaxWidth="200000" Margin="10,1,1,1"  />
+                                <TextBlock Text="{Binding Text}" FontSize="15" />
+                            </StackPanel>
+                        </Border>
+                    </DataTemplate>
+                </ItemsRepeater.ItemTemplate>
+            </ItemsRepeater>
+        </ScrollViewer>
+
     </DockPanel>
 </UserControl>
