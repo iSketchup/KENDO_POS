@@ -19,6 +19,6 @@ public partial class ShaderRendererViewModel : ViewModelBase
     public void SetContext(AppContext a)
     {
         Shader s = a.Shader;
-        Document.Text = s.Code;
+        Document.Text = s.ShaderCode;
     }
 }

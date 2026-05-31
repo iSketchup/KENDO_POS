@@ -1,4 +1,6 @@
-﻿using Main.Models;
+﻿using System;
+using System.Net.Http;
+using Main.Models;
 using Main.Views;
 
 namespace Main.ViewModels;
@@ -12,8 +14,14 @@ public partial class MainWindowViewModel : ViewModelBase
 
     public MainWindowViewModel()
     {
+       
+        HttpClient client = new HttpClient()
+        {
+            BaseAddress = new Uri("http://localhost:8000/")
+        }; 
+        
         // ToDo: give this a user
-        AppContext = new AppContext(null); 
+        AppContext = new AppContext(null, client); 
         AppContext.CreatNewShader();
         
         ShaderRenderer.SetContext(AppContext);

@@ -5,10 +5,10 @@ namespace Main.Models;
 
 public partial class Shader : ObservableObject
 {
-    public int Id { get; private set; }
+    public int ShaderId { get;  set; }
 
     [ObservableProperty]
-    private string _code  = """
+    private string _shaderCode  = """
                             #version 330
 
                             out vec4 outputColor;
@@ -27,14 +27,14 @@ public partial class Shader : ObservableObject
                             }
                             """;
 
-    public int ShaderLikes { get; private set; }
+    public int ShaderLikes { get;  set; }
     public List<Comment> Comments { get; set; }
     public List<string> ShaderTags { get; set; }
 
     public void LoadShader()
     {
-        Comments = Comment.LoadComments(Id);
-        ShaderTags = Tags.LoadByShader(Id);
-        ShaderLikes = Likes.GetLikesAmount(Id);
+        Comments = Comment.LoadComments(ShaderId);
+        ShaderTags = Tags.LoadByShader(ShaderId);
+        ShaderLikes = Likes.GetLikesAmount(ShaderId);
     }
 }
