@@ -3,15 +3,15 @@ using Main.Models;
 
 Console.WriteLine("Hello, World!");
 
-var result1 = await Userhandling.VaidateLogin("Daniel", "123HTL12");
-if (result1 != null)
-{
-    Console.WriteLine("Login erfolgreich");
-}
-
-//var user = new user()
+//var result1 = await Userhandling.VaidateLogin("Test", "hallo123");
+//if (result1 != null)
 //{
-//    username = "test",
+//    Console.WriteLine("Login erfolgreich");
+//}
+
+//var user = new User()
+//{
+//    UserName = "test",
 //    passwd = "hallo123"
 //};
 
