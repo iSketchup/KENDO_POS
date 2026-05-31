@@ -2,7 +2,22 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="clr-namespace:Main.ViewModels"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:Class="Main.Views.FrontPageView">
+             x:Class="Main.Views.FrontPageView"
+             x:DataType="vm:FrontPageViewModel">
     
+    <Carousel ItemsSource="{Binding Slides}" SelectedIndex="{Binding CurrentSlide}">
+        <Carousel.PageTransition>
+            <CrossFade Duration="0:00:00.300" />
+        </Carousel.PageTransition>
+        <Carousel.ItemTemplate>
+            <DataTemplate>
+                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <TextBlock Text="Binding Title}" FontSize="24" FontWeight="Bold" />
+                    <TextBlock Text="Binding Description}" TextWrapping="Wrap" />
+                </StackPanel>
+            </DataTemplate>
+        </Carousel.ItemTemplate>
+    </Carousel>
 </UserControl>

@@ -17,21 +17,18 @@
         <vm:MainWindowViewModel/>
     </Design.DataContext>
     <Grid>
+        
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="2*"></ColumnDefinition>
-            <ColumnDefinition Width="3*"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="30*"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
         
-        <views:EditorView Grid.Column="1" Grid.Row="0" DataContext="{Binding ShaderRenderer}"></views:EditorView>
+        <ContentControl Grid.Row="0" Content="{Binding CurrentViewModel}"></ContentControl>
         
-       
-        <ContentControl Grid.Column="0" Grid.Row="0" Content="{Binding ShaderRenderer}"></ContentControl>
         
-        <ContentControl Grid.Column="0" Grid.Row="1"  Content="{Binding Comments}"></ContentControl>
+        <Button Grid.Row="1" Background="PowderBlue" Content="Switcheroo" Command="{Binding Swicheroo}"></Button>
     </Grid>
-   
 </Window>

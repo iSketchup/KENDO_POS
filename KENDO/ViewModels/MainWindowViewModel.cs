@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Net.Http;
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using Main.Models;
 using Main.Views;
 
@@ -7,23 +9,27 @@ namespace Main.ViewModels;
 
 public partial class MainWindowViewModel : ViewModelBase
 {
-    public ShaderRendererViewModel ShaderRenderer { get; } = new ();
-    public CommentListViewModel Comments { get; } = new CommentListViewModel();
-    
-    public AppContext AppContext { get; }
+    [ObservableProperty] 
+    private ViewModelBase _currentViewModel;
+    public FrontPageViewModel FrontPageViewModel { get; set; }
+    public ShaderPageViewModel ShaderPageViewModel { get; set; }
 
     public MainWindowViewModel()
     {
-       
-        HttpClient client = new HttpClient()
-        {
-            BaseAddress = new Uri("http://localhost:8000/")
-        }; 
-        
-        // ToDo: give this a user
-        AppContext = new AppContext(null, client); 
-        AppContext.CreatNewShader();
-        
-        ShaderRenderer.SetContext(AppContext);
+        ShaderPageViewModel = new ShaderPageViewModel();
+        FrontPageViewModel = new FrontPageViewModel();
+        CurrentViewModel = ShaderPageViewModel;
     }
+    
+    [RelayCommand]
+    public void Swicheroo()
+    {
+        if (CurrentViewModel is FrontPageViewModel)
+            CurrentViewModel = ShaderPageViewModel;
+        else 
+            CurrentViewModel = FrontPageViewModel;
+
+        Console.WriteLine("ARSCHLOCH");
+    }
+
 }
