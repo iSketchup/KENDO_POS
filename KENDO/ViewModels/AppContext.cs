@@ -13,9 +13,12 @@ public  class AppContext
     public Shader Shader { get; set; } 
     
 
-    public  AppContext(User? currentUser, HttpClient client)
+    public  AppContext(User? currentUser, HttpClient? client)
     {
-        AsyncInit(client);
+        if (client == null)
+            FakeInit();
+        else 
+            AsyncInit(client);
         
         // TODO: noch zu implementieren
         User = currentUser;
@@ -23,8 +26,16 @@ public  class AppContext
         
     }
 
+    private void FakeInit()
+    {
+        Console.WriteLine("Loading with fake repo");
+        shaderRepository = new ShaderRepositoryRest(null);
+        
+    }
+
     private async void AsyncInit(HttpClient client)
     {
+        Console.WriteLine("Loading with rest repo");
         shaderRepository = new ShaderRepositoryRest(client);
         
         List<Shader> shaders = await shaderRepository.GetAllShaders();

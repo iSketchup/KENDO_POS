@@ -14,14 +14,26 @@ public class ShaderPageViewModel : ViewModelBase
 
     public ShaderPageViewModel()
     {
-       
-        HttpClient client = new HttpClient()
-        {
-            BaseAddress = new Uri("http://localhost:8000/")
-        }; 
         
+        bool Fake = false;
+        Uri Ba = null;
+
+        if (!Fake)
+        {
+
+
+            HttpClient client = new HttpClient()
+            {
+                BaseAddress = new Uri("http://localhost:8000/")
+            }; 
+            AppContext = new AppContext(null, client); 
+        }
+        else
+        {
+            AppContext = new AppContext(null, null);
+        }
+
         // ToDo: give this a user
-        AppContext = new AppContext(null, client); 
         AppContext.CreatNewShader();
         
         ShaderRenderer.SetContext(AppContext);

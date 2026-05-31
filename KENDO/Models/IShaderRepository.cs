@@ -41,3 +41,21 @@ public class ShaderRepositoryRest : IShaderRepository
         throw new System.NotImplementedException();
     }
 }
+
+public class ShaderRepositoryFake : IShaderRepository
+{
+    public async Task<List<Shader>> GetAllShaders()
+    {
+        return new List<Shader>() {new Shader(), new Shader()};
+    }
+
+    public Task<Shader> GetShaderById(int id)
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public void updateShader(int uid, int sid)
+    {
+        throw new System.NotImplementedException();
+    }
+}
