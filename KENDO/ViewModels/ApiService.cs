@@ -3,6 +3,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
 using Main.Models;
+using System.Text.Json;
 using System.Text;
 using System.Collections.Generic;
 using System.IO.Pipelines;
@@ -18,14 +19,15 @@ public class ApiService
     {
         _client = client;
     }
-    
-    public async Task<User?> GetUserInfo(string username, string password)
-    {
-        User user = new User() { passwd = password, UserName = username };
-        HttpResponseMessage response = await _client.PostAsJsonAsync($"user/login?UserName={username}&passwd={password}", user);
 
-        // Neue Liste wird erzeugt, falls der User nicht geholt werden kann.
-        return user;
+    public async Task<User?> GetUserInfo(string userName, string passwd)
+    {
+        User user = new User { UserName = userName, passwd = passwd };
+
+        HttpResponseMessage response = await _client.PostAsJsonAsync("user/login", user);
+        string body = await response.Content.ReadAsStringAsync();
+
+        return JsonSerializer.Deserialize<User>(body, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
     }
 
     public async Task CreateUser(User user)
