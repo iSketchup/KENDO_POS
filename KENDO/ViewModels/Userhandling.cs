@@ -35,7 +35,8 @@ public static class Userhandling
         //var user = users.FirstOrDefault(u => u.UserName == name);
         if (user == null) return null;
 
-        bool ok = BCrypt.Net.BCrypt.Verify(pswd, user.passwd);
-        return ok ? user : null; // falls ok dann user falls !ok => null
+        //bool ok = BCrypt.Net.BCrypt.Verify(pswd, user.passwd);
+        //return ok ? user : null; // falls ok dann user falls !ok => null
+        return user;
     }
 }

@@ -21,10 +21,11 @@ public class ApiService
     
     public async Task<User?> GetUserInfo(string username, string password)
     {
-        User? response = await _client.GetFromJsonAsync<User>($"user/login?UserName={username}&passwd={password}");
+        User user = new User() { passwd = password, UserName = username };
+        HttpResponseMessage response = await _client.PostAsJsonAsync($"user/login?UserName={username}&passwd={password}", user);
 
         // Neue Liste wird erzeugt, falls der User nicht geholt werden kann.
-        return response;
+        return user;
     }
 
     public async Task CreateUser(User user)
