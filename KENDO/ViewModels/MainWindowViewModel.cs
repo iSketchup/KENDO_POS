@@ -19,6 +19,12 @@ public partial class MainWindowViewModel : ViewModelBase
         ShaderPageViewModel = new ShaderPageViewModel();
         FrontPageViewModel = new FrontPageViewModel();
         CurrentViewModel = ShaderPageViewModel;
+        
+        
+        Log.Logger = new LoggerConfiguration()
+            .WriteTo.Console(restrictedToMinimumLevel: Serilog.Events.LogEventLevel.Debug)
+            .WriteTo.File("log.txt", rollingInterval: RollingInterval.Month, fileSizeLimitBytes: 1000000, restrictedToMinimumLevel: Serilog.Events.LogEventLevel.Debug)
+            .CreateLogger();
     }
     
     [RelayCommand]
