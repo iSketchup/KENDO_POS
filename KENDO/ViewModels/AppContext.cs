@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Main.Models;
+using Serilog;
 
 namespace Main.ViewModels;
 
@@ -23,7 +24,7 @@ public  class AppContext
 
     public async void FakeInit()
     {
-        Console.WriteLine("Loading with fake repo");
+        Log.Logger.Information("Loading fake repo");
         shaderRepository = new ShaderRepositoryFake();
         Shaders = await shaderRepository.GetAllShaders();
 
@@ -31,7 +32,7 @@ public  class AppContext
 
     public async Task AsyncInit(HttpClient client)
     {
-        Console.WriteLine("Loading with rest repo");
+        Log.Logger.Information("Loading rest repo");
         shaderRepository = new ShaderRepositoryRest(client);
         
         Shaders = await shaderRepository.GetAllShaders();
