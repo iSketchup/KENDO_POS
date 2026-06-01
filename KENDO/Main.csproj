@@ -26,6 +26,8 @@
         <PackageReference Include="BCrypt.Net-Next" Version="4.2.0" />
         <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.1" />
         <PackageReference Include="OpenTK" Version="4.9.4" />
+        <PackageReference Include="Serilog.Sinks.Console" Version="6.1.1" />
+        <PackageReference Include="Serilog.Sinks.File" Version="8.0.0-nblumhardt-02322" />
         <PackageReference Include="StbImageSharp" Version="2.30.15" />
         <PackageReference Include="TextMateSharp.Grammars" Version="2.0.3" />
     </ItemGroup>
