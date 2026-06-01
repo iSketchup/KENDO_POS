@@ -14,7 +14,9 @@ public partial class MainWindowViewModel : ViewModelBase
     private ViewModelBase _currentViewModel;
     public FrontPageViewModel FrontPageViewModel { get; set; }
     public ShaderPageViewModel ShaderPageViewModel { get; set; }
-    private bool UseFakeRepo= true; 
+    
+    [ObservableProperty]
+    private bool _useFakeRepo= true; 
     private Uri baseadress = new("http://localhost:8000/");
 
     public MainWindowViewModel()
@@ -44,18 +46,20 @@ public partial class MainWindowViewModel : ViewModelBase
     }
 
     [RelayCommand]
-    public void SwitchLoaded()
+    public async void SwitchLoaded()
     {
-        if (UseFakeRepo)
+
+        try
         {
-            UseFakeRepo = false;
+            await ShaderPageViewModel.InitContext(UseFakeRepo,baseadress);
+            Log.Logger.Information("Switched Repo Load status");
         }
-        else
+        catch (HttpRequestException e)
         {
-            UseFakeRepo = true;
+            Log.Logger.Error(e.Message); 
+            UseFakeRepo =  true;
+            
         }
-        ShaderPageViewModel.InitContext(UseFakeRepo,baseadress);
-        Log.Logger.Information("Switched Repo Load status");
     }
 
 }

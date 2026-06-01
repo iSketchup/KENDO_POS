@@ -1,5 +1,6 @@
 using System;
 using System.Net.Http;
+using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.Input;
 
 namespace Main.ViewModels;
@@ -11,7 +12,7 @@ public class ShaderPageViewModel : ViewModelBase
     public CommentListViewModel Comments { get; } = new CommentListViewModel();
 
     public AppContext AppContext { get; private set; }
-    public async void InitContext(bool fake, Uri? ba)
+    public async Task InitContext(bool fake, Uri? ba)
     {
         
         if (!fake)
