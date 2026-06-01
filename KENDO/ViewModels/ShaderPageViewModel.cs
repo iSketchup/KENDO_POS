@@ -9,30 +9,25 @@ public class ShaderPageViewModel : ViewModelBase
     
     public ShaderRendererViewModel ShaderRenderer { get; } = new ();
     public CommentListViewModel Comments { get; } = new CommentListViewModel();
-    
-    public AppContext AppContext { get; }
 
-    public ShaderPageViewModel()
+    public AppContext AppContext { get; private set; }
+    public async void InitContext(bool fake, Uri? ba)
     {
         
-        bool Fake = true;
-        Uri Ba = null;
-
-        if (!Fake)
+        if (!fake)
         {
-
-
             HttpClient client = new HttpClient()
             {
-                BaseAddress = new Uri("http://localhost:8000/")
+                BaseAddress = ba
             }; 
-            AppContext = new AppContext(null, client); 
+            AppContext = new AppContext(null); 
+            await AppContext.AsyncInit(client);
         }
         else
         {
-            AppContext = new AppContext(null, null);
+            AppContext = new AppContext(null);
+            AppContext.FakeInit();
         }
-
         
         ShaderRenderer.SetContext(AppContext, 0);
         Comments.SetContext(AppContext, 0);
