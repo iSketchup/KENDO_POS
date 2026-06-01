@@ -22,13 +22,17 @@
             <ColumnDefinition Width="*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="30*"></RowDefinition>
+            <RowDefinition Height="20*"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
         
         <ContentControl Grid.Row="0" Content="{Binding CurrentViewModel}"></ContentControl>
         
-        
-        <Button Grid.Row="1" Background="PowderBlue" Content="Switcheroo" Command="{Binding Swicheroo}"></Button>
+        <StackPanel Grid.Row="1" Orientation="Horizontal" Background="CadetBlue">
+            <Button Background="PowderBlue" Content="Switcheroo" Command="{Binding Swicheroo}"></Button>
+            <Label Content="Use real Repo: " Background="PowderBlue" Height="32" VerticalContentAlignment="Center"></Label>
+            <ToggleSwitch Background="PowderBlue"  Command="{Binding SwitchLoaded}"></ToggleSwitch>
+            
+        </StackPanel>
     </Grid>
 </Window>

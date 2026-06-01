@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Net.Http;
+using System.Threading.Tasks;
 using Main.Models;
 
 namespace Main.ViewModels;
@@ -13,20 +14,14 @@ public  class AppContext
     public List<Shader> Shaders { get; set; } 
     
 
-    public  AppContext(User? currentUser, HttpClient? client)
+    public  AppContext(User? currentUser)
     {
-        if (client == null)
-            FakeInit();
-        else 
-            AsyncInit(client);
-        
-        // TODO: noch zu implementieren
         User = currentUser;
         
         
     }
 
-    private async void FakeInit()
+    public async void FakeInit()
     {
         Console.WriteLine("Loading with fake repo");
         shaderRepository = new ShaderRepositoryFake();
@@ -34,7 +29,7 @@ public  class AppContext
 
     }
 
-    private async void AsyncInit(HttpClient client)
+    public async Task AsyncInit(HttpClient client)
     {
         Console.WriteLine("Loading with rest repo");
         shaderRepository = new ShaderRepositoryRest(client);
