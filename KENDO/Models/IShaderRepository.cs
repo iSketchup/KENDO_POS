@@ -46,7 +46,7 @@ public class ShaderRepositoryFake : IShaderRepository
 {
     public async Task<List<Shader>> GetAllShaders()
     {
-        return new List<Shader>() {new Shader(), new Shader()};
+        return  new List<Shader>() {new Shader(), new Shader()};
     }
 
     public Task<Shader> GetShaderById(int id)

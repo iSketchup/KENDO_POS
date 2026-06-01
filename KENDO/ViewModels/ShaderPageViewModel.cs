@@ -15,7 +15,7 @@ public class ShaderPageViewModel : ViewModelBase
     public ShaderPageViewModel()
     {
         
-        bool Fake = false;
+        bool Fake = true;
         Uri Ba = null;
 
         if (!Fake)
@@ -33,11 +33,9 @@ public class ShaderPageViewModel : ViewModelBase
             AppContext = new AppContext(null, null);
         }
 
-        // ToDo: give this a user
-        AppContext.CreatNewShader();
         
-        ShaderRenderer.SetContext(AppContext);
-        Comments.SetContext(AppContext);
+        ShaderRenderer.SetContext(AppContext, 0);
+        Comments.SetContext(AppContext, 0);
     }
 
 }
