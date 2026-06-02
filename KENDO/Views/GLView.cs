@@ -9,6 +9,7 @@ using Avalonia.OpenGL.Controls;
 using Avalonia.Platform;
 using OpenTK;
 using OpenTK.Graphics.OpenGL4;
+using Serilog;
 using StbImageSharp;
 using PixelFormat = OpenTK.Graphics.OpenGL4.PixelFormat;
 
@@ -41,7 +42,7 @@ public class GLView : OpenGlControlBase
     // unioforms:
     private int uTime;
     
-    private Uri[] texUris = {new Uri("avares://Main/Assets/TEXtuffesbild.jpg"), new("avares://Main/Assets/TEXTuffAssMinion.jpg") };
+    private Uri[] texUris = {new Uri("avares://Main/Assets/TEXTuffAssDino.jpg"), new("avares://Main/Assets/TEXTuffAssMinion.jpg"), new("avares://Main/Assets/TEXTuffAsWorm.jpg")};
     private List<Texture> textures = new();
     
     float[] vertices =
@@ -127,7 +128,7 @@ public class GLView : OpenGlControlBase
         Reload();
         
 
-        Console.WriteLine("OpenGL initialized");
+        Log.Logger.Debug("OpenGL Initialize");
         
     }
 
@@ -137,8 +138,9 @@ public class GLView : OpenGlControlBase
         GL.DeleteBuffer(vertexBufferObject);
         GL.DeleteVertexArray(vertexArrayObject);
         GL.DeleteProgram(shaderProgramm);
+    
+        Log.Logger.Debug("OpenGl Destroyed");
 
-        Console.WriteLine("OpenGL destroyed");
         
        
     }
@@ -179,7 +181,7 @@ public class GLView : OpenGlControlBase
     private void Reload()
     {
         if (!_glInitialzed) return;
-        Console.WriteLine("Reloading...");
+        Log.Logger.Debug("Reloading OpenGL");
 
         string fragmentShaderSource = FragmentShaderIn;
         
@@ -195,7 +197,7 @@ public class GLView : OpenGlControlBase
         if (vsuccess == 0)
         {
             string infoLog = GL.GetShaderInfoLog(vertexShader);
-            Console.WriteLine(infoLog);
+            Log.Logger.Information($"Vertex Compile error:  \n{infoLog}");
         }
 
         GL.CompileShader(fragmentShader);
@@ -204,7 +206,7 @@ public class GLView : OpenGlControlBase
         if (fsuccess == 0)
         {
             string infoLog = GL.GetShaderInfoLog(fragmentShader);
-            Console.WriteLine(infoLog);
+            Log.Logger.Information($"Fragment Compile error:  \n{infoLog}");
         }
         
 
@@ -219,9 +221,7 @@ public class GLView : OpenGlControlBase
         if (success == 0)
         {
             string infoLog = GL.GetProgramInfoLog(newProgram);
-            Console.WriteLine("Program link error:");
-            Console.WriteLine(infoLog);
-
+            Log.Logger.Information($"Program Link error: \n{infoLog}"); 
             GL.DeleteProgram(newProgram);
             return;
         }

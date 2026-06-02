@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace Main.Models;
 
@@ -17,7 +18,7 @@ public class Tags
         throw new NotImplementedException();
     }
 
-    public static List<string> LoadByShader(int ShaderID)
+    public static ObservableCollection<string> LoadByShader(int ShaderID)
     {
         throw new NotImplementedException();
     }

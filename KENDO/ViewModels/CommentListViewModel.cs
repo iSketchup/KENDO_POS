@@ -10,30 +10,38 @@ public partial class CommentListViewModel : ViewModelBase
 {
     public Shader? Shader { get; private set; }
     
-    public ObservableCollection<Comment> comments { get; set; }
-
-    public CommentListViewModel()
-    {
-        comments = new ObservableCollection<Comment>()
-        {
-            new Comment("Test", "Test"),
-            new Comment("Test2", "Test2"),
-        };
-    }
     
-    public CommentListViewModel(Shader shader)
-    {
-        shader = shader;
-    }
-    
-    
+    public CommentListViewModel() { }
     
     [RelayCommand]
     public void AddComment(TextBox textBox)
     {
-        string? commentText = textBox.Text;
-        comments.Add(new Comment($"{commentText}", $"fehlt"));
-        textBox.Clear();
+        if (textBox.Text != "")
+        {
+            Shader.Comments.Add(new Comment($"{textBox.Text}", $"fehtl"));
+            textBox.Clear();
+        }
     }
     
+    [RelayCommand]
+    public void DeleteTag(string tag)
+    {
+        Shader.ShaderTags.Remove(tag);
+    }
+    
+    [RelayCommand]
+    public void AddTag(TextBox textBox)
+    {
+        if (textBox.Text != "")
+        {
+            Shader.ShaderTags.Add(textBox.Text);
+            textBox.Clear();
+        }
+
+    }
+    
+    public void SetContext(AppContext a, int Shader_id)
+    {
+        this.Shader = a.Shaders[Shader_id];
+    }
 }

@@ -1,40 +1,29 @@
 ﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace Main.Models;
 
 public partial class Shader : ObservableObject
 {
-    public int Id { get; private set; }
+    public int ShaderId { get;  set; }
 
-    [ObservableProperty]
-    private string _code  = """
-                            #version 330
+    [ObservableProperty] private string _shaderCode;
 
-                            out vec4 outputColor;
+    public int ShaderLikes { get;  set; }
+    public ObservableCollection<Comment> Comments { get; set; } = new ObservableCollection<Comment>();
+    public ObservableCollection<string> ShaderTags { get; set; } = new ObservableCollection<string>();
 
-                            in vec2 TexCoord;
-
-                            uniform sampler2D texture0;
-                            uniform sampler2D texture1;
-                            uniform float uTime;
-
-                            void main()
-                            {
-                                 vec4 tex0 = texture(texture0, TexCoord * sin(uTime)+1.2);
-                                 vec4 tex1 = texture(texture1, TexCoord) * cos(uTime)*0.5;
-                                 outputColor = mix(tex0,tex1,0.3);
-                            }
-                            """;
-
-    public int ShaderLikes { get; private set; }
-    public List<Comment> Comments { get; set; }
-    public List<string> ShaderTags { get; set; }
+    public Shader(string shaderCode, int shaderId)
+    {
+        ShaderId = shaderId;
+        ShaderCode = shaderCode;
+    }
 
     public void LoadShader()
     {
-        Comments = Comment.LoadComments(Id);
-        ShaderTags = Tags.LoadByShader(Id);
-        ShaderLikes = Likes.GetLikesAmount(Id);
+        Comments = Comment.LoadComments(ShaderId);
+        ShaderTags = Tags.LoadByShader(ShaderId);
+        ShaderLikes = Likes.GetLikesAmount(ShaderId);
     }
 }

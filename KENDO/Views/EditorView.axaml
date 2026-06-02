@@ -12,13 +12,14 @@
             <ColumnDefinition Width="*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
+            <RowDefinition Height="4*"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
         
         <!-- TextBox MinLines="16" AcceptsReturn="True" AcceptsTab="True" FontSize="32" Text="{Binding Context.Code}"/>
         -->
        
-        <avaloniaEdit:TextEditor x:Name="Editor" Document="{Binding Document}"
+        <avaloniaEdit:TextEditor Grid.Row="0" x:Name="Editor" Document="{Binding Document}"
                                  
                                  ShowLineNumbers="True"
                                  FontFamily="Cascadia Code,Consolas,Menlo,Monospace"
