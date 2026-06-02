@@ -21,10 +21,15 @@ public class ApiService
     
     public async Task<User?> GetUserInfo(string username, string password)
     {
-        User? response = await _client.GetFromJsonAsync<User>($"user/login?UserName={username}&passwd={password}");
+        HttpResponseMessage? response = await _client.PostAsJsonAsync("user/login", new User { UserName = username, passwd = password });
+        //User? response = await _client.GetFromJsonAsync<User>($"user/login?UserName={username}&passwd={password}");
+        if (!response.IsSuccessStatusCode)
+        {
+            throw new Exception("Login fehlgeschlagen");
+        }
 
         // Neue Liste wird erzeugt, falls der User nicht geholt werden kann.
-        return response;
+        return await response.Content.ReadFromJsonAsync<User>();
     }
 
     public async Task CreateUser(User user)

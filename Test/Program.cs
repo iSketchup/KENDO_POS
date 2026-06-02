@@ -17,7 +17,7 @@ Console.WriteLine("Hello, World!");
 
 //await Userhandling.AddUser(user.UserName, user.passwd);
 
-User? result2 = await Userhandling.VaidateLogin("Test","hallo123");
+User? result2 = await Userhandling.VaidateLogin("test","hallo123");
 if (result2 != null)
 {
     Console.WriteLine("Login erfolgreich");
