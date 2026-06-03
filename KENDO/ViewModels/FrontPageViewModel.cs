@@ -8,7 +8,7 @@ public partial class FrontPageViewModel: ViewModelBase, IContext
 {
    public AppContext AppContext { get; set; }
 
-   public FilterSelectionViewModel FilterSelection { get; set; }
+   public FilterSelectionViewModel FilterSelection { get; set; } = new();
    
    [ObservableProperty] private List<ShaderRendererViewModel> _shaderPages;
     

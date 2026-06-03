@@ -1,6 +1,6 @@
 namespace Main.ViewModels;
 
-public class FilterSelectionViewModel
+public class FilterSelectionViewModel : ViewModelBase
 {
     
 }
