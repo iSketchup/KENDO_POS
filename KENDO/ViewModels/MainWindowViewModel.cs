@@ -13,8 +13,10 @@ public partial class MainWindowViewModel : ViewModelBase
 {
     [ObservableProperty] 
     private ViewModelBase _currentViewModel;
-    public FrontPageViewModel FrontPageViewModel { get; set; } 
-    public ShaderPageViewModel ShaderPageViewModel { get; set; }
+
+    private FrontPageViewModel FrontPageViewModel { get; set; } 
+    private ShaderPageViewModel ShaderPageViewModel { get; set; }
+    private UserViewModel UserViewModel { get; set; }
     
     private AppContext AppContext { get; set; }
     
@@ -41,9 +43,10 @@ public partial class MainWindowViewModel : ViewModelBase
     {
         
         ShaderPageViewModel = new ShaderPageViewModel();
-        CurrentViewModel = ShaderPageViewModel;
         FrontPageViewModel = new FrontPageViewModel();
+        UserViewModel = new UserViewModel();
         
+        CurrentViewModel = UserViewModel;
         
         
         await InitContext(UseFakeRepo,baseadress);

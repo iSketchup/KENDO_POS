@@ -9,12 +9,14 @@ using Serilog;
 
 namespace Main.ViewModels;
 
-public partial class UserViewModel : ViewModelBase
+public partial class UserViewModel : ViewModelBase, IContext
 {
     [ObservableProperty]
     private string _username = "";
     [ObservableProperty]
     private string _password = "";
+    
+    private AppContext appContext;
 
 
     [RelayCommand]
@@ -25,6 +27,9 @@ public partial class UserViewModel : ViewModelBase
         if (user != null)
         {
             Log.Information("Login successful");
+            // ToDo: userdaten in Appcontext schreiben
+            
+            
             // TODO: Navigieren zur nächsten Seite
             
         }
@@ -40,6 +45,13 @@ public partial class UserViewModel : ViewModelBase
 
     public void LoginUser(User user)
     {
+        
+    }
+
+    public void UpdateContexts(AppContext appContext)
+    {
+        this.appContext = appContext;
+        
         
     }
 }
