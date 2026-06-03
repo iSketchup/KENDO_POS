@@ -8,6 +8,8 @@ public partial class FrontPageViewModel: ViewModelBase, IContext
 {
    public AppContext AppContext { get; set; }
 
+   public FilterSelectionViewModel FilterSelection { get; set; }
+   
    [ObservableProperty] private List<ShaderRendererViewModel> _shaderPages;
     
     public void UpdateContexts(AppContext appContext)

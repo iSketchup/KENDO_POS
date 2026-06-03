@@ -6,6 +6,7 @@
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="Main.Views.FrontPageView"
              x:DataType="vm:FrontPageViewModel">
+    
             
  
     <Grid>
@@ -24,6 +25,7 @@
         <ItemsControl Grid.Column="1" Grid.Row="0" ItemsSource="{Binding ShaderPages}">
             
         </ItemsControl>
+        <ContentControl Grid.Column="2" Content="{Binding FilterSelection}"></ContentControl>
         
     </Grid>
  
