@@ -28,10 +28,10 @@ public partial class UserViewModel : ViewModelBase, IContext
         {
             Log.Information("Login successful");
             // ToDo: userdaten in Appcontext schreiben
-            
+            appContext = new AppContext(user);
             
             // TODO: Navigieren zur nächsten Seite
-            
+
         }
         else
         {
