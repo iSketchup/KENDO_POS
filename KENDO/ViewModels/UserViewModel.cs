@@ -20,7 +20,7 @@ public partial class UserViewModel : ViewModelBase, IContext
 
 
     [RelayCommand]
-    private async Task LoginCommand()
+    public async Task LoginCommand()
     {
         User? user = await Userhandling.ValidateLogin(Username, Password);
 
