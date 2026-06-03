@@ -73,7 +73,9 @@ public partial class MainWindowViewModel : ViewModelBase
         }
         ShaderPageViewModel.UpdateContexts(AppContext);
         FrontPageViewModel.UpdateContexts(AppContext);
+        UserViewModel.UpdateContexts(AppContext);
     }
+    
 
     
     [RelayCommand]
