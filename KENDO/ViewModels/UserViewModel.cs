@@ -2,6 +2,7 @@
 using System.Globalization;
 using System.Threading.Tasks;
 using Avalonia.Data.Converters;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Main.Models;
 using Serilog;
@@ -10,29 +11,14 @@ namespace Main.ViewModels;
 
 public partial class UserViewModel : ViewModelBase
 {
+    [ObservableProperty]
     private string _username = "";
+    [ObservableProperty]
     private string _password = "";
 
-    public string Username
-    {
-        get => _username;
-        set => SetProperty(ref _username, value);
-    }
 
-    public string Password
-    {
-        get => _password;
-        set => SetProperty(ref _password, value);
-    }
-    
-    public IRelayCommand LoginCommand { get; }
-
-    public UserViewModel()
-    {
-        LoginCommand = new AsyncRelayCommand(DoLogin);
-    }
-
-    private async Task DoLogin()
+    [RelayCommand]
+    private async Task LoginCommand()
     {
         User? user = await Userhandling.ValidateLogin(Username, Password);
 
