@@ -26,7 +26,7 @@ public static class Userhandling
         await apiService.CreateUser(user);
     }
 
-    public async static Task<User?> VaidateLogin(string name, string pswd)
+    public async static Task<User?> ValidateLogin(string name, string pswd)
     {
         User? user = await apiService.GetUserInfo(name, pswd);
         
