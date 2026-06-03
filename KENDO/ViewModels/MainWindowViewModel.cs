@@ -83,7 +83,7 @@ public partial class MainWindowViewModel : ViewModelBase
 
         try
         {
-            InitContext(UseFakeRepo,baseadress);
+            await InitContext(UseFakeRepo,baseadress);
             Log.Logger.Information("Switched Repo Load status");
         }
         catch (HttpRequestException e)
