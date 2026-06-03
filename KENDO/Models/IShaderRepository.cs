@@ -78,14 +78,30 @@ public class ShaderRepositoryFake : IShaderRepository
 
                                  void main()
                                  {
-                                    outputColor = vex4 (0.5);
+                                    outputColor = vec4(0.6,0.7,0,1);
                                  }
-                                 """; 
+                                 """;
+
+    private string sampleCode3 = """
+                                 #version 330
+                                 out vec4 outputColor;
+                                 in vec2 TexCoord;
+                                 uniform sampler2D texture0;
+                                 uniform sampler2D texture1;
+                                 uniform float uTime;
+
+                                 void main()
+                                 {
+                                     vec4 tex0 = texture(texture0, TexCoord);
+                                     outputColor = vec4(1-tex0.rbg, tex0.a);
+                                 }
+                                 """;
+
 
     
     public async Task<List<Shader>> GetAllShaders()
     {
-        return  new List<Shader>() {new Shader(sampleCode1, 1), new Shader(sampleCode2, 2)};
+        return  new List<Shader>() {new Shader(sampleCode1, 1), new Shader(sampleCode2, 2), new Shader(sampleCode3, 3)};
     }
 
     public Task<Shader> GetShaderById(int id)

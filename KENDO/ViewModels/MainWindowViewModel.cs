@@ -24,6 +24,16 @@ public partial class MainWindowViewModel : ViewModelBase
 
     public MainWindowViewModel()
     {
+        Log.Logger = new LoggerConfiguration()
+            .MinimumLevel.Debug()
+            .WriteTo.Console(restrictedToMinimumLevel: Serilog.Events.LogEventLevel.Verbose)
+            .WriteTo.File(
+                "log.txt",
+                rollingInterval: RollingInterval.Month,
+                fileSizeLimitBytes: 1000000,
+                restrictedToMinimumLevel: Serilog.Events.LogEventLevel.Debug)
+            .CreateLogger();
+        
         Setup();
     }
 
@@ -35,12 +45,9 @@ public partial class MainWindowViewModel : ViewModelBase
         FrontPageViewModel = new FrontPageViewModel();
         
         
+        
         await InitContext(UseFakeRepo,baseadress);
         
-        Log.Logger = new LoggerConfiguration()
-            .WriteTo.Console(restrictedToMinimumLevel: Serilog.Events.LogEventLevel.Debug)
-            .WriteTo.File("log.txt", rollingInterval: RollingInterval.Month, fileSizeLimitBytes: 1000000, restrictedToMinimumLevel: Serilog.Events.LogEventLevel.Debug)
-            .CreateLogger();
     }
     
     
