@@ -31,9 +31,11 @@ public class ShaderRepositoryRest : IShaderRepository
         // Returns result if result != null -> otherwise the right part so a new List
     }
 
-    public Task<Shader> GetShaderById(int id)
+    public async Task<Shader>? GetShaderById(int id)
     {
-        throw new System.NotImplementedException();
+        var result = await client.GetFromJsonAsync<Shader>("shaders");
+        
+        return result ?? null;
     }
 
     public void updateShader(int uid, int sid)

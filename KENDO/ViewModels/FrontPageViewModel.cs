@@ -1,10 +1,25 @@
 using System.Collections.Generic;
+using CommunityToolkit.Mvvm.ComponentModel;
+using Main.Models;
 
 namespace Main.ViewModels;
 
-public class FrontPageViewModel: ViewModelBase
+public partial class FrontPageViewModel: ViewModelBase, IContext
 {
-    public List<string> Slides { get; set; } = new() {"123123", "123123"};
+   public AppContext AppContext { get; set; }
+
+   [ObservableProperty] private List<ShaderRendererViewModel> _shaderPages;
     
-    public int CurrentSlide { get; set; }
+    public void UpdateContexts(AppContext appContext)
+    {
+        AppContext = appContext;
+        
+        for (int i = 0; i > AppContext.Shaders.Count; i++)
+        {
+            ShaderRendererViewModel spvm = new ShaderRendererViewModel();
+            spvm.UpdateContexts(AppContext,i);
+            ShaderPages.Add(spvm);
+            
+        }
+    }
 }

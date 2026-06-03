@@ -22,7 +22,7 @@ public  class AppContext
         
     }
 
-    public async void FakeInit()
+    public async Task FakeInit()
     {
         Log.Logger.Information("Loading fake repo");
         shaderRepository = new ShaderRepositoryFake();

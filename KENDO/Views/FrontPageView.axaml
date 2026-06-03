@@ -6,18 +6,25 @@
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="Main.Views.FrontPageView"
              x:DataType="vm:FrontPageViewModel">
-    
-    <Carousel ItemsSource="{Binding Slides}" SelectedIndex="{Binding CurrentSlide}">
-        <Carousel.PageTransition>
-            <CrossFade Duration="0:00:00.300" />
-        </Carousel.PageTransition>
-        <Carousel.ItemTemplate>
-            <DataTemplate>
-                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-                    <TextBlock Text="Binding Title}" FontSize="24" FontWeight="Bold" />
-                    <TextBlock Text="Binding Description}" TextWrapping="Wrap" />
-                </StackPanel>
-            </DataTemplate>
-        </Carousel.ItemTemplate>
-    </Carousel>
+            
+ 
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="3*"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+        
+        <WrapPanel Grid.Column="1" Grid.Row="0">
+        </WrapPanel>
+        
+        <ItemsControl Grid.Column="1" Grid.Row="0" ItemsSource="{Binding ShaderPages}">
+            
+        </ItemsControl>
+        
+    </Grid>
+ 
 </UserControl>
