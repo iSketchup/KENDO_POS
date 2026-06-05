@@ -21,8 +21,7 @@
         
         <ItemsControl Grid.Column="1"
                       Grid.Row="0"
-                      ItemsSource="{Binding ShaderPages}"
-                      Background="PowderBlue">
+                      ItemsSource="{Binding ShaderPages}">
     
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
@@ -36,7 +35,16 @@
                     <Button Command="{Binding GoToThisShader}">
                         <StackPanel Orientation="Vertical"  Margin="25" >
                             <ContentControl Width="300" Height="300" Content="{Binding}"/>
-                            <Label Content="{Binding Shader.ShaderId}"/>
+                            
+                            <Label>
+                                <Label.Content>
+                                    <MultiBinding StringFormat="Shader : {0},      Likes : {1}">
+                                        <Binding Path="Shader.ShaderId"></Binding>
+                                        <Binding Path="Shader.ShaderLikes"></Binding>
+                                    </MultiBinding>
+                                </Label.Content>
+                            </Label>
+                            
                         </StackPanel>
                     </Button> 
                 </DataTemplate>
