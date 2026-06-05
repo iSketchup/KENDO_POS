@@ -18,10 +18,11 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
-        
-        <ItemsControl Grid.Column="1"
-                      Grid.Row="0"
-                      ItemsSource="{Binding ShaderPages}">
+        <ScrollViewer Grid.Column="1"
+                      Grid.Row="0">
+            
+            <ItemsControl 
+                ItemsSource="{Binding ShaderPages}">
     
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
@@ -50,6 +51,8 @@
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ItemsControl>
+            
+        </ScrollViewer>
         
 
         
