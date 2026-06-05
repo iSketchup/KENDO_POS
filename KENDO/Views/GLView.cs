@@ -163,7 +163,14 @@ public class GLView : OpenGlControlBase
         
         GL.BindFramebuffer(FramebufferTarget.Framebuffer, fb);
         
-        GL.Viewport(0, 0, (int)Bounds.Width, (int)Bounds.Height);
+        
+        double scaling = TopLevel.GetTopLevel(this)?.RenderScaling ?? 1.0;
+
+        int width = Math.Max(1, (int)Math.Ceiling(Bounds.Width * scaling));
+        int height = Math.Max(1, (int)Math.Ceiling(Bounds.Height * scaling));
+
+        GL.Viewport(0, 0, width, height);
+        
         GL.Clear(ClearBufferMask.ColorBufferBit);
 
         GL.UseProgram(shaderProgramm);
