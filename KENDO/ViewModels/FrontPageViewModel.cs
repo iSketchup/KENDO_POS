@@ -11,12 +11,20 @@ public partial class FrontPageViewModel: ViewModelBase, IContext
 {
    public AppContext AppContext { get; set; }
 
+   
+   private readonly NavigationService _navigation;
+   
    public FilterSelectionViewModel FilterSelection { get; set; } = new();
    
    
    [ObservableProperty] 
    private ObservableCollection<ShaderRendererViewModel> _shaderPages = new ();
     
+   public FrontPageViewModel(NavigationService navigation)
+   {
+       _navigation = navigation;
+   }
+   
     public void UpdateContexts(AppContext appContext)
     {
         
@@ -26,7 +34,7 @@ public partial class FrontPageViewModel: ViewModelBase, IContext
         
         for (int i = 0; i < AppContext.Shaders.Count; i++)
         {
-            ShaderRendererViewModel spvm = new ShaderRendererViewModel();
+            ShaderRendererViewModel spvm = new ShaderRendererViewModel(_navigation);
             spvm.UpdateContexts(AppContext,i);
             ShaderPages.Add(spvm);
             

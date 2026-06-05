@@ -33,7 +33,7 @@
             
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
-                    <Button Command="{Binding Opened}">
+                    <Button Command="{Binding GoToThisShader}">
                         <StackPanel Orientation="Vertical"  Margin="25" >
                             <ContentControl Width="300" Height="300" Content="{Binding}"/>
                             <Label Content="{Binding Shader.ShaderId}"/>

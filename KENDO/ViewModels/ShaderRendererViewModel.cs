@@ -13,12 +13,17 @@ public partial class ShaderRendererViewModel : ViewModelBase
 {
     [ObservableProperty] 
     private TextDocument _document;
-    [ObservableProperty] 
-    private Shader _shader;
+
+    [ObservableProperty] private Shader _shader;
     
-    public ShaderRendererViewModel()
+    
+    
+    private readonly NavigationService _navigation;
+    
+    public ShaderRendererViewModel(NavigationService navigation)
     {
         Document = new TextDocument();
+        _navigation = navigation;
     }
     
     public void UpdateContexts(AppContext a, int shader_id)
@@ -31,8 +36,12 @@ public partial class ShaderRendererViewModel : ViewModelBase
     }
     
     [RelayCommand]
-    public void Opened()
+    public void GoToThisShader()
     {
-        Log.Logger.Information("Opened shader: " + Shader.ShaderId);
+        int id = Shader.ShaderId;
+
+        _navigation.NavigateRequestedId(id);
+        
+        Log.Logger.Information("Opened shader: "+id );
     }
 }

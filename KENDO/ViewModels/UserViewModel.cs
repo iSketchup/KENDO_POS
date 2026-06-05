@@ -18,6 +18,14 @@ public partial class UserViewModel : ViewModelBase, IContext
     
     private AppContext appContext;
 
+    
+    
+    private readonly NavigationService _navigation;
+    
+    public UserViewModel(NavigationService navigation)
+    {
+        _navigation = navigation;
+    }
 
     [RelayCommand]
     public async Task LoginCommand()
@@ -30,7 +38,8 @@ public partial class UserViewModel : ViewModelBase, IContext
             // ToDo: userdaten in Appcontext schreiben
             appContext = new AppContext(user);
             
-            // TODO: Navigieren zur nächsten Seite
+            //Navigieren zur nächsten Seite
+            GoToFrontPage();
 
         }
         else
@@ -51,7 +60,10 @@ public partial class UserViewModel : ViewModelBase, IContext
     public void UpdateContexts(AppContext appContext)
     {
         this.appContext = appContext;
-        
-        
+    }
+
+    private void GoToFrontPage()
+    {
+        _navigation.Navigate(Page.Front);
     }
 }

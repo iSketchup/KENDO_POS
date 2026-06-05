@@ -23,6 +23,9 @@ public partial class MainWindowViewModel : ViewModelBase
     [ObservableProperty]
     private bool _useFakeRepo= true; 
     private Uri baseadress = new("http://localhost:8000/");
+    
+    
+    private readonly NavigationService _navigation = new();
 
     public MainWindowViewModel()
     {
@@ -42,9 +45,13 @@ public partial class MainWindowViewModel : ViewModelBase
     public async Task Setup()
     {
         
-        ShaderPageViewModel = new ShaderPageViewModel();
-        FrontPageViewModel = new FrontPageViewModel();
-        UserViewModel = new UserViewModel();
+        _navigation.NavigateRequested = Navigate;
+        _navigation.NavigateRequestedId = NavigateId;
+
+        
+        ShaderPageViewModel = new ShaderPageViewModel(_navigation);
+        FrontPageViewModel = new FrontPageViewModel(_navigation);
+        UserViewModel = new UserViewModel(_navigation);
         
         
         
@@ -72,12 +79,25 @@ public partial class MainWindowViewModel : ViewModelBase
             AppContext = new AppContext(null);
             await AppContext.FakeInit();
         }
-        ShaderPageViewModel.UpdateContexts(AppContext);
         FrontPageViewModel.UpdateContexts(AppContext);
         UserViewModel.UpdateContexts(AppContext);
     }
     
-
+    private void Navigate(Page page)
+    {
+        CurrentViewModel = page switch
+        {
+            Page.User => UserViewModel,
+            Page.Front => FrontPageViewModel,
+            _ => CurrentViewModel
+        };
+    }    
+    private void NavigateId(int shaderId)
+    {
+        ShaderPageViewModel.UpdateContexts(AppContext, shaderId-1);
+        
+        CurrentViewModel = ShaderPageViewModel;
+    }
     
     [RelayCommand]
     public void Swicheroo()
@@ -107,4 +127,24 @@ public partial class MainWindowViewModel : ViewModelBase
         }
     }
 
+}
+public enum Page
+{
+    User,
+    Front,
+    Shader
+}
+public class NavigationService
+{
+    public Action<Page>? NavigateRequested { get; set; }
+    public Action<int>? NavigateRequestedId { get; set; }
+
+    public void Navigate(Page page)
+    {
+        NavigateRequested?.Invoke(page);
+    }    
+    public void Navigate(int shaderId)
+    {
+        NavigateRequestedId?.Invoke(shaderId);
+    }
 }
