@@ -32,7 +32,7 @@ public partial class UserViewModel : ViewModelBase, IContext
     {
         User? user = await Userhandling.ValidateLogin(Username, Password);
 
-        if (user != null)
+        if (user.UserName == _username && user.passwd == _password)
         {
             Log.Information("Login successful");
             // ToDo: userdaten in Appcontext schreiben

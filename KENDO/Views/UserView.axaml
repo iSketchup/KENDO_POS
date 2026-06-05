@@ -11,8 +11,8 @@
     
     <StackPanel Margin="10" Spacing="10">
         <TextBox FontSize="28">Login</TextBox>
-        <TextBox Watermark="Benutzername"/>
-        <TextBox Watermark="Passwort"/>
+        <TextBox Watermark="Benutzername" Text="{Binding Username}"/>
+        <TextBox Watermark="Passwort" Text="{Binding Password}"/>
         <Button Content="Hallo" Command="{Binding LoginCommand }"/>
     </StackPanel>
     
