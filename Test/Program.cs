@@ -1,8 +1,6 @@
 ﻿using Main.ViewModels;
 using Main.Models;
 
-Console.WriteLine("Hello, World!");
-
 //var result1 = await Userhandling.VaidateLogin("Test", "hallo123");
 //if (result1 != null)
 //{
@@ -17,10 +15,11 @@ Console.WriteLine("Hello, World!");
 
 //await Userhandling.AddUser(user.UserName, user.passwd);
 
-User? result2 = await Userhandling.ValidateLogin("test","hallo123");
-if (result2 != null)
+bool result2 = await Userhandling.ValidateLogin("test","hallo123");
+if (result2 != false)
 {
     Console.WriteLine("Login erfolgreich");
+    
 } else
 {
     Console.WriteLine("Fehlgeschlagen");

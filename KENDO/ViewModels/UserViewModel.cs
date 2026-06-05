@@ -5,6 +5,7 @@ using Avalonia.Data.Converters;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Main.Models;
+using OpenTK.Graphics.ES11;
 using Serilog;
 
 namespace Main.ViewModels;
@@ -30,17 +31,16 @@ public partial class UserViewModel : ViewModelBase, IContext
     [RelayCommand]
     public async Task LoginCommand()
     {
-        User? user = await Userhandling.ValidateLogin(Username, Password);
+        bool ok = await Userhandling.ValidateLogin(Username, Password);
 
-        if (user.UserName == _username && user.passwd == _password)
+        if (ok)
         {
             Log.Information("Login successful");
             // ToDo: userdaten in Appcontext schreiben
-            appContext = new AppContext(user);
+            //appContext = new AppContext(user);
             
             //Navigieren zur nächsten Seite
             GoToFrontPage();
-
         }
         else
         {

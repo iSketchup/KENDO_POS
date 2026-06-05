@@ -10,9 +10,21 @@ namespace Main.ViewModels;
 
 public static class Userhandling
 {
-    private static HttpClient client = new HttpClient()
+    // *****
+    // KI-Teil
+    // ChatGPT & Claude
+    // Prompt: Wie kann ich HTTPS für das Login handeln?
+    private static HttpClientHandler handler = new HttpClientHandler
     {
-        BaseAddress = new Uri("http://127.0.0.1:8000/")
+        ServerCertificateCustomValidationCallback =
+        HttpClientHandler.DangerousAcceptAnyServerCertificateValidator
+    };
+
+    // *****
+
+    private static HttpClient client = new HttpClient(handler)
+    {
+        BaseAddress = new Uri("https://127.0.0.1:8000")
     };
 
     private static ApiService apiService = new ApiService(client);
@@ -26,17 +38,13 @@ public static class Userhandling
         await apiService.CreateUser(user);
     }
 
-    public async static Task<User?> ValidateLogin(string name, string pswd)
+    public async static Task<bool> ValidateLogin(string name, string pswd)
     {
         User? user = await apiService.GetUserInfo(name, pswd);
         
-        // Das FirstOrDefault holt sich den ersten Wert von der DB, bei welcher
-        // der Name und das Passwort zueinander passen.
-        //var user = users.FirstOrDefault(u => u.UserName == name);
-        if (user == null) return null;
+        if (user == null) return false;
 
-        //bool ok = BCrypt.Net.BCrypt.Verify(pswd, user.passwd);
-        //return ok ? user : null; // falls ok dann user falls !ok => null
-        return user;
+        bool ok = BCrypt.Net.BCrypt.Verify(pswd, user.passwd);
+        return ok ? true : false; // falls ok dann user falls !ok => false
     }
 }
