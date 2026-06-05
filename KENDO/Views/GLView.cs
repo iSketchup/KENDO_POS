@@ -83,6 +83,14 @@ public class GLView : OpenGlControlBase
     {
         GL.LoadBindings(new AvaloniaBindingsContext(gl));
         
+        
+        
+        
+        Log.Information("OpenGL Version: {Version}", GL.GetString(StringName.Version));
+        Log.Information("GLSL Version: {Version}", GL.GetString(StringName.ShadingLanguageVersion));
+        Log.Information("Renderer: {Renderer}", GL.GetString(StringName.Renderer));
+        
+        
         GL.ClearColor(0.2f, 0.3f, 0.3f, 1.0f);
         
         vertexArrayObject = GL.GenVertexArray();
