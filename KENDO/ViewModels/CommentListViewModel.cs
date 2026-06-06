@@ -40,8 +40,8 @@ public partial class CommentListViewModel : ViewModelBase
 
     }
     
-    public void SetContext(AppContext a, int Shader_id)
+    public void SetContext(Shader s)
     {
-        this.Shader = a.Shaders[Shader_id];
+        this.Shader = s;
     }
 }

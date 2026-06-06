@@ -12,13 +12,11 @@ public  class AppContext
     public User User { get; set; }
     
     private IShaderRepository shaderRepository;
-    public List<Shader> Shaders { get; set; } 
     
 
     public  AppContext(User? currentUser)
     {
         User = currentUser;
-        
         
     }
 
@@ -26,7 +24,6 @@ public  class AppContext
     {
         Log.Logger.Information("Loading fake repo");
         shaderRepository = new ShaderRepositoryFake();
-        Shaders = await shaderRepository.GetAllShaders();
 
     }
 
@@ -35,7 +32,17 @@ public  class AppContext
         Log.Logger.Information("Loading rest repo");
         shaderRepository = new ShaderRepositoryRest(client);
         
-        Shaders = await shaderRepository.GetAllShaders();
 
     }
+
+    public async Task<List<Shader>> GetAllShaders()
+    {
+        return await shaderRepository.GetAllShaders();   
+    }
+
+    public async Task<Shader?> GetShaderById(int id)
+    {
+        return await shaderRepository.GetShaderById(id);  
+    }
+    
 }

@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Main.Models;
@@ -25,17 +26,20 @@ public partial class FrontPageViewModel: ViewModelBase, IContext
        _navigation = navigation;
    }
    
-    public void UpdateContexts(AppContext appContext)
+    public async Task UpdateContexts(AppContext appContext)
     {
         
         ShaderPages.Clear();
         
         AppContext = appContext;
+
+        List<Shader> shaders =  await AppContext.GetAllShaders();
         
-        for (int i = 0; i < AppContext.Shaders.Count; i++)
+        
+        for (int i = 0; i < shaders.Count; i++)
         {
             ShaderRendererViewModel spvm = new ShaderRendererViewModel(_navigation);
-            spvm.UpdateContexts(AppContext,i);
+            spvm.UpdateContexts(await AppContext.GetShaderById(i));
             ShaderPages.Add(spvm);
             
         }

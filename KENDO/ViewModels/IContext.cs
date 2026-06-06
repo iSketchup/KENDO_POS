@@ -1,7 +1,9 @@
+using System.Threading.Tasks;
+
 namespace Main.ViewModels;
 
 public interface IContext
 {
     
-    public abstract void UpdateContexts(AppContext appContext);
+    public abstract Task UpdateContexts(AppContext appContext);
 }

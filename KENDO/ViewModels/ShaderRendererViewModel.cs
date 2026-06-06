@@ -26,11 +26,12 @@ public partial class ShaderRendererViewModel : ViewModelBase
         _navigation = navigation;
     }
     
-    public void UpdateContexts(AppContext a, int shader_id)
+    public void UpdateContexts(Shader shader)
     {
-        Log.Logger.Debug("Updating shader context for " + shader_id);
+        Shader = shader;
         
-        Shader = a.Shaders[shader_id];
+        Log.Logger.Debug("Updating shader context for " + Shader.ShaderId);
+
         
         Document.Text = Shader.ShaderCode;
     }

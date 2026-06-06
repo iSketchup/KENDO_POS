@@ -2,6 +2,7 @@ using System;
 using System.Net.Http;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.Input;
+using Main.Models;
 
 namespace Main.ViewModels;
 
@@ -23,12 +24,14 @@ public partial class ShaderPageViewModel : ViewModelBase
     }
 
 
-    public void UpdateContexts(AppContext appContext, int shader_id)
+    public async Task UpdateContexts(AppContext appContext, int shader_id)
     {
         AppContext = appContext;
         
-        ShaderRenderer.UpdateContexts(AppContext, shader_id);
-        Comments.SetContext(AppContext, shader_id);
+        Shader shader = await AppContext.GetShaderById(shader_id);
+        
+        ShaderRenderer.UpdateContexts(shader);
+        Comments.SetContext(shader);
     }
     
     [RelayCommand]

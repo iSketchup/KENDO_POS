@@ -57,7 +57,7 @@ public partial class UserViewModel : ViewModelBase, IContext
         
     }
 
-    public void UpdateContexts(AppContext appContext)
+    public async Task UpdateContexts(AppContext appContext)
     {
         this.appContext = appContext;
     }

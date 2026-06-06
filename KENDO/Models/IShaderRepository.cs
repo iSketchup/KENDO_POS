@@ -104,9 +104,10 @@ public class ShaderRepositoryFake : IShaderRepository
         return  new List<Shader>() {new Shader(sampleCode1, 1), new Shader(sampleCode2, 2), new Shader(sampleCode3, 3)};
     }
 
-    public Task<Shader> GetShaderById(int id)
+    public async Task<Shader> GetShaderById(int id)
     {
-        throw new System.NotImplementedException();
+        List<Shader> shaders = await GetAllShaders();
+        return shaders[id];
     }
 
     public void updateShader(int uid, int sid)
