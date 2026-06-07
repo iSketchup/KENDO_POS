@@ -15,6 +15,12 @@ using Main.Models;
 
 //await Userhandling.AddUser(user.UserName, user.passwd);
 
+//Userhandling.DeleteUser(user.UserName);
+//Console.WriteLine("Wurde gelöscht");
+
+await Userhandling.ChangeUser("test", "test12", "Passwort");
+Console.WriteLine("Userdaten verändert");
+
 bool result2 = await Userhandling.ValidateLogin("test","hallo123");
 if (result2 != false)
 {
@@ -24,3 +30,4 @@ if (result2 != false)
 {
     Console.WriteLine("Fehlgeschlagen");
 }
+

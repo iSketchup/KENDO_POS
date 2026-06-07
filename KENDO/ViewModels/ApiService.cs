@@ -30,10 +30,28 @@ public class ApiService
         return JsonSerializer.Deserialize<User>(body, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
     }
 
+
+    // Diese Methoden ermöglichen die Verbindung auf den Endpunkt
+    // mit den jeweiligen Methoden.
     public async Task CreateUser(User user)
     {
         // Bevor man etwas einfügt, wird auf eine Antwort der API gewartet
         HttpResponseMessage result = await _client.PostAsJsonAsync("user/", user);
+        result.EnsureSuccessStatusCode();
+    }
+
+
+    public async Task ChangeUser(string username, User user)
+    {
+        HttpResponseMessage result = await _client.PutAsJsonAsync($"user/?username={username}", user);
+        result.EnsureSuccessStatusCode();
+    }
+
+
+
+    public async Task DeleteUser(string username)
+    {
+        HttpResponseMessage result = await _client.DeleteAsync($"user/?username={username}");
         result.EnsureSuccessStatusCode();
     }
 }
