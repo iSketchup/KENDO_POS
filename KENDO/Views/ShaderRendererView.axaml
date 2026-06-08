@@ -8,6 +8,6 @@
             xmlns:vm="clr-namespace:Main.ViewModels"
             x:DataType="vm:ShaderRendererViewModel">
     
-    <local:GLView FragmentShaderIn="{Binding Document.Text}"></local:GLView>
+    <local:GLView FragmentShaderIn="{Binding Document.Text}" TextureUris="{Binding Shader.Textures}"></local:GLView>
     
 </UserControl>

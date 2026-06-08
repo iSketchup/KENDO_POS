@@ -97,11 +97,17 @@ public class ShaderRepositoryFake : IShaderRepository
                                  }
                                  """;
 
+    private List<string> samplePaths = new List<string> {"avares://Main/Assets/TEXTuffAssDino.jpg" , "avares://Main/Assets/TEXTuffAssDino.jpg", "avares://Main/Assets/TEXTuffAssDino.jpg"};
+            
 
     
     public async Task<List<Shader>> GetAllShaders()
     {
-        return  new List<Shader>() {new Shader(sampleCode1, 1), new Shader(sampleCode2, 2), new Shader(sampleCode3, 3)};
+        return  new List<Shader>()
+        {
+            new(sampleCode1, 1, samplePaths), new(sampleCode2, 2, samplePaths), new(sampleCode3, 3, samplePaths)
+        };
+        
     }
 
     public async Task<Shader> GetShaderById(int id)

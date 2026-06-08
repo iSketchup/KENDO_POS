@@ -19,9 +19,24 @@ public class GLView : OpenGlControlBase
 {
     private bool _glInitialzed;
     private bool _needsReload;
+    
+    public static readonly StyledProperty<List<Uri>> TextureUrisProperty =
+        AvaloniaProperty.Register<GLView, List<Uri>>(nameof(TextureUris));
+
+    public List<Uri> TextureUris
+    {
+        get => GetValue(TextureUrisProperty); 
+
+        set
+        {
+            SetValue(TextureUrisProperty, value);
+            Log.Logger.Information("Got Textures 0 is " + TextureUris[0]);
+        }
+    }
+
+
     public static readonly StyledProperty<string> FragmentShaderInProperty =
         AvaloniaProperty.Register<GLView, string>(nameof(FragmentShaderIn));
-
     public string FragmentShaderIn
     {
         get => GetValue(FragmentShaderInProperty);
@@ -31,7 +46,7 @@ public class GLView : OpenGlControlBase
     {
         base.OnPropertyChanged(change);
 
-        if (change.Property == FragmentShaderInProperty)
+        if (change.Property == FragmentShaderInProperty || change.Property == TextureUrisProperty)
         {
             queNewReload();
         }
@@ -42,8 +57,7 @@ public class GLView : OpenGlControlBase
     // unioforms:
     private int uTime;
     
-    private Uri[] texUris = {new Uri("avares://Main/Assets/TEXTuffAssDino.jpg"), new("avares://Main/Assets/TEXTuffAssMinion.jpg"), new("avares://Main/Assets/TEXTuffAsWorm.jpg")};
-    private List<Texture> textures = new();
+   private List<Texture> textures = new();
     
     float[] vertices =
     {
@@ -126,9 +140,9 @@ public class GLView : OpenGlControlBase
         
         
         // Texturegekoche
-        for( int i =0; i  < texUris.Length; i++)
+        for( int i =0; i  < TextureUris.Count; i++)
         {
-            textures.Add(new Texture(texUris[i], i));
+            textures.Add(new Texture(TextureUris[i], i));
         } 
         
         _glInitialzed = true;

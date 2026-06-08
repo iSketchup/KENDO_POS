@@ -24,5 +24,7 @@
                                  ShowLineNumbers="True"
                                  FontFamily="Cascadia Code,Consolas,Menlo,Monospace"
                                  /> 
+        
+        
     </Grid>
 </UserControl>
