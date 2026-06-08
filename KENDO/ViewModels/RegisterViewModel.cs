@@ -1,16 +1,12 @@
-﻿using System;
-using System.Globalization;
-using System.Threading.Tasks;
-using Avalonia.Data.Converters;
+﻿using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Main.Models;
-using OpenTK.Graphics.ES11;
 using Serilog;
 
 namespace Main.ViewModels;
 
-public partial class UserViewModel : ViewModelBase, IContext
+public partial class RegisterViewModel : ViewModelBase
 {
     [ObservableProperty]
     private string _username = "";
@@ -18,31 +14,23 @@ public partial class UserViewModel : ViewModelBase, IContext
     private string _password = "";
     
     private AppContext appContext;
-
-    
-    
     private readonly NavigationService _navigation;
-    
-    public UserViewModel(NavigationService navigation)
-    {
-        _navigation = navigation;
-    }
-
-    [RelayCommand]
-    public void SwitchRegister()
-    {
-        GoToRegister();
-    }
 
 
     [RelayCommand]
-    public async Task LoginCommand()
+    public void SwitchLogin()
     {
-        bool ok = await Userhandling.ValidateLogin(Username, Password);
+        GoLogin();
+    }
 
+    [RelayCommand]
+    public async Task RegisterCommand()
+    {
+        bool ok = await Userhandling.AddUser(Username, Password);
+        
         if (ok)
         {
-            Log.Information("Login successful");
+            Log.Information("Register successful");
             // ToDo: userdaten in Appcontext schreiben
             //appContext = new AppContext(user);
             
@@ -51,31 +39,30 @@ public partial class UserViewModel : ViewModelBase, IContext
         }
         else
         {
-            Log.Warning("Login failed");
+            Log.Warning("Register failed");
             // TODO: Fehlermeldung anzeigen.
             
         }
         Log.Logger.Information("LoginCommand");
     }
-
-
-    public void LoginUser(User user)
+    
+    public RegisterViewModel(NavigationService navigation)
     {
-        
+        _navigation = navigation;
     }
-
+    
     public async Task UpdateContexts(AppContext appContext)
     {
         this.appContext = appContext;
     }
-
+    
     private void GoToFrontPage()
     {
         _navigation.Navigate(Page.Front);
     }
 
-    private void GoToRegister()
+    private void GoLogin()
     {
-        _navigation.Navigate(Page.Register);
+        _navigation.Navigate(Page.Login);
     }
 }

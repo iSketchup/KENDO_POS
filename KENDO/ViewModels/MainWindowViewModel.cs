@@ -17,6 +17,7 @@ public partial class MainWindowViewModel : ViewModelBase
     private FrontPageViewModel FrontPageViewModel { get; set; } 
     private ShaderPageViewModel ShaderPageViewModel { get; set; }
     private UserViewModel UserViewModel { get; set; }
+    private RegisterViewModel RegisterViewModel { get; set; }
     
     private AppContext AppContext { get; set; }
     
@@ -52,6 +53,7 @@ public partial class MainWindowViewModel : ViewModelBase
         ShaderPageViewModel = new ShaderPageViewModel(_navigation);
         FrontPageViewModel = new FrontPageViewModel(_navigation);
         UserViewModel = new UserViewModel(_navigation);
+        RegisterViewModel = new RegisterViewModel(_navigation);
         
         
         
@@ -89,6 +91,8 @@ public partial class MainWindowViewModel : ViewModelBase
         {
             Page.User => UserViewModel,
             Page.Front => FrontPageViewModel,
+            Page.Register => RegisterViewModel,
+            Page.Login => UserViewModel,
             _ => CurrentViewModel
         };
     }    
@@ -108,6 +112,17 @@ public partial class MainWindowViewModel : ViewModelBase
             CurrentViewModel = FrontPageViewModel;
         
         Log.Logger.Information("Page switched");
+    }
+
+    [RelayCommand]
+    public void LogOut()
+    {
+        if (CurrentViewModel is FrontPageViewModel)
+            CurrentViewModel = UserViewModel;
+        else
+            CurrentViewModel = FrontPageViewModel;
+
+        Log.Logger.Information("Back to the Login");
     }
 
     [RelayCommand]
@@ -132,7 +147,9 @@ public enum Page
 {
     User,
     Front,
-    Shader
+    Shader,
+    Login,
+    Register
 }
 public class NavigationService
 {

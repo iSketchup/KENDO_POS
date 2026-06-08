@@ -1,20 +1,17 @@
-<UserControl xmlns="https://github.com/avaloniaui"
+﻿<UserControl xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vm="clr-namespace:Main.ViewModels"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:Class="Main.Views.UserView"            
-             x:DataType="vm:UserViewModel">
-
-    
+             x:Class="Main.Views.RegisterView"        
+             x:DataType="vm:RegisterViewModel">
     
     <StackPanel Margin="10" Spacing="10">
-        <TextBox FontSize="28">Login</TextBox>
+        <TextBox FontSize="28">Registrate</TextBox>
         <TextBox Watermark="Username" Text="{Binding Username}"/>
         <TextBox Watermark="Password" PasswordChar="*" Text="{Binding Password}"/>
-        <Button Content="Submit" Command="{Binding LoginCommand }"/>
-		<Button Content="You don't own a account?" Command="{Binding SwitchRegister }"/>
+        <Button Content="Submit" Command="{Binding RegisterCommand }"/>
+		<Button Content="You already have an account?" Command="{Binding SwitchLogin }"/>
     </StackPanel>
-    
 </UserControl>

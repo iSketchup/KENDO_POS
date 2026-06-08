@@ -20,14 +20,28 @@ public class ApiService
         _client = client;
     }
 
-    public async Task<User?> GetUserInfo(string userName, string passwd)
+    public async Task<User?> GetLogin(string userName, string passwd)
     {
         User user = new User { UserName = userName, passwd = passwd };
 
         HttpResponseMessage response = await _client.PostAsJsonAsync("user/login", user);
         string body = await response.Content.ReadAsStringAsync();
 
-        return JsonSerializer.Deserialize<User>(body, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+        return JsonSerializer.Deserialize<User>(
+            body,
+            new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+    }
+
+    public async Task<User?> GetUserInfo(string username, string passwd)
+    {
+        User user = new User { UserName = username, passwd = passwd };
+
+        HttpResponseMessage response = await _client.PostAsJsonAsync($"user/{username}", user);
+        string body = await response.Content.ReadAsStringAsync();
+
+        return JsonSerializer.Deserialize<User>(
+            body,
+            new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
     }
 
 

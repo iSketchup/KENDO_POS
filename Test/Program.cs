@@ -18,10 +18,10 @@ using Main.Models;
 //Userhandling.DeleteUser(user.UserName);
 //Console.WriteLine("Wurde gelöscht");
 
-await Userhandling.ChangeUser("test", "test12", "Passwort");
+await Userhandling.ChangeUser("test", "test12", "hallo123");
 Console.WriteLine("Userdaten verändert");
 
-bool result2 = await Userhandling.ValidateLogin("test","hallo123");
+bool result2 = await Userhandling.ValidateLogin("test12","hallo123");
 if (result2 != false)
 {
     Console.WriteLine("Login erfolgreich");

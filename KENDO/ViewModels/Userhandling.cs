@@ -30,13 +30,23 @@ public static class Userhandling
     private static ApiService apiService = new ApiService(client);
     
 
-    public async static Task AddUser(string name, string pswd)
+    public async static Task<bool> AddUser(string name, string pswd)
     {
+        User? gettingUser = await apiService.GetUserInfo(name, pswd);
+
+        if (gettingUser == null && gettingUser.UserName != name)
+        {
+            return false;
+        }
+
         string hashed = BCrypt.Net.BCrypt.HashPassword(pswd);
         User user =  new User { UserName = name, passwd = hashed };
         
 
         await apiService.CreateUser(user);
+
+
+        return true;
     }
 
 
@@ -44,6 +54,14 @@ public static class Userhandling
     public async static Task ChangeUser(string username, string name, string newpswd)
     {
         // Das veränderte Passwort sollte auch gehasht werden
+        User? gettingUser = await apiService.GetLogin(username, newpswd);
+
+        if (gettingUser != null && gettingUser.UserName != username)
+        {
+            throw new Exception("The username must not be the" +
+                " same as the previous username");
+        }
+
         string hashed = BCrypt.Net.BCrypt.HashPassword(newpswd);
         User updatedUser = new User { UserName = name, passwd = hashed };
 
@@ -64,7 +82,7 @@ public static class Userhandling
 
     public async static Task<bool> ValidateLogin(string name, string pswd)
     {
-        User? user = await apiService.GetUserInfo(name, pswd);
+        User? user = await apiService.GetLogin(name, pswd);
         
         // Ist ein Passwort vorhanden?
         if (string.IsNullOrWhiteSpace(user.passwd)) return false;
