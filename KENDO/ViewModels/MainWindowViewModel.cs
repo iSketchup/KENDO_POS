@@ -59,13 +59,16 @@ public partial class MainWindowViewModel : ViewModelBase
         
         await InitContext(UseFakeRepo,baseadress);
         
-        CurrentViewModel = UserViewModel;
+        //CurrentViewModel = UserViewModel;
+        CurrentViewModel = FrontPageViewModel;
         
     }
     
     
     public async Task InitContext(bool fake, Uri? ba)
     {
+        // ToDo: User hier reinladen
+        User user = new User(0, "auraman");
         
         if (!fake)
         {
@@ -73,16 +76,18 @@ public partial class MainWindowViewModel : ViewModelBase
             {
                 BaseAddress = ba
             }; 
-            AppContext = new AppContext(null); 
+            AppContext = new AppContext(user); 
             await AppContext.AsyncInit(client);
+            
         }
         else
         {
-            AppContext = new AppContext(null);
+            AppContext = new AppContext(user);
             await AppContext.FakeInit();
         }
-        FrontPageViewModel.UpdateContexts(AppContext);
-        UserViewModel.UpdateContexts(AppContext);
+        
+        await FrontPageViewModel.UpdateContexts(AppContext);
+        await UserViewModel.UpdateContexts(AppContext);
     }
     
     private void Navigate(Page page)

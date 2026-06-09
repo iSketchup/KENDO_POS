@@ -37,12 +37,12 @@ public  class AppContext
 
     public async Task<List<Shader>> GetAllShaders()
     {
-        return await shaderRepository.GetAllShaders();   
+        return await shaderRepository.GetAllShaders(User);   
     }
 
-    public async Task<Shader?> GetShaderById(int id)
+    public async Task<Shader?> GetShaderById(int shaderid)
     {
-        return await shaderRepository.GetShaderById(id);  
+        return await shaderRepository.GetShaderById(User, shaderid);  
     }
     
 }

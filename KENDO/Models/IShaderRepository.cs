@@ -7,8 +7,8 @@ namespace Main.Models;
 
 public interface IShaderRepository
 {
-    Task<List<Shader>> GetAllShaders();
-    Task<Shader> GetShaderById(int id);
+    Task<List<Shader>> GetAllShaders(User user);
+    Task<Shader> GetShaderById(User user, int id);
     void updateShader(int uid, int sid);
     
 }
@@ -23,17 +23,17 @@ public class ShaderRepositoryRest : IShaderRepository
         this.client = client;
     }
 
-    public async Task<List<Shader>> GetAllShaders()
+    public async Task<List<Shader>> GetAllShaders(User user)
     {
-        var result = await client.GetFromJsonAsync<List<Shader>>("shaders");
+        var result = await client.GetFromJsonAsync<List<Shader>>($"{user.Id}/shaders");
         
         return result ?? new List<Shader>();
         // Returns result if result != null -> otherwise the right part so a new List
     }
 
-    public async Task<Shader>? GetShaderById(int id)
+    public async Task<Shader> GetShaderById(User user,  int id)
     {
-        var result = await client.GetFromJsonAsync<Shader>("shaders");
+        var result = await client.GetFromJsonAsync<Shader>($"{user.Id}/shaders/{id}");
         
         return result ?? null;
     }
@@ -101,7 +101,7 @@ public class ShaderRepositoryFake : IShaderRepository
             
 
     
-    public async Task<List<Shader>> GetAllShaders()
+    public async Task<List<Shader>> GetAllShaders(User user ) 
     {
         return  new List<Shader>()
         {
@@ -110,9 +110,9 @@ public class ShaderRepositoryFake : IShaderRepository
         
     }
 
-    public async Task<Shader> GetShaderById(int id)
+    public async Task<Shader> GetShaderById(User user, int id)
     {
-        List<Shader> shaders = await GetAllShaders();
+        List<Shader> shaders = await GetAllShaders(user);
         return shaders[id];
     }
 
