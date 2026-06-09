@@ -68,7 +68,7 @@ public partial class MainWindowViewModel : ViewModelBase
     public async Task InitContext(bool fake, Uri? ba)
     {
         // ToDo: User hier reinladen
-        User user = new User(0, "auraman");
+        User user = new User(1, "auraman");
         
         if (!fake)
         {

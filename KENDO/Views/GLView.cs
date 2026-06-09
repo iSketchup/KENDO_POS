@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
 using Avalonia;
@@ -20,10 +21,10 @@ public class GLView : OpenGlControlBase
     private bool _glInitialzed;
     private bool _needsReload;
     
-    public static readonly StyledProperty<List<Uri>> TextureUrisProperty =
-        AvaloniaProperty.Register<GLView, List<Uri>>(nameof(TextureUris));
+    public static readonly StyledProperty<ObservableCollection<Uri>> TextureUrisProperty =
+        AvaloniaProperty.Register<GLView, ObservableCollection<Uri>>(nameof(TextureUris), new());
 
-    public List<Uri> TextureUris
+    public ObservableCollection<Uri> TextureUris
     {
         get => GetValue(TextureUrisProperty); 
 
@@ -139,11 +140,7 @@ public class GLView : OpenGlControlBase
         GL.VertexAttribPointer(texCoordLocation, 2, VertexAttribPointerType.Float, false, 5 * sizeof(float), 3 * sizeof(float));
         
         
-        // Texturegekoche
-        for( int i =0; i  < TextureUris.Count; i++)
-        {
-            textures.Add(new Texture(TextureUris[i], i));
-        } 
+
         
         _glInitialzed = true;
 
@@ -211,6 +208,13 @@ public class GLView : OpenGlControlBase
     {
         if (!_glInitialzed) return;
         Log.Logger.Debug("Reloading OpenGL");
+        
+        // Texturegekoche
+        for( int i =0; i  < TextureUris.Count; i++)
+        {
+            textures.Add(new Texture(TextureUris[i], i));
+        } 
+
 
         string fragmentShaderSource = FragmentShaderIn;
         

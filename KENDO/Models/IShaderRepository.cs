@@ -98,7 +98,7 @@ public class ShaderRepositoryFake : IShaderRepository
                                  }
                                  """;
 
-    private List<string> samplePaths = new List<string> {"avares://Main/Assets/TEXTuffAssDino.jpg" , "avares://Main/Assets/TEXTuffAssDino.jpg", "avares://Main/Assets/TEXTuffAssDino.jpg"};
+    private List<string> samplePaths = new List<string> {"avares://Main/Assets/TEXTuffAssDino.jpg" , "avares://Main/Assets/TEXTuffAssMinion.jpg", "avares://Main/Assets/TEXTuffAssWorm.jpg"};
             
 
     
@@ -107,6 +107,8 @@ public class ShaderRepositoryFake : IShaderRepository
         return  new List<Shader>()
         {
             Shader.ShaderFactory(1,sampleCode1, "Dino", new(), new(67, false), new ObservableCollection<Comment>(), samplePaths),
+            Shader.ShaderFactory(2,sampleCode2, "chillax", new(), new(67, false), new ObservableCollection<Comment>(), samplePaths),
+            Shader.ShaderFactory(3,sampleCode3, "evilmaxxing", new(), new(67, false), new ObservableCollection<Comment>(), samplePaths),
         };
         
     }

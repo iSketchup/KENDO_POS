@@ -12,22 +12,21 @@ public partial class Shader : ObservableObject
     public int ShaderId {get; set;}
     public string ShaderName {get; set;}
     public string ShaderCode {get; set;}
-    public ObservableCollection<string> ShaderTags {get; set;}
-    public  Likes ShaderLikes {get; set;}
-    public ObservableCollection<Comment> ShaderComments {get; set;}
+    public ObservableCollection<string> ShaderTags {get; set;} = new();
+    public  Likes ShaderLikes {get; set;} = new(); 
+    public ObservableCollection<Comment> ShaderComments { get; set; } = new();
+
     public List<string> ShadersTextures
     {
         set
         {
-            Textures = new ObservableCollection<Uri>();
             foreach (string path in value)
             {
                 Textures.Add(new Uri(path));
             }
         }
-    }
-
-    [JsonIgnore] [ObservableProperty] public ObservableCollection<Uri> _textures;
+    }  
+    [JsonIgnore] [ObservableProperty] public ObservableCollection<Uri> _textures = new();
     
     
     

@@ -8,6 +8,10 @@ public class Likes
     public int amount {get; set;}
     public bool liked_by_u {get; set;}
 
+    public Likes()
+    {
+    }
+    
     public Likes(int amount, bool liked_by_u)
     {
         this.amount = amount;

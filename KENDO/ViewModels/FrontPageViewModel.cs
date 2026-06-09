@@ -39,7 +39,7 @@ public partial class FrontPageViewModel: ViewModelBase, IContext
         for (int i = 0; i < shaders.Count; i++)
         {
             ShaderRendererViewModel spvm = new ShaderRendererViewModel(_navigation);
-            spvm.UpdateContexts(await AppContext.GetShaderById(i));
+            spvm.UpdateContexts(shaders[i]);
             ShaderPages.Add(spvm);
             
         }
