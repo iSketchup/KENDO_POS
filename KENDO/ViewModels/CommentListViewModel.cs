@@ -18,7 +18,7 @@ public partial class CommentListViewModel : ViewModelBase
     {
         if (textBox.Text != "")
         {
-            Shader.Comments.Add(new Comment($"{textBox.Text}", $"Username"));
+            Shader.ShaderComments.Add(new Comment($"{textBox.Text}", $"Username"));
             textBox.Clear();
         }
     }

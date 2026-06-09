@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Net.Http;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
@@ -105,7 +106,7 @@ public class ShaderRepositoryFake : IShaderRepository
     {
         return  new List<Shader>()
         {
-            new(sampleCode1, 1, samplePaths), new(sampleCode2, 2, samplePaths), new(sampleCode3, 3, samplePaths)
+            Shader.ShaderFactory(1,sampleCode1, "Dino", new(), new(67, false), new ObservableCollection<Comment>(), samplePaths),
         };
         
     }

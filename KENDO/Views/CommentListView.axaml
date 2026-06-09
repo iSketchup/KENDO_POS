@@ -63,7 +63,7 @@
         <TextBlock DockPanel.Dock="Top" Margin="10 10 10 0" FontSize="17">Comments:</TextBlock>
         
         <ScrollViewer VerticalScrollBarVisibility="Auto" DockPanel.Dock="Top">
-            <ItemsRepeater ItemsSource="{Binding Shader.Comments}">
+            <ItemsRepeater ItemsSource="{Binding Shader.ShaderComments}">
                 <ItemsRepeater.ItemTemplate>
                     <DataTemplate>
                         <Border Margin="5,10,5,0"
