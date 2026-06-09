@@ -72,7 +72,14 @@ public partial class MainWindowViewModel : ViewModelBase
         
         if (!fake)
         {
-            HttpClient client = new HttpClient()
+            
+            var handler = new HttpClientHandler();
+
+            handler.ServerCertificateCustomValidationCallback =
+                HttpClientHandler.DangerousAcceptAnyServerCertificateValidator;
+
+            
+            HttpClient client = new HttpClient(handler)
             {
                 BaseAddress = ba
             }; 
