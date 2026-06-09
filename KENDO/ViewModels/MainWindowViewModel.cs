@@ -23,7 +23,7 @@ public partial class MainWindowViewModel : ViewModelBase
     
     [ObservableProperty]
     private bool _useFakeRepo= true; 
-    private Uri baseadress = new("http://localhost:8000/");
+    private Uri baseadress = new("https://localhost:8000/");
     
     
     private readonly NavigationService _navigation = new();
