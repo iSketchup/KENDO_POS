@@ -40,8 +40,8 @@
                             <Label>
                                 <Label.Content>
                                     <MultiBinding StringFormat="Shader : {0},      Likes : {1}">
-                                        <Binding Path="Shader.ShaderId"></Binding>
-                                        <Binding Path="Shader.ShaderLikes"></Binding>
+                                        <Binding Path="Shader.ShaderName"></Binding>
+                                        <Binding Path="Shader.ShaderLikes.amount"></Binding>
                                     </MultiBinding>
                                 </Label.Content>
                             </Label>
