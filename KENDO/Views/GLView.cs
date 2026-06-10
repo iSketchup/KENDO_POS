@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -26,6 +27,7 @@ public class GLView : OpenGlControlBase
     public static readonly StyledProperty<ObservableCollection<Uri>> TextureUrisProperty =
         AvaloniaProperty.Register<GLView, ObservableCollection<Uri>>(nameof(TextureUris), new());
 
+    private ObservableCollection<Uri>? _currentTextureUris;
     public ObservableCollection<Uri> TextureUris
     {
         get => GetValue(TextureUrisProperty); 
@@ -45,14 +47,39 @@ public class GLView : OpenGlControlBase
         get => GetValue(FragmentShaderInProperty);
         set => SetValue(FragmentShaderInProperty, value);
     }
+
     protected override void OnPropertyChanged(AvaloniaPropertyChangedEventArgs change)
     {
         base.OnPropertyChanged(change);
 
-        if (change.Property == FragmentShaderInProperty || change.Property == TextureUrisProperty)
+        if (change.Property == TextureUrisProperty)
+        {
+            HookTextureUris(TextureUris);
+            queNewReload();
+            return;
+        }
+
+        if (change.Property == FragmentShaderInProperty)
         {
             queNewReload();
         }
+    }
+
+    private void HookTextureUris(ObservableCollection<Uri>? textureUris)
+        {
+            if (_currentTextureUris != null)
+                _currentTextureUris.CollectionChanged -= OnTextureUrisChanged;
+
+            _currentTextureUris = textureUris;
+
+            if (_currentTextureUris != null)
+                _currentTextureUris.CollectionChanged += OnTextureUrisChanged;
+        }
+
+        private void OnTextureUrisChanged(object? sender, NotifyCollectionChangedEventArgs e)
+        {
+            queNewReload();
+        
     }
     
     private Stopwatch _timer = new Stopwatch();
@@ -205,6 +232,20 @@ public class GLView : OpenGlControlBase
         RequestNextFrameRendering();
         
     }
+    private void ReloadTextures()
+    {
+        foreach (var texture in textures)
+        {
+            GL.DeleteTexture(texture.Handle);
+        }
+
+        textures.Clear();
+
+        for (int i = 0; i < TextureUris.Count; i++)
+        {
+            textures.Add(new Texture(TextureUris[i], i));
+        }
+    }
 
     private void Reload()
     {
@@ -212,10 +253,7 @@ public class GLView : OpenGlControlBase
         Log.Logger.Debug("Reloading OpenGL");
         
         // Texturegekoche
-        for( int i =0; i  < TextureUris.Count; i++)
-        {
-            textures.Add(new Texture(TextureUris[i], i));
-        } 
+        ReloadTextures();
 
 
         string fragmentShaderSource = FragmentShaderIn;
