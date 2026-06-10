@@ -59,8 +59,8 @@ public partial class MainWindowViewModel : ViewModelBase
         
         await InitContext(UseFakeRepo,baseadress);
         
-        //CurrentViewModel = UserViewModel;
-        CurrentViewModel = FrontPageViewModel;
+        CurrentViewModel = UserViewModel;
+        //CurrentViewModel = FrontPageViewModel;
         
     }
     

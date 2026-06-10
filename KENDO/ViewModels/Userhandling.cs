@@ -14,15 +14,29 @@ public static class Userhandling
     // KI-Teil
     // ChatGPT & Claude
     // Prompt: Wie kann ich HTTPS für das Login handeln?
-    private static HttpClientHandler handler = new HttpClientHandler
+    /*private static HttpClientHandler handler = new HttpClientHandler
     {
         ServerCertificateCustomValidationCallback =
         HttpClientHandler.DangerousAcceptAnyServerCertificateValidator
     };
-
+*/
     // *****
-
-    private static HttpClient client = new HttpClient(handler)
+    private static HttpClient client = new HttpClient(
+        // *****
+        // KI-Teil: Claude
+        // Prompt: Wie verhindere ich in C# bei HttpClient zuverlässig Socket-Timeouts bzw.
+        // wie konfiguriere ich Timeouts und Connection-Reuse korrekt mit SocketsHttpHandler,
+        // ohne dass die Anwendung bei Netzwerkproblemen abstürzt?
+            new SocketsHttpHandler
+            {
+                PooledConnectionLifetime = TimeSpan.FromMinutes(15),
+                SslOptions = new System.Net.Security.SslClientAuthenticationOptions
+                {
+                    RemoteCertificateValidationCallback = (msg, cert, chain, errors) => true
+                }
+            }
+        )
+    // *****
     {
         BaseAddress = new Uri("https://127.0.0.1:8000")
     };
@@ -34,7 +48,7 @@ public static class Userhandling
     {
         User? gettingUser = await apiService.GetUserInfo(name, pswd);
 
-        if (gettingUser == null && gettingUser.UserName != name)
+        if (gettingUser.UserName == name)
         {
             return false;
         }
@@ -85,7 +99,7 @@ public static class Userhandling
         User? user = await apiService.GetLogin(name, pswd);
         
         // Ist ein Passwort vorhanden?
-        if (string.IsNullOrWhiteSpace(user.passwd)) return false;
+        if (user == null || string.IsNullOrWhiteSpace(user.passwd)) return false;
         else
         {
             bool ok = BCrypt.Net.BCrypt.Verify(pswd, user.passwd);
