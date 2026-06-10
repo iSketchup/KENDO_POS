@@ -10,7 +10,6 @@ namespace Main.ViewModels;
 public  class AppContext
 {
     public User User { get; set; }
-    public string CurrentUsername { get; set; }
     
     private IShaderRepository shaderRepository;
     
@@ -18,7 +17,6 @@ public  class AppContext
     public  AppContext(User? currentUser)
     {
         User = currentUser;
-        
     }
 
     public async Task FakeInit()

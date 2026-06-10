@@ -48,7 +48,7 @@ public partial class UserViewModel : ViewModelBase, IContext
             //appContext = new AppContext(user);
             
             // Vom AppContext den aktuellen Usernamen herausholen
-            appContext.CurrentUsername = Username;
+            appContext.User.UserName = Username;
             
             //Navigieren zur nächsten Seite
             GoToFrontPage();

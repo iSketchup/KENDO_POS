@@ -25,7 +25,7 @@ public partial class MainWindowViewModel : ViewModelBase
     private AppContext AppContext { get; set; }
 
     // 
-    public string CurrentUserName => AppContext?.CurrentUsername ?? "";
+    private string CurrentUserName => AppContext?.User.UserName ?? "";
 
     [ObservableProperty]
     private bool _useFakeRepo= true; 
@@ -125,8 +125,8 @@ public partial class MainWindowViewModel : ViewModelBase
     public async Task RemoveUser()
     {   
         // Der aktuelle User wird gelöscht.
-        await Userhandling.DeleteUser(CurrentUserName);
-        if (CurrentViewModel is FrontPageViewModel)
+        bool ok = await Userhandling.DeleteUser(AppContext.User.UserName);
+        if (CurrentViewModel is FrontPageViewModel && ok)
             CurrentViewModel = UserViewModel;
     }
     
