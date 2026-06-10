@@ -3,6 +3,8 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
 using Avalonia.Controls;
+using Avalonia.Media.Imaging;
+using Avalonia.Platform;
 using Avalonia.Platform.Storage;
 using AvaloniaEdit.Document;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -20,7 +22,7 @@ public partial class ShaderRendererViewModel : ViewModelBase
 
     [ObservableProperty] private Shader _shader;
 
-    [ObservableProperty] private ObservableCollection<ImageDropSlotViewModel> _imageDropSlots = new() { new() };
+    [ObservableProperty] private ObservableCollection<ImageDropSlotViewModel> _imageDropSlots = new() ;
     
     
     private readonly NavigationService _navigation;
@@ -29,11 +31,81 @@ public partial class ShaderRendererViewModel : ViewModelBase
     {
         Document = new TextDocument();
         _navigation = navigation;
+        
+        AddImageDropSlot();
+    }
+    
+    
+    private void AddImageDropSlot()
+    {
+        var slot = new ImageDropSlotViewModel();
+
+        slot.PropertyChanged += OnImageDropSlotPropertyChanged;
+
+        ImageDropSlots.Add(slot);
+    }    
+    private void AddImageDropSlot(Uri uri)
+    {
+        var slot = new ImageDropSlotViewModel();
+        slot.ImageUri= uri;
+
+        slot.PropertyChanged += OnImageDropSlotPropertyChanged;
+
+        ImageDropSlots.Add(slot);
+    }
+
+    private void OnImageDropSlotPropertyChanged(object? sender, PropertyChangedEventArgs e)
+    {
+        
+            if (e.PropertyName != nameof(ImageDropSlotViewModel.ImageUri) &&
+                e.PropertyName != nameof(ImageDropSlotViewModel.HasBaseSource))
+                return;
+
+            UpdateShaderTextures();
+            EnsureEmptySlotAtEnd();
+        
+    }
+
+    private void UpdateShaderTextures()
+    {
+        Shader.Textures.Clear();
+        foreach (ImageDropSlotViewModel slot in ImageDropSlots)
+        {
+            if (slot.HasBaseSource)
+                continue;
+            
+            Shader.Textures.Add(slot.ImageUri);
+        }
+    }
+    
+    private void EnsureEmptySlotAtEnd()
+    {
+        if (ImageDropSlots.Count == 0)
+        {
+            AddImageDropSlot();
+            return;
+        }
+
+        var lastSlot = ImageDropSlots[ImageDropSlots.Count - 1];
+
+        if (!lastSlot.HasBaseSource)
+        {
+            AddImageDropSlot();
+        }
     }
     
     public void UpdateContexts(Shader shader)
     {
         Shader = shader;
+
+        ImageDropSlots.Clear();
+        foreach (Uri path in Shader.Textures)
+        {
+            
+            
+            AddImageDropSlot(path);
+        }
+        AddImageDropSlot();
         
         Log.Logger.Debug("Updating shader context for " + Shader.ShaderId);
 

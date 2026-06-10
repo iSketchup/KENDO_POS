@@ -2,12 +2,14 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.OpenGL;
 using Avalonia.OpenGL.Controls;
 using Avalonia.Platform;
+using Main.ViewModels;
 using OpenTK;
 using OpenTK.Graphics.OpenGL4;
 using Serilog;
@@ -322,7 +324,7 @@ public class Texture
         
         StbImage.stbi_set_flip_vertically_on_load(1);
 
-        ImageResult image = ImageResult.FromStream(AssetLoader.Open(Path), ColorComponents.RedGreenBlueAlpha);
+        ImageResult image = ImageResult.FromStream(Helper.OpenImageStream(Path), ColorComponents.RedGreenBlueAlpha);
         
         GL.TexImage2D(
             TextureTarget.Texture2D,
@@ -344,7 +346,8 @@ public class Texture
         GL.ActiveTexture(unit);
         GL.BindTexture(TextureTarget.Texture2D, Handle);
     }
-
+  
+    
 }
 
 public class AvaloniaBindingsContext : IBindingsContext

@@ -11,7 +11,38 @@ namespace Main.ViewModels;
 
 public partial class ImageDropSlotViewModel :ViewModelBase
 {
-    [ObservableProperty] private Bitmap _imageSource= new(AssetLoader.Open(new Uri("avares://Main/Assets/AddIcon.png")));
+    
+    [ObservableProperty]
+    private bool _hasBaseSource = true;
+
+    private Uri _imageUri = new Uri("avares://Main/Assets/AddIcon.png");
+
+    public Uri ImageUri
+    {
+        get => _imageUri;
+        set
+        {
+
+            if (SetProperty(ref _imageUri, value))
+            {
+                ImageSource = new Bitmap(Helper.OpenImageStream(value));
+            } 
+        }
+    }
+
+    private Bitmap _imageSource= new(AssetLoader.Open(new Uri("avares://Main/Assets/AddIcon.png")));
+    public Bitmap ImageSource
+    {
+        get => _imageSource;
+        private set
+        {
+            if (SetProperty(ref _imageSource, value))
+            {
+                HasBaseSource = false;
+            }
+        }
+    }
+
     
     [RelayCommand]
     public async void AddPicture(Control control)
@@ -34,7 +65,8 @@ public partial class ImageDropSlotViewModel :ViewModelBase
             var file = files[0];
             
             await using var stream = await file.OpenReadAsync();
-            ImageSource = new Bitmap(stream);
+            ImageUri = file.Path;
+            
         }
     }
 }

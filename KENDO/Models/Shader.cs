@@ -26,6 +26,7 @@ public partial class Shader : ObservableObject
             }
         }
     }  
+    
     [JsonIgnore] [ObservableProperty] public ObservableCollection<Uri> _textures = new();
     
     
