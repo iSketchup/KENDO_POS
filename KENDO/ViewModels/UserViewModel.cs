@@ -5,6 +5,7 @@ using Avalonia.Data.Converters;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Main.Models;
+using Main.Views;
 using OpenTK.Graphics.ES11;
 using Serilog;
 
@@ -45,6 +46,9 @@ public partial class UserViewModel : ViewModelBase, IContext
             Log.Information("Login successful");
             // ToDo: userdaten in Appcontext schreiben
             //appContext = new AppContext(user);
+            
+            // Vom AppContext den aktuellen Usernamen herausholen
+            appContext.CurrentUsername = Username;
             
             //Navigieren zur nächsten Seite
             GoToFrontPage();

@@ -10,6 +10,7 @@ namespace Main.ViewModels;
 public  class AppContext
 {
     public User User { get; set; }
+    public string CurrentUsername { get; set; }
     
     private IShaderRepository shaderRepository;
     
