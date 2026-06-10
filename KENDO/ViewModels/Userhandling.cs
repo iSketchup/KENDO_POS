@@ -46,6 +46,13 @@ public static class Userhandling
 
     public async static Task<bool> AddUser(string name, string pswd)
     {
+        if (pswd == null)
+            return false;
+
+        if (pswd.Length < 8)
+            return false;
+        
+        
         User? gettingUser = await apiService.GetUserInfo(name, pswd);
 
         if (gettingUser.UserName == name)
@@ -65,9 +72,16 @@ public static class Userhandling
 
 
 
-    public async static Task ChangeUser(string username, string name, string newpswd)
+    public async static Task<bool> ChangeUser(string username, string name, string newpswd)
     {
         // Das veränderte Passwort sollte auch gehasht werden
+        if (newpswd == null)
+            return false;
+          
+        if (newpswd.Length < 8)
+            return false;  
+        
+        
         User? gettingUser = await apiService.GetLogin(username, newpswd);
 
         if (gettingUser != null && gettingUser.UserName != username)
@@ -81,15 +95,20 @@ public static class Userhandling
 
 
         await apiService.ChangeUser(username, updatedUser);
+        return true;
     }
 
 
 
-    public async static Task DeleteUser(string username)
+    public async static Task<bool> DeleteUser(string username)
     {
         // Einfach nur nach den Namen suchen und dann diesen User löschen.
         // Sehr simple
+        if (username == null)
+            return false;
+        
         await apiService.DeleteUser(username);
+        return true;
     }
 
 

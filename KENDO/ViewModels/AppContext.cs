@@ -17,7 +17,6 @@ public  class AppContext
     public  AppContext(User? currentUser)
     {
         User = currentUser;
-        
     }
 
     public async Task FakeInit()

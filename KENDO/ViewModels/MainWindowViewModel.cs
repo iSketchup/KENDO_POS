@@ -1,16 +1,19 @@
-﻿using System;
-using System.Net.Http;
-using System.Threading.Tasks;
-using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Main.Models;
 using Main.Views;
+using OpenTK.Audio.OpenAL;
 using Serilog;
+using System;
+using System.Net.Http;
+using System.Threading.Tasks;
 
 namespace Main.ViewModels;
 
 public partial class MainWindowViewModel : ViewModelBase
 {
+    
+
     [ObservableProperty] 
     private ViewModelBase _currentViewModel;
 
@@ -20,7 +23,10 @@ public partial class MainWindowViewModel : ViewModelBase
     private RegisterViewModel RegisterViewModel { get; set; }
     
     private AppContext AppContext { get; set; }
-    
+
+    // 
+    private string CurrentUserName => AppContext?.User.UserName ?? "";
+
     [ObservableProperty]
     private bool _useFakeRepo= true; 
     private Uri baseadress = new("https://localhost:8000/");
@@ -113,6 +119,15 @@ public partial class MainWindowViewModel : ViewModelBase
         ShaderPageViewModel.UpdateContexts(AppContext, shaderId-1);
         
         CurrentViewModel = ShaderPageViewModel;
+    }
+
+    [RelayCommand]
+    public async Task RemoveUser()
+    {   
+        // Der aktuelle User wird gelöscht.
+        bool ok = await Userhandling.DeleteUser(AppContext.User.UserName);
+        if (CurrentViewModel is FrontPageViewModel && ok)
+            CurrentViewModel = UserViewModel;
     }
     
     [RelayCommand]
