@@ -24,7 +24,29 @@
                                  ShowLineNumbers="True"
                                  FontFamily="Cascadia Code,Consolas,Menlo,Monospace"
                                  /> 
-        
+        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Disabled" HorizontalScrollBarVisibility="Auto">
+            
+            <ItemsControl 
+                ItemsSource="{Binding ImageDropSlots}">
+    
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                            <StackPanel Orientation="Horizontal"/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+            
+            
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Button Command="{Binding AddPicture}"
+                                CommandParameter="{Binding $parent[UserControl]}">
+                        <ContentControl Margin="10" Content="{Binding}"/>
+                        </Button>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+            
+        </ScrollViewer>
         
     </Grid>
 </UserControl>

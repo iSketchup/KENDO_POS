@@ -1,6 +1,9 @@
 using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.IO;
+using Avalonia.Controls;
+using Avalonia.Platform.Storage;
 using AvaloniaEdit.Document;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -16,8 +19,8 @@ public partial class ShaderRendererViewModel : ViewModelBase
     private TextDocument _document;
 
     [ObservableProperty] private Shader _shader;
-    
-    [ObservableProperty] private ObservableCollection<ImageDropSlotViewModel> _imageDropSlots; 
+
+    [ObservableProperty] private ObservableCollection<ImageDropSlotViewModel> _imageDropSlots = new() { new() };
     
     
     private readonly NavigationService _navigation;
