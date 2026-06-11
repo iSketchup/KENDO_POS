@@ -12,8 +12,6 @@ namespace Main.ViewModels;
 
 public partial class MainWindowViewModel : ViewModelBase
 {
-    
-
     [ObservableProperty] 
     private ViewModelBase _currentViewModel;
 
@@ -21,18 +19,18 @@ public partial class MainWindowViewModel : ViewModelBase
     private ShaderPageViewModel ShaderPageViewModel { get; set; }
     private UserViewModel UserViewModel { get; set; }
     private RegisterViewModel RegisterViewModel { get; set; }
+    private UserChangeViewModel UserChangeViewModel { get; set; } 
     
     private AppContext AppContext { get; set; }
 
-    // 
-    private string CurrentUserName => AppContext?.User.UserName ?? "";
+    // private string CurrentUserName => AppContext?.User.UserName ?? "";
 
     [ObservableProperty]
     private bool _useFakeRepo= true; 
     private Uri baseadress = new("https://localhost:8000/");
     
-    
     private readonly NavigationService _navigation = new();
+
 
     public MainWindowViewModel()
     {
@@ -49,6 +47,7 @@ public partial class MainWindowViewModel : ViewModelBase
         Setup();
     }
 
+
     public async Task Setup()
     {
         
@@ -60,6 +59,7 @@ public partial class MainWindowViewModel : ViewModelBase
         FrontPageViewModel = new FrontPageViewModel(_navigation);
         UserViewModel = new UserViewModel(_navigation);
         RegisterViewModel = new RegisterViewModel(_navigation);
+        UserChangeViewModel = new UserChangeViewModel(_navigation);
         
         
         
@@ -101,7 +101,9 @@ public partial class MainWindowViewModel : ViewModelBase
         
         await FrontPageViewModel.UpdateContexts(AppContext);
         await UserViewModel.UpdateContexts(AppContext);
+        await UserChangeViewModel.UpdateContexts(AppContext);
     }
+
     
     private void Navigate(Page page)
     {
@@ -111,15 +113,19 @@ public partial class MainWindowViewModel : ViewModelBase
             Page.Front => FrontPageViewModel,
             Page.Register => RegisterViewModel,
             Page.Login => UserViewModel,
+            Page.Change => UserChangeViewModel,
             _ => CurrentViewModel
         };
-    }    
+    }   
+    
+
     private void NavigateId(int shaderId)
     {
         ShaderPageViewModel.UpdateContexts(AppContext, shaderId-1);
         
         CurrentViewModel = ShaderPageViewModel;
     }
+
 
     [RelayCommand]
     public async Task RemoveUser()
@@ -129,33 +135,56 @@ public partial class MainWindowViewModel : ViewModelBase
         if (CurrentViewModel is FrontPageViewModel && ok)
             CurrentViewModel = UserViewModel;
     }
+
     
     [RelayCommand]
     public void Swicheroo()
     {
         if (CurrentViewModel is FrontPageViewModel)
             CurrentViewModel = ShaderPageViewModel;
+        else if (CurrentViewModel is UserViewModel)
+            CurrentViewModel = UserViewModel;
+        else if (CurrentViewModel is RegisterViewModel)
+            CurrentViewModel = RegisterViewModel;
         else 
             CurrentViewModel = FrontPageViewModel;
         
         Log.Logger.Information("Page switched");
     }
 
+
     [RelayCommand]
     public void LogOut()
     {
         if (CurrentViewModel is FrontPageViewModel)
             CurrentViewModel = UserViewModel;
+        else if (CurrentViewModel is UserViewModel)
+            CurrentViewModel = UserViewModel;
+        else if (CurrentViewModel is RegisterViewModel)
+            CurrentViewModel = RegisterViewModel;
         else
             CurrentViewModel = FrontPageViewModel;
 
         Log.Logger.Information("Back to the Login");
     }
 
+
+    [RelayCommand]
+    public void ChangeUser()
+    {
+        if (CurrentViewModel is FrontPageViewModel)
+            CurrentViewModel = UserChangeViewModel;
+        else if (CurrentViewModel is UserViewModel)
+            CurrentViewModel = UserViewModel;
+        else if (CurrentViewModel is RegisterViewModel)
+            CurrentViewModel = RegisterViewModel;
+
+        Log.Logger.Information("To the Userdata ChangeWindow");
+    }
+
     [RelayCommand]
     public async void SwitchLoaded()
     {
-
         try
         {
             await InitContext(UseFakeRepo,baseadress);
@@ -170,14 +199,19 @@ public partial class MainWindowViewModel : ViewModelBase
     }
 
 }
+
+
 public enum Page
 {
     User,
     Front,
     Shader,
     Login,
-    Register
+    Register,
+    Change
 }
+
+
 public class NavigationService
 {
     public Action<Page>? NavigateRequested { get; set; }

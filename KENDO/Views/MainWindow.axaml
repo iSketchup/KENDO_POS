@@ -30,12 +30,18 @@
         
         <StackPanel Grid.Row="1" Orientation="Horizontal" Background="CadetBlue">
             <Button Background="PowderBlue" Content="Remove Account"
-                    Command="{Binding RemoveUser}"
-                    CommandParameter="{Binding CurrentUserName}"></Button>
-            <Button Background="PowderBlue" Content="LogOut" Command="{Binding LogOut}"></Button>
-            <Button Background="PowderBlue" Content="Switcheroo" Command="{Binding Swicheroo}"></Button>
-            <Label Content="Use Fake Repo: " Background="PowderBlue" Height="32" VerticalContentAlignment="Center"></Label>
-            <ToggleSwitch Background="PowderBlue" IsChecked="{Binding UseFakeRepo}" Command="{Binding SwitchLoaded}"></ToggleSwitch>
+                    Command="{Binding RemoveUser}"></Button>
+            <Button Background="PowderBlue" Content="Change Accountdata"
+                    Command="{Binding ChangeUser}"></Button>
+            <Button Background="PowderBlue" Content="LogOut"
+                    Command="{Binding LogOut}"></Button>
+            <Button Background="PowderBlue" Content="Switcheroo"
+                    Command="{Binding Swicheroo}"></Button>
+            <Label Content="Use Fake Repo: " Background="PowderBlue" Height="32"
+                   VerticalContentAlignment="Center"></Label>
+            <ToggleSwitch Background="PowderBlue"
+                          IsChecked="{Binding UseFakeRepo}" 
+                          Command="{Binding SwitchLoaded}"></ToggleSwitch>
             
         </StackPanel>
     </Grid>
