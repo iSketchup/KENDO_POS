@@ -35,8 +35,8 @@
                     Command="{Binding ChangeUser}"></Button>
             <Button Background="PowderBlue" Content="LogOut"
                     Command="{Binding LogOut}"></Button>
-            <Button Background="PowderBlue" Content="Switcheroo"
-                    Command="{Binding Swicheroo}"></Button>
+            <Button Background="PowderBlue" Content="Front Page"
+                    Command="{Binding GoToFrontPage}"></Button>
             <Label Content="Use Fake Repo: " Background="PowderBlue" Height="32"
                    VerticalContentAlignment="Center"></Label>
             <ToggleSwitch Background="PowderBlue"

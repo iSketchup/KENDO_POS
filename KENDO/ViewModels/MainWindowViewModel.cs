@@ -138,17 +138,9 @@ public partial class MainWindowViewModel : ViewModelBase
 
     
     [RelayCommand]
-    public void Swicheroo()
+    public void GoToFrontPage()
     {
-        if (CurrentViewModel is FrontPageViewModel)
-            CurrentViewModel = ShaderPageViewModel;
-        else if (CurrentViewModel is UserViewModel)
-            CurrentViewModel = UserViewModel;
-        else if (CurrentViewModel is RegisterViewModel)
-            CurrentViewModel = RegisterViewModel;
-        else 
-            CurrentViewModel = FrontPageViewModel;
-        
+        Navigate(Page.Front);
         Log.Logger.Information("Page switched");
     }
 
