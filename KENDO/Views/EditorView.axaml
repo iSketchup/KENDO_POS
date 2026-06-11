@@ -40,7 +40,13 @@
                     <DataTemplate>
                         <Button Command="{Binding AddPicture}"
                                 CommandParameter="{Binding $parent[UserControl]}">
-                        <ContentControl Margin="10" Content="{Binding}"/>
+                            <DockPanel>
+                                
+                                <TextBlock DockPanel.Dock="Top" Text="{Binding Number, StringFormat='texture{0}'}"
+                                           HorizontalAlignment="Center"/>
+                                
+                                <ContentControl DockPanel.Dock="Bottom" Margin="10" Content="{Binding}"/>
+                            </DockPanel>
                         </Button>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>

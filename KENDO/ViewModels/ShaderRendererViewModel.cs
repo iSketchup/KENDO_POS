@@ -48,7 +48,7 @@ public partial class ShaderRendererViewModel : ViewModelBase
     {
         var slot = new ImageDropSlotViewModel();
         slot.ImageUri= uri;
-
+        slot.Number = ImageDropSlots.Count;
         slot.PropertyChanged += OnImageDropSlotPropertyChanged;
 
         ImageDropSlots.Add(slot);
