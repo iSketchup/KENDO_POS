@@ -129,14 +129,27 @@ public partial class MainWindowViewModel : ViewModelBase
 
     [RelayCommand]
     public async Task RemoveUser()
-    {   
+    {
         // Der aktuelle User wird gelöscht.
-        bool ok = await Userhandling.DeleteUser(AppContext.User.UserName);
-        if (CurrentViewModel is FrontPageViewModel && ok)
-            CurrentViewModel = UserViewModel;
+        if (CurrentViewModel is UserChangeViewModel)
+            CurrentViewModel = UserChangeViewModel;
+
+        else if (CurrentViewModel is UserViewModel)
+            CurrentViewModel = CurrentViewModel;
+
+        else
+        {
+
+            bool ok = await Userhandling.DeleteUser(AppContext.User.UserName);
+
+
+            if (ok)
+                CurrentViewModel = UserViewModel;
+
+        }
     }
 
-    
+
     [RelayCommand]
     public void GoToFrontPage()
     {

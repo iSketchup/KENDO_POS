@@ -74,27 +74,27 @@ public static class Userhandling
 
     public async static Task<bool> ChangeUser(string username, string name, string newpswd)
     {
+        string PasswordToSend;
         // Das veränderte Passwort sollte auch gehasht werden
-        if (newpswd == null)
-            return false;
-          
-        if (newpswd.Length < 8)
-            return false;  
-        
-        
-        User? gettingUser = await apiService.GetLogin(username, newpswd);
-
-        if (gettingUser != null && gettingUser.UserName != username)
+        if (newpswd == "")
         {
-            throw new Exception("The username must not be the" +
-                " same as the previous username");
+            PasswordToSend = "";
+        }
+        else
+        {
+            if (newpswd.Length < 8)
+            {
+                return false;
+            }
+
+            PasswordToSend = BCrypt.Net.BCrypt.HashPassword(newpswd);
         }
 
-        string hashed = BCrypt.Net.BCrypt.HashPassword(newpswd);
-        User updatedUser = new User { UserName = name, passwd = hashed };
+
+        User updatedUserPass = new User { UserName = name, passwd = PasswordToSend };
 
 
-        await apiService.ChangeUser(username, updatedUser);
+        await apiService.ChangeUser(username, updatedUserPass);
         return true;
     }
 
