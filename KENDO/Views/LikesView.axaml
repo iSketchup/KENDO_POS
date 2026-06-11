@@ -1,0 +1,16 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="clr-namespace:Main.ViewModels"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:DataType="vm:LikesViewModel"
+             x:Class="Main.Views.LikesView">
+    <StackPanel Orientation="Horizontal">
+        <Button Command="{Binding UserLikedCommand}" MaxHeight="30" MaxWidth="30">
+            <Image Source="{Binding LikeTexture}"  
+                   Stretch="Uniform" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+        </Button>
+        <Label Content="{Binding Like.amount}" MaxHeight="25" MaxWidth="25" />
+    </StackPanel>
+</UserControl>

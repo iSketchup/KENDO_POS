@@ -9,7 +9,7 @@ namespace Main.ViewModels;
 public partial class CommentListViewModel : ViewModelBase
 {
     public Shader? Shader { get; private set; }
-    
+    public LikesViewModel Like { get; } = new LikesViewModel(); 
     
     public CommentListViewModel() { }
     
@@ -43,5 +43,6 @@ public partial class CommentListViewModel : ViewModelBase
     public void SetContext(Shader s)
     {
         this.Shader = s;
+        Like.SetContext(Shader.ShaderLikes);  
     }
 }

@@ -2,24 +2,22 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:views="clr-namespace:Main.Views"
-             xmlns:main="clr-namespace:Main"
              xmlns:vm="clr-namespace:Main.ViewModels"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="Main.Views.CommentListView"
              x:DataType="vm:CommentListViewModel">
-    
-    
+
     <DockPanel Margin="10 5 10 10">
-        <DockPanel DockPanel.Dock="Top" MaxHeight="35" Margin="0 0 0 5" >
-            <TextBox FontSize="8" MaxHeight="15" MaxWidth="50" 
-                     Margin="0 0 5 0" Name="TagTextBox" DockPanel.Dock="Left"/>
+        <DockPanel DockPanel.Dock="Top" MaxHeight="45" Margin="0 0 0 5">
+            <ContentControl Content="{Binding Like}" />
+            <TextBox FontSize="8" MaxHeight="15" MaxWidth="50"
+                     Margin="0 0 5 0" Name="TagTextBox" DockPanel.Dock="Left" />
             <Button Content="Add" FontSize="10" Margin="0 0 5 0"
-                    Command="{Binding AddTagCommand}" 
-                    CommandParameter="{Binding ElementName=TagTextBox }"
-                    HorizontalAlignment="Center" VerticalAlignment="Center"  
-                    DockPanel.Dock="Left"/>
-            <ScrollViewer HorizontalScrollBarVisibility="Visible"   DockPanel.Dock="Left">
+                    Command="{Binding AddTagCommand}"
+                    CommandParameter="{Binding ElementName=TagTextBox }" HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    DockPanel.Dock="Left" />
+            <ScrollViewer HorizontalScrollBarVisibility="Visible" DockPanel.Dock="Left">
                 <ItemsRepeater ItemsSource="{Binding Shader.ShaderTags}">
                     <ItemsRepeater.Layout>
                         <StackLayout Spacing="5"
@@ -33,9 +31,9 @@
                                     Padding="3">
                                 <StackPanel Orientation="Horizontal">
                                     <TextBlock Text="{Binding  }" FontSize="10" />
-                                    <Button Content="X" MaxWidth="15" MaxHeight="15" VerticalAlignment="Top" 
-                                            Command="{Binding}" 
-                                            CommandParameter="{Binding  }"/>
+                                    <Button Content="X" MaxWidth="15" MaxHeight="15" VerticalAlignment="Top"
+                                            Command="{Binding}"
+                                            CommandParameter="{Binding  }" />
                                 </StackPanel>
                             </Border>
                         </DataTemplate>
@@ -43,25 +41,22 @@
                 </ItemsRepeater>
             </ScrollViewer>
         </DockPanel>
-        
         <Grid DockPanel.Dock="Top" Margin="0 5 0 0 ">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="3*" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
-            <TextBox CornerRadius="5"  x:Name="CommentTextTextBox"
-                     BorderBrush="Blue" BorderThickness="1" 
-                     Padding="5" AcceptsReturn="True" 
-                     MinLines="2" TextWrapping="Wrap" 
+            <TextBox CornerRadius="5" x:Name="CommentTextTextBox"
+                     BorderBrush="Blue" BorderThickness="1"
+                     Padding="5" AcceptsReturn="True"
+                     MinLines="2" TextWrapping="Wrap"
                      Grid.Column="0" />
-            <Button Name="CommentButton" Content="Comment" 
-            Command="{Binding AddCommentCommand}" 
-            CommandParameter="{Binding ElementName=CommentTextTextBox }"
-            Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+            <Button Name="CommentButton" Content="Comment"
+                    Command="{Binding AddCommentCommand}"
+                    CommandParameter="{Binding ElementName=CommentTextTextBox }" Grid.Column="1"
+                    VerticalAlignment="Center" HorizontalAlignment="Center" />
         </Grid>
-       
         <TextBlock DockPanel.Dock="Top" Margin="10 10 10 0" FontSize="17">Comments:</TextBlock>
-        
         <ScrollViewer VerticalScrollBarVisibility="Auto" DockPanel.Dock="Top">
             <ItemsRepeater ItemsSource="{Binding Shader.ShaderComments}">
                 <ItemsRepeater.ItemTemplate>
@@ -71,7 +66,7 @@
                                 BorderBrush="Blue" BorderThickness="1"
                                 Padding="5">
                             <StackPanel>
-                                <TextBlock Text="{Binding Author}" FontSize="18" MaxWidth="200000" Margin="10,1,1,1"  />
+                                <TextBlock Text="{Binding Author}" FontSize="18" MaxWidth="200000" Margin="10,1,1,1" />
                                 <TextBlock Text="{Binding Text}" FontSize="15" />
                             </StackPanel>
                         </Border>
@@ -79,6 +74,5 @@
                 </ItemsRepeater.ItemTemplate>
             </ItemsRepeater>
         </ScrollViewer>
-
     </DockPanel>
 </UserControl>
