@@ -7,7 +7,7 @@
         x:Class="Main.Views.UserChangeView"
         x:DataType="vm:UserChangeViewModel">
     
-    <StackPanel Margin="10" Spacing="10">
+    <StackPanel Margin="10" Spacing="15" Background="AliceBlue">
         <TextBox FontSize="28">ChangeData</TextBox>
         <TextBox Watermark="Username" Text="{Binding Username}"/>
         <TextBox Watermark="Password" PasswordChar="*" Text="{Binding Password}"/>

@@ -89,6 +89,7 @@ public partial class MainWindowViewModel : ViewModelBase
             {
                 BaseAddress = ba
             }; 
+
             AppContext = new AppContext(user); 
             await AppContext.AsyncInit(client);
             
@@ -168,7 +169,8 @@ public partial class MainWindowViewModel : ViewModelBase
         else if (CurrentViewModel is RegisterViewModel)
             CurrentViewModel = RegisterViewModel;
         else
-            CurrentViewModel = FrontPageViewModel;
+            CurrentViewModel = UserViewModel;
+
 
         Log.Logger.Information("Back to the Login");
     }
@@ -183,6 +185,9 @@ public partial class MainWindowViewModel : ViewModelBase
             CurrentViewModel = UserViewModel;
         else if (CurrentViewModel is RegisterViewModel)
             CurrentViewModel = RegisterViewModel;
+        else
+            CurrentViewModel = UserChangeViewModel;
+
 
         Log.Logger.Information("To the Userdata ChangeWindow");
     }
