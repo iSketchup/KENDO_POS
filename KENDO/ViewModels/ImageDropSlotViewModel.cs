@@ -11,6 +11,7 @@ namespace Main.ViewModels;
 
 public partial class ImageDropSlotViewModel :ViewModelBase
 {
+    [ObservableProperty] private int _number;
     
     [ObservableProperty]
     private bool _hasBaseSource = true;
