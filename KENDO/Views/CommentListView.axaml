@@ -32,8 +32,8 @@
                                 <StackPanel Orientation="Horizontal">
                                     <TextBlock Text="{Binding  }" FontSize="10" />
                                     <Button Content="X" MaxWidth="15" MaxHeight="15" VerticalAlignment="Top"
-                                            Command="{Binding}"
-                                            CommandParameter="{Binding  }" />
+                                            Command="{Binding $parent[ItemsRepeater].((vm:CommentListViewModel)DataContext).DeleteTag}"
+                                            CommandParameter="{Binding}" />
                                 </StackPanel>
                             </Border>
                         </DataTemplate>
