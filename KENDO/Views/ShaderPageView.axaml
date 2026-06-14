@@ -17,11 +17,12 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="*"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
         
-        <views:EditorView Grid.Column="1" Grid.Row="0" DataContext="{Binding ShaderRenderer}"></views:EditorView>
+        <views:EditorView Grid.Column="1" Grid.Row="0" Grid.RowSpan="2" DataContext="{Binding ShaderRenderer}"></views:EditorView>
         
-       
+       <Button Grid.Column="1" Grid.Row="2" HotKey="Ctrl+S" Command="{Binding SaveShader}">Save</Button>
         <ContentControl Grid.Column="0" Grid.Row="0" Content="{Binding ShaderRenderer}"></ContentControl>
         
         <ContentControl Grid.Column="0" Grid.Row="1"  Content="{Binding Comments}"></ContentControl>

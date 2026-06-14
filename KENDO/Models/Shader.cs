@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Text.Json.Serialization;
 using CommunityToolkit.Mvvm.ComponentModel;
+using SimpleJSON;
 
 
 namespace Main.Models;
@@ -16,10 +17,12 @@ public partial class Shader : ObservableObject
     public  Likes ShaderLikes {get; set;} = new(); 
     public ObservableCollection<Comment> ShaderComments { get; set; } = new();
 
+    private List<String> _shaderTextures;
     public List<string> ShadersTextures
     {
         set
         {
+            _shaderTextures = value;
             foreach (string path in value)
             {
                 Textures.Add(new Uri(path));

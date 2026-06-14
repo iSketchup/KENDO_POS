@@ -32,4 +32,10 @@
         <PackageReference Include="StbImageSharp" Version="2.30.15" />
         <PackageReference Include="TextMateSharp.Grammars" Version="2.0.3" />
     </ItemGroup>
+
+    <ItemGroup>
+      <Compile Update="Views\LikesView.axaml.cs">
+        <DependentUpon>LikesView.axaml</DependentUpon>
+      </Compile>
+    </ItemGroup>
 </Project>

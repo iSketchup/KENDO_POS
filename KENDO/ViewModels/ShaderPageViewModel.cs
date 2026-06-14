@@ -39,6 +39,12 @@ public partial class ShaderPageViewModel : ViewModelBase
     {
         _navigation.Navigate(Page.Front);
     }
+
+    [RelayCommand]
+    private void SaveShader()
+    {
+        AppContext.SaveShader();
+    }
     
     
 }

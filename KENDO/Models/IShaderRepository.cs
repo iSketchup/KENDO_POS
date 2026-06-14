@@ -10,7 +10,7 @@ public interface IShaderRepository
 {
     Task<List<Shader>> GetAllShaders(User user);
     Task<Shader> GetShaderById(User user, int id);
-    void updateShader(int uid, int sid);
+    void updateShader(int uid, int sid, Shader shader);
     
 }
 
@@ -39,9 +39,10 @@ public class ShaderRepositoryRest : IShaderRepository
         return result ?? null;
     }
 
-    public void updateShader(int uid, int sid)
+    public async void updateShader(int uid, int sid, Shader shader)
     {
-        throw new System.NotImplementedException();
+        
+        
     }
 }
 
@@ -119,7 +120,7 @@ public class ShaderRepositoryFake : IShaderRepository
         return shaders[id];
     }
 
-    public void updateShader(int uid, int sid)
+    public void updateShader(int uid, int sid, Shader shader)
     {
         throw new System.NotImplementedException();
     }
