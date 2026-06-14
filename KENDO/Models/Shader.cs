@@ -16,27 +16,13 @@ public partial class Shader : ObservableObject
     public ObservableCollection<string> ShaderTags {get; set;} = new();
     public  Likes ShaderLikes {get; set;} = new(); 
     public ObservableCollection<Comment> ShaderComments { get; set; } = new();
+    
+    [ObservableProperty] public ObservableCollection<Uri> _shaderTextures = new();
+    
 
-    private List<String> _shaderTextures;
-    public List<string> ShadersTextures
-    {
-        set
-        {
-            _shaderTextures = value;
-            foreach (string path in value)
-            {
-                Textures.Add(new Uri(path));
-            }
-        }
-    }  
-    
-    [JsonIgnore] [ObservableProperty] public ObservableCollection<Uri> _textures = new();
-    
-    
-    
 
     public static Shader ShaderFactory(int Id, string Code, string Name, ObservableCollection<string> Tags, Likes likes, ObservableCollection<Comment> Comments,
-        List<string> Textures)
+        ObservableCollection<Uri> Textures)
     {
         return new Shader
         {
@@ -46,9 +32,26 @@ public partial class Shader : ObservableObject
             ShaderTags = Tags,
             ShaderLikes = likes,
             ShaderComments = Comments,
-            ShadersTextures = Textures,
+            ShaderTextures = Textures,
         };
     }
 
 
+}
+
+public class ShaderUpdateDto
+{
+    public string ShaderCode { get; set; } = "";
+    public string ShaderName { get; set; } = "";
+    public int user_id { get; set; }
+
+    public List<TextureUpdateDto> ShaderTextures { get; set; } = new();
+}
+
+public class TextureUpdateDto
+{
+    public int id { get; set; }
+
+    [JsonConverter(typeof(ImageUriBase64Converter))]
+    public Uri Texture64 { get; set; } = default!;
 }

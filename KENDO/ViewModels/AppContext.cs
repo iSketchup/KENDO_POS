@@ -44,8 +44,8 @@ public  class AppContext
         return await shaderRepository.GetShaderById(User, shaderid);  
     }
 
-    public async Task SaveShader()
+    public async Task SaveShader(Shader shader)
     {
-        
+        await shaderRepository.UpdateShader(User.Id, shader);
     }
 }

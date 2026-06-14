@@ -122,7 +122,7 @@ public partial class MainWindowViewModel : ViewModelBase
 
     private void NavigateId(int shaderId)
     {
-        ShaderPageViewModel.UpdateContexts(AppContext, shaderId-1);
+        ShaderPageViewModel.UpdateContexts(AppContext, shaderId);
         
         CurrentViewModel = ShaderPageViewModel;
     }

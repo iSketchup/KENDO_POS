@@ -1,8 +1,12 @@
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Json;
+using System.Text.Json;
 using System.Threading.Tasks;
+using Serilog;
 
 namespace Main.Models;
 
@@ -10,7 +14,7 @@ public interface IShaderRepository
 {
     Task<List<Shader>> GetAllShaders(User user);
     Task<Shader> GetShaderById(User user, int id);
-    void updateShader(int uid, int sid, Shader shader);
+    Task UpdateShader(int uid, Shader shader);
     
 }
 
@@ -32,17 +36,35 @@ public class ShaderRepositoryRest : IShaderRepository
         // Returns result if result != null -> otherwise the right part so a new List
     }
 
-    public async Task<Shader> GetShaderById(User user,  int id)
+    public async Task<Shader> GetShaderById(User user, int id)
     {
         var result = await client.GetFromJsonAsync<Shader>($"{user.Id}/shaders/{id}");
         
         return result ?? null;
     }
 
-    public async void updateShader(int uid, int sid, Shader shader)
+    public async Task UpdateShader(int uid, Shader shader)
     {
-        
-        
+        Log.Logger.Debug("GetShaderById {id}", shader.ShaderId);
+        var dto = new ShaderUpdateDto
+        {
+            ShaderCode = shader.ShaderCode,
+            ShaderName = shader.ShaderName,
+            user_id = uid,
+
+            ShaderTextures = shader.ShaderTextures.Select((uri, index) => new TextureUpdateDto
+            {
+                id = index,
+                Texture64 = uri
+            }).ToList()
+        };
+
+        var result = await client.PutAsJsonAsync(
+            $"{uid}/shaders/{shader.ShaderId}",
+        dto
+            );
+
+        result.EnsureSuccessStatusCode();
     }
 }
 
@@ -99,7 +121,7 @@ public class ShaderRepositoryFake : IShaderRepository
                                  }
                                  """;
 
-    private List<string> samplePaths = new List<string> {"avares://Main/Assets/TEXTuffAssDino.jpg" , "avares://Main/Assets/TEXTuffAssMinion.jpg", "avares://Main/Assets/TEXTuffAssWorm.jpg"};
+    private ObservableCollection<Uri> samplePaths = new ObservableCollection<Uri>() {new Uri("avares://Main/Assets/TEXTuffAssDino.jpg") , new Uri("avares://Main/Assets/TEXTuffAssMinion.jpg"), new Uri("avares://Main/Assets/TEXTuffAssWorm.jpg")};
             
 
     
@@ -120,7 +142,7 @@ public class ShaderRepositoryFake : IShaderRepository
         return shaders[id];
     }
 
-    public void updateShader(int uid, int sid, Shader shader)
+    public Task UpdateShader(int uid, Shader shader)
     {
         throw new System.NotImplementedException();
     }

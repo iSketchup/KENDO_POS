@@ -69,13 +69,13 @@ public partial class ShaderRendererViewModel : ViewModelBase
 
     private void UpdateShaderTextures()
     {
-        Shader.Textures.Clear();
+        Shader.ShaderTextures.Clear();
         foreach (ImageDropSlotViewModel slot in ImageDropSlots)
         {
             if (slot.HasBaseSource)
                 continue;
             
-            Shader.Textures.Add(slot.ImageUri);
+            Shader.ShaderTextures.Add(slot.ImageUri);
         }
     }
     
@@ -100,7 +100,7 @@ public partial class ShaderRendererViewModel : ViewModelBase
         Shader = shader;
 
         ImageDropSlots.Clear();
-        foreach (Uri path in Shader.Textures)
+        foreach (Uri path in Shader.ShaderTextures)
         {
             
             

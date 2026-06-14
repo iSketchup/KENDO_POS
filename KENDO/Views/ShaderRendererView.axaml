@@ -8,6 +8,6 @@
             xmlns:vm="clr-namespace:Main.ViewModels"
             x:DataType="vm:ShaderRendererViewModel">
     <Border BorderBrush="PowderBlue">
-    <local:GLView FragmentShaderIn="{Binding Document.Text}" TextureUris="{Binding Shader.Textures}"></local:GLView>
+    <local:GLView FragmentShaderIn="{Binding Document.Text}" TextureUris="{Binding Shader.ShaderTextures}"></local:GLView>
     </Border>
 </UserControl>

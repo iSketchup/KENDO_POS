@@ -43,7 +43,7 @@ public partial class ShaderPageViewModel : ViewModelBase
     [RelayCommand]
     private void SaveShader()
     {
-        AppContext.SaveShader();
+        AppContext.SaveShader(ShaderRenderer.Shader);
     }
     
     
