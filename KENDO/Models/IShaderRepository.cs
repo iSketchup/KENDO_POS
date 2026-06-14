@@ -63,6 +63,14 @@ public class ShaderRepositoryRest : IShaderRepository
             $"{uid}/shaders/{shader.ShaderId}",
         dto
             );
+        
+        
+        var body = await result.Content.ReadAsStringAsync();
+
+        if (!result.IsSuccessStatusCode)
+        {
+            Log.Logger.Error("PUT failed {StatusCode}: {Body}", result.StatusCode, body);
+        }
 
         result.EnsureSuccessStatusCode();
     }

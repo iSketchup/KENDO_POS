@@ -41,17 +41,25 @@ public partial class Shader : ObservableObject
 
 public class ShaderUpdateDto
 {
+    [JsonPropertyName("ShaderCode")]
     public string ShaderCode { get; set; } = "";
+
+    [JsonPropertyName("ShaderName")]
     public string ShaderName { get; set; } = "";
+
+    [JsonPropertyName("user_id")]
     public int user_id { get; set; }
 
+    [JsonPropertyName("ShaderTextures")]
     public List<TextureUpdateDto> ShaderTextures { get; set; } = new();
 }
 
 public class TextureUpdateDto
 {
+    [JsonPropertyName("id")]
     public int id { get; set; }
 
+    [JsonPropertyName("Texture64")]
     [JsonConverter(typeof(ImageUriBase64Converter))]
     public Uri Texture64 { get; set; } = default!;
 }
