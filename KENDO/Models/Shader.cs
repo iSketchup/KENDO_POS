@@ -38,7 +38,16 @@ public partial class Shader : ObservableObject
 
 
 }
-
+public class ShaderGetDto
+{
+    public int ShaderId { get; set; }
+    public string ShaderName { get; set; } = "";
+    public string ShaderCode { get; set; } = "";
+    public List<string> ShaderTags { get; set; } = new();
+    public Likes ShaderLikes { get; set; } = new();
+    public List<Comment> ShaderComments { get; set; } = new();
+    public List<TextureUpdateDto> ShaderTextures { get; set; } = new();
+}
 public class ShaderUpdateDto
 {
     [JsonPropertyName("ShaderCode")]

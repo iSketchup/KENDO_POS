@@ -30,17 +30,39 @@ public class ShaderRepositoryRest : IShaderRepository
 
     public async Task<List<Shader>> GetAllShaders(User user)
     {
-        var result = await client.GetFromJsonAsync<List<Shader>>($"{user.Id}/shaders");
-        
-        return result ?? new List<Shader>();
-        // Returns result if result != null -> otherwise the right part so a new List
+        var dtos = await client.GetFromJsonAsync<List<ShaderGetDto>>($"{user.Id}/shaders/");
+
+        List<Shader> result = new ();
+
+        foreach (var dto in dtos)
+        {
+            result.Add( Shader.ShaderFactory(
+                dto.ShaderId,
+                dto.ShaderCode,
+                dto.ShaderName,
+                new(dto.ShaderTags),
+                dto.ShaderLikes,
+                new(dto.ShaderComments),
+                new(dto.ShaderTextures.Select(t => t.Texture64))
+            ));
+        }
+
+        return result ?? null;
     }
 
     public async Task<Shader> GetShaderById(User user, int id)
     {
-        var result = await client.GetFromJsonAsync<Shader>($"{user.Id}/shaders/{id}");
+        var dto = await client.GetFromJsonAsync<ShaderGetDto>($"{user.Id}/shaders/{id}");
         
-        return result ?? null;
+        return  Shader.ShaderFactory(
+            dto.ShaderId,
+            dto.ShaderCode,
+            dto.ShaderName,
+            new(dto.ShaderTags),
+            dto.ShaderLikes,
+            new(dto.ShaderComments),
+            new(dto.ShaderTextures.Select(t => t.Texture64))
+        ) ?? null;
     }
 
     public async Task UpdateShader(int uid, Shader shader)
