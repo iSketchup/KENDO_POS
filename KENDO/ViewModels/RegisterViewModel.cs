@@ -6,14 +6,15 @@ using Serilog;
 
 namespace Main.ViewModels;
 
-public partial class RegisterViewModel : ViewModelBase
+public partial class RegisterViewModel : ViewModelBase, IContext
 {
     [ObservableProperty]
     private string _username = "";
     [ObservableProperty]
     private string _password = "";
-    
+
     private AppContext appContext;
+
     private readonly NavigationService _navigation;
 
 
@@ -32,8 +33,13 @@ public partial class RegisterViewModel : ViewModelBase
         {
             Log.Information("Register successful");
             // ToDo: userdaten in Appcontext schreiben
+            ////appContext = new AppContext(user);
+            //User user = new User { UserName = Username, passwd = Password };
+
             //appContext = new AppContext(user);
-            
+
+            appContext.User.UserName = Username;
+
             //Navigieren zur nächsten Seite
             GoToFrontPage();
         }
@@ -43,6 +49,7 @@ public partial class RegisterViewModel : ViewModelBase
             // TODO: Fehlermeldung anzeigen.
             
         }
+
         Log.Logger.Information("LoginCommand");
     }
     

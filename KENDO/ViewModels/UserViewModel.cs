@@ -59,13 +59,8 @@ public partial class UserViewModel : ViewModelBase, IContext
             // TODO: Fehlermeldung anzeigen.
             
         }
+
         Log.Logger.Information("LoginCommand");
-    }
-
-
-    public void LoginUser(User user)
-    {
-        
     }
 
     public async Task UpdateContexts(AppContext appContext)

@@ -103,6 +103,7 @@ public partial class MainWindowViewModel : ViewModelBase
         await FrontPageViewModel.UpdateContexts(AppContext);
         await UserViewModel.UpdateContexts(AppContext);
         await UserChangeViewModel.UpdateContexts(AppContext);
+        await RegisterViewModel.UpdateContexts(AppContext);
     }
 
     

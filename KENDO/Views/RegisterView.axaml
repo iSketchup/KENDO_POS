@@ -6,6 +6,8 @@
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="Main.Views.RegisterView"        
              x:DataType="vm:RegisterViewModel">
+	
+	
     
     <StackPanel Margin="10" Spacing="15" Background="AliceBlue">
         <TextBox FontSize="28">Registrate</TextBox>
