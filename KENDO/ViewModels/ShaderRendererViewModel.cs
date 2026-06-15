@@ -19,8 +19,8 @@ public partial class ShaderRendererViewModel : ViewModelBase
 {
     [ObservableProperty] 
     private TextDocument _document;
-
-    [ObservableProperty] private Shader _shader;
+    
+    [ObservableProperty] private Shader _shader = new ();
 
     [ObservableProperty] private ObservableCollection<ImageDropSlotViewModel> _imageDropSlots = new() ;
     
@@ -30,6 +30,11 @@ public partial class ShaderRendererViewModel : ViewModelBase
     public ShaderRendererViewModel(NavigationService navigation)
     {
         Document = new TextDocument();
+        Document.TextChanged += (_, _) =>
+        {
+            Shader.ShaderCode = Document.Text;
+        };
+
         _navigation = navigation;
         
         AddImageDropSlot();

@@ -67,7 +67,7 @@ public class ShaderRepositoryRest : IShaderRepository
 
     public async Task UpdateShader(int uid, Shader shader)
     {
-        Log.Logger.Debug("GetShaderById {id}", shader.ShaderId);
+        Log.Logger.Debug("UpdatedById {id}", shader.ShaderId);
         var dto = new ShaderUpdateDto
         {
             ShaderCode = shader.ShaderCode,

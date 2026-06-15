@@ -41,9 +41,9 @@ public partial class ShaderPageViewModel : ViewModelBase
     }
 
     [RelayCommand]
-    private void SaveShader()
+    private async void SaveShader()
     {
-        AppContext.SaveShader(ShaderRenderer.Shader);
+        await AppContext.SaveShader(ShaderRenderer.Shader);
     }
     
     
