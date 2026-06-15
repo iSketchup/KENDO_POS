@@ -16,6 +16,6 @@
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
         <Label  >Sort By Likes</Label>
-        <ToggleSwitch Grid.Column="1"></ToggleSwitch>
+        <ToggleSwitch Grid.Row="0" Grid.Column="1"></ToggleSwitch>
     </Grid>
 </UserControl>

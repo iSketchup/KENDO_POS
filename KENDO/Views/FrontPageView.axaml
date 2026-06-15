@@ -3,6 +3,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vm="clr-namespace:Main.ViewModels"
+             xmlns:v="clr-namespace:Main.Views"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="Main.Views.FrontPageView"
              x:DataType="vm:FrontPageViewModel">
@@ -41,11 +42,13 @@
                                 <Label.Content>
                                     <MultiBinding StringFormat="Shader : {0},      Likes : {1}">
                                         <Binding Path="Shader.ShaderName"></Binding>
-                                        <Binding Path="Shader.ShaderLikes.amount"></Binding>
+                                        <Binding Path="Shader.ShaderLikes"></Binding>
                                     </MultiBinding>
                                 </Label.Content>
                             </Label>
-                            
+                            <!-- 
+                            <v:LikesView DataContext="{Binding Shader.ShaderLikes}"/>
+                            -->
                         </StackPanel>
                     </Button> 
                 </DataTemplate>

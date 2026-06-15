@@ -11,12 +11,14 @@ public partial class CommentListViewModel : ViewModelBase
     public Shader? Shader { get; private set; }
     public LikesViewModel Like { get; } = new LikesViewModel(); 
     
+    public TagViewModel Tag { get; } = new TagViewModel();
+    
     public CommentListViewModel() { }
     
     [RelayCommand]
     public void AddComment(TextBox textBox)
     {
-        if (textBox.Text != "")
+        if (textBox.Text.Length > 0)
         {
             Shader.ShaderComments.Add(new Comment($"{textBox.Text}", $"Username"));
             textBox.Clear();
@@ -44,5 +46,6 @@ public partial class CommentListViewModel : ViewModelBase
     {
         this.Shader = s;
         Like.SetContext(Shader.ShaderLikes);  
+        Tag.SetContext(Shader.ShaderTags);
     }
 }

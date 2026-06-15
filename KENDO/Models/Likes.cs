@@ -5,9 +5,9 @@ namespace Main.Models;
 
 public class Likes
 {
-    
-    public int amount {get; set;}
-    public bool liked_by_u {get; set;}
+
+    public int amount { get; set; } = 0;
+    public bool liked_by_u {get; set;} = false;
 
     public static Uri LikedTexture = new ("avares://Main/Assets/heart-solid.png");
 

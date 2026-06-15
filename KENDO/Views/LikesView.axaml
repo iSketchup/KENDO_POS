@@ -7,10 +7,10 @@
              x:DataType="vm:LikesViewModel"
              x:Class="Main.Views.LikesView">
     <StackPanel Orientation="Horizontal">
-        <Button Command="{Binding UserLikedCommand}" MaxHeight="30" MaxWidth="30">
+        <Button Command="{Binding UserLikedCommand}" Height="30" Width="30">
             <Image Source="{Binding LikeTexture}"  
                    Stretch="Uniform" VerticalAlignment="Center" HorizontalAlignment="Center"/>
         </Button>
-        <Label Content="{Binding Like.amount}" MaxHeight="25" MaxWidth="25" />
+        <Label Content="{Binding Like.amount}" />
     </StackPanel>
 </UserControl>
