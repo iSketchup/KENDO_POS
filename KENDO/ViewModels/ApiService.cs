@@ -13,11 +13,19 @@ namespace Main.ViewModels;
 
 public class ApiService
 {
+    private string apiKey = Environment.GetEnvironmentVariable("KENDO_KEY");
     private HttpClient _client;
 
     public ApiService(HttpClient client)
     {
         _client = client;
+
+        if (string.IsNullOrEmpty(apiKey))
+        {
+            throw new Exception("Api Key was nof found");
+        }
+
+        _client.DefaultRequestHeaders.Add("X-API-KEY", apiKey);
     }
 
     public async Task<User?> GetLogin(string userName, string passwd)
