@@ -115,6 +115,7 @@ public partial class MainWindowViewModel : ViewModelBase
             Page.Register => RegisterViewModel,
             Page.Login => UserViewModel,
             Page.Change => UserChangeViewModel,
+            Page.Admin => AdminView,
             _ => CurrentViewModel
         };
     }   
@@ -226,7 +227,8 @@ public enum Page
     Front,
     Login,
     Register,
-    Change
+    Change,
+    Admin
 }
 
 

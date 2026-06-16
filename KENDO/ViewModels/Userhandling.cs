@@ -113,7 +113,7 @@ public static class Userhandling
 
 
 
-    public async static Task<bool> ValidateLogin(string name, string pswd)
+    public async static Task<User?> ValidateLogin(string name, string pswd)
     {
         User? user = await apiService.GetLogin(name, pswd);
         
@@ -122,7 +122,7 @@ public static class Userhandling
         else
         {
             bool ok = BCrypt.Net.BCrypt.Verify(pswd, user.passwd);
-            return ok ? true : false; // falls ok dann user falls !ok => false
+            return ok ? user : null; // falls ok dann user falls !ok => false
         }
     }
 }
