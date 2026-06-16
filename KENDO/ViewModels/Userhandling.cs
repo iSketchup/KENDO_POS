@@ -117,14 +117,25 @@ public static class Userhandling
     public async static Task<User?> ValidateLogin(string name, string pswd)
     {
         User? user = await apiService.GetLogin(name, pswd);
-        
+
         // Ist ein Passwort vorhanden?
-        if (user == null || string.IsNullOrWhiteSpace(user.passwd)) return null;
-        else
+        //if (user == null || string.IsNullOrWhiteSpace(user.passwd)) return null;
+        //else
+        //{
+        //    Log.Debug($"API-Response erhalten. User: {user.UserName}, IsAdmin im Frontend: {user.is_admin}");
+        //    bool ok = BCrypt.Net.BCrypt.Verify(pswd, user.passwd);
+        //    return ok ? user : null; // falls ok dann user falls !ok => false
+        //}
+
+        if (user == null)
         {
-            Log.Debug($"API-Response erhalten. User: {user.UserName}, IsAdmin im Frontend: {user.is_admin}");
-            bool ok = BCrypt.Net.BCrypt.Verify(pswd, user.passwd);
-            return ok ? user : null; // falls ok dann user falls !ok => false
+            Log.Warning($"Login fehlgeschlagen für User: {name}");
+            return null;
         }
+
+        Log.Debug($"API-Response erhalten. User: {user.UserName}, IsAdmin im Frontend: {user.is_admin}");
+
+        // Einfach den User zurückgeben, da das Backend ihn bereits verifiziert hat
+        return user;
     }
 }

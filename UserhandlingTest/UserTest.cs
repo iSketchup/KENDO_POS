@@ -7,16 +7,7 @@ namespace Main.Tests
 {
     public class UserhandlingTests
     {
-        // Prüft ob das Login funktioniert
-        [Fact]
-        public async Task VaidateLogin_ExistingUser_ReturnsNotNull()
-        {
-
-            User? result = await Userhandling.ValidateLogin("Daniel", "123HTL12");
-
-
-            Assert.NotNull(result);
-        }
+        
 
 
         [Fact]
@@ -65,6 +56,17 @@ namespace Main.Tests
 
 
             Assert.True(added);
+        }
+
+        // Prüft ob das Login funktioniert
+        [Fact]
+        public async Task ValidateLogin_ExistingUser_ReturnsNotNull()
+        {
+
+            User? result = await Userhandling.ValidateLogin("Test", "Hallo123");
+
+
+            Assert.NotNull(result);
         }
 
 
