@@ -49,4 +49,14 @@ public  class AppContext
     {
         await shaderRepository.UpdateShader(User.Id, shader);
     }
+
+    /// <summary>
+    /// creates a new shader from the reposetory
+    /// </summary>
+    /// <param name="shaderName"></param>
+    /// <returns>Returns the shader id of the newly built shader</returns>
+    public async Task<int> CreateNewShader(string shaderName)
+    {
+        return (await shaderRepository.CreateNewShader(User, shaderName)).ShaderId;
+    }
 }

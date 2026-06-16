@@ -43,13 +43,30 @@
             </Button>
 
             
+            <Button Content="New Shader">
+                <Button.Flyout>
+                    <Flyout>
+                        <StackPanel Spacing="8" MinWidth="180">
+                            <TextBox
+                                x:Name="TBNewShaderName"
+                                PlaceholderText="Shader Name" />
+
+                            <Button
+                                Content="Create"
+                                Command="{Binding CreateNewShaderCommand}"
+                                CommandParameter="{Binding Text, ElementName=TBNewShaderName}" />
+                        </StackPanel>
+                    </Flyout>
+                </Button.Flyout>
+            </Button>
+            
             <Button Content="Front Page"
-                    Command="{Binding GoToFrontPage}"></Button>
+                    Command="{Binding GoToFrontPage}"/>
             <Label Content="Use Fake Repo: " Height="32"
-                   VerticalContentAlignment="Center"></Label>
+                   VerticalContentAlignment="Center"/>
             <ToggleSwitch
                           IsChecked="{Binding UseFakeRepo}" 
-                          Command="{Binding SwitchLoaded}"></ToggleSwitch>
+                          Command="{Binding SwitchLoaded}"/>
             
         </StackPanel>
     </Grid>

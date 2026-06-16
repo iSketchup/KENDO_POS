@@ -26,7 +26,7 @@ public partial class MainWindowViewModel : ViewModelBase
     // private string CurrentUserName => AppContext?.User.UserName ?? "";
 
     [ObservableProperty]
-    private bool _useFakeRepo= true; 
+    private bool _useFakeRepo= false; 
     private Uri baseadress = new("https://localhost:8000/");
     
     private readonly NavigationService _navigation = new();
@@ -120,9 +120,9 @@ public partial class MainWindowViewModel : ViewModelBase
     }   
     
 
-    private void NavigateId(int shaderId)
+    private async void NavigateId(int shaderId)
     {
-        ShaderPageViewModel.UpdateContexts(AppContext, shaderId);
+        await ShaderPageViewModel.UpdateContexts(AppContext, shaderId);
         
         CurrentViewModel = ShaderPageViewModel;
     }
@@ -208,6 +208,15 @@ public partial class MainWindowViewModel : ViewModelBase
         }
     }
 
+    [RelayCommand]
+    public async Task CreateNewShader(string shaderName)
+    {
+        
+        int newShaderId = await AppContext.CreateNewShader(shaderName);
+        
+        NavigateId(newShaderId);
+    }
+
 }
 
 
@@ -215,7 +224,6 @@ public enum Page
 {
     User,
     Front,
-    Shader,
     Login,
     Register,
     Change

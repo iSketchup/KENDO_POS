@@ -15,6 +15,7 @@ public interface IShaderRepository
     Task<List<Shader>> GetAllShaders(User user);
     Task<Shader> GetShaderById(User user, int id);
     Task UpdateShader(int uid, Shader shader);
+    Task<Shader> CreateNewShader(User user, string ShaderName);
     
 }
 
@@ -96,6 +97,38 @@ public class ShaderRepositoryRest : IShaderRepository
 
         result.EnsureSuccessStatusCode();
     }
+
+    public async Task<Shader> CreateNewShader(User user, string ShaderName)
+    {
+        Log.Logger.Debug("Creating Shader");
+        var dtoin = new ShaderUpdateDto
+        {
+            ShaderName = ShaderName,
+            user_id = user.Id,
+
+            ShaderTextures = new List<TextureUpdateDto>()
+        };
+
+        var result = await client.PostAsJsonAsync(
+            $"{user.Id}/shaders/new",
+            dtoin
+        );
+        result.EnsureSuccessStatusCode();
+        
+        
+        var dto = await result.Content.ReadFromJsonAsync<ShaderGetDto>();
+        
+        return  Shader.ShaderFactory(
+            dto.ShaderId,
+            dto.ShaderCode,
+            dto.ShaderName,
+            new(dto.ShaderTags),
+            dto.ShaderLikes,
+            new(dto.ShaderComments),
+            new(dto.ShaderTextures.Select(t => t.Texture64))
+        ) ?? null;
+    }
+
 }
 
 public class ShaderRepositoryFake : IShaderRepository
@@ -175,5 +208,10 @@ public class ShaderRepositoryFake : IShaderRepository
     public Task UpdateShader(int uid, Shader shader)
     {
         throw new System.NotImplementedException();
+    }
+
+    public Task<Shader> CreateNewShader(User user, string ShaderName)
+    {
+        throw new NotImplementedException();
     }
 }
