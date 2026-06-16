@@ -169,7 +169,7 @@ public class ShaderRepositoryFake : IShaderRepository
     public async Task<Shader> GetShaderById(User user, int id)
     {
         List<Shader> shaders = await GetAllShaders(user);
-        return shaders[id];
+        return shaders.First(s => s.ShaderId == id);
     }
 
     public Task UpdateShader(int uid, Shader shader)
