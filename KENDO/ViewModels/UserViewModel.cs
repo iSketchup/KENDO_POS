@@ -39,27 +39,35 @@ public partial class UserViewModel : ViewModelBase, IContext
     [RelayCommand]
     public async Task LoginCommand()
     {
-        bool ok = await Userhandling.ValidateLogin(Username, Password);
+        // 1. Login anfordern und User-Objekt erhalten
+        User? loggedInUser = await Userhandling.ValidateLogin(Username, Password);
 
-        if (ok)
+        if (loggedInUser != null)
         {
-            Log.Information("Login successful");
-            // ToDo: userdaten in Appcontext schreiben
-            //appContext = new AppContext(user);
-            
-            // Vom AppContext den aktuellen Usernamen herausholen
-            appContext.User.UserName = Username;
-            
-            //Navigieren zur nächsten Seite
-            GoToFrontPage();
+            Log.Information($"Login successful for {loggedInUser.UserName}");
+
+            // 2. Daten in den globalen AppContext schreiben
+            appContext.User.UserName = loggedInUser.UserName;
+            appContext.User.IsAdmin = loggedInUser.IsAdmin;
+            appContext.User.Id = loggedInUser.Id;
+
+            // 3. Rollenprüfung: Wo soll der User hin?
+            if (appContext.User.IsAdmin)
+            {
+                Log.Information("User is Admin. Navigating to AdminView...");
+                _navigation.Navigate(Page.Admin); // Registriere Page.Admin in deinem NavigationService
+            }
+            else
+            {
+                Log.Information("User is Standard User. Navigating to FrontPage...");
+                _navigation.Navigate(Page.Front);
+            }
         }
         else
         {
-            Log.Warning("Login failed");
-            
+            Log.Warning("Login failed: Wrong username or password");
+            // ToDo: Fehlermeldung in der UI anzeigen
         }
-
-        Log.Logger.Information("LoginCommand");
     }
 
     public async Task UpdateContexts(AppContext appContext)

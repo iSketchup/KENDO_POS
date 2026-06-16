@@ -10,13 +10,21 @@ public partial class RegisterViewModel : ViewModelBase, IContext
 {
     [ObservableProperty]
     private string _username = "";
+
     [ObservableProperty]
     private string _password = "";
 
-    private AppContext appContext;
+    // NEU: Eigenschaft für die Checkbox im UI
+    [ObservableProperty]
+    private bool _isAdminRegistration;
 
+    private AppContext appContext;
     private readonly NavigationService _navigation;
 
+    public RegisterViewModel(NavigationService navigation)
+    {
+        _navigation = navigation;
+    }
 
     [RelayCommand]
     public void SwitchLogin()
@@ -27,42 +35,44 @@ public partial class RegisterViewModel : ViewModelBase, IContext
     [RelayCommand]
     public async Task RegisterCommand()
     {
-        bool ok = await Userhandling.AddUser(Username, Password);
-        
+        bool ok = false;
+
+        // NEU: Unterscheidung zwischen Admin und User
+        if (IsAdminRegistration)
+        {
+            // Leitet die Anfrage an deinen Admin-Router im Python-Backend weiter
+            ok = await AdminHandling.AddAdmin(Username, Password);
+        }
+        else
+        {
+            // Leitet die Anfrage an deinen normalen User-Router weiter
+            ok = await Userhandling.AddUser(Username, Password);
+        }
+
         if (ok)
         {
-            Log.Information("Register successful");
-            // ToDo: userdaten in Appcontext schreiben
-            ////appContext = new AppContext(user);
-            //User user = new User { UserName = Username, passwd = Password };
+            Log.Information($"Register successful. IsAdmin: {IsAdminRegistration}");
 
-            //appContext = new AppContext(user);
-
+            // Hier den AppContext mit dem Namen füllen
             appContext.User.UserName = Username;
 
-            //Navigieren zur nächsten Seite
+            // Wenn du das IsAdmin Flag auch im C# Model hast, kannst du es hier gleich setzen:
+            appContext.User.IsAdmin = IsAdminRegistration;
+
             GoToFrontPage();
         }
         else
         {
             Log.Warning("Register failed");
-            // TODO: Fehlermeldung anzeigen.
-            
+            // TODO: Fehlermeldung in der UI anzeigen (z.B. über ein weiteres ObservableProperty)
         }
+    }
 
-        Log.Logger.Information("LoginCommand");
-    }
-    
-    public RegisterViewModel(NavigationService navigation)
-    {
-        _navigation = navigation;
-    }
-    
     public async Task UpdateContexts(AppContext appContext)
     {
         this.appContext = appContext;
     }
-    
+
     private void GoToFrontPage()
     {
         _navigation.Navigate(Page.Front);

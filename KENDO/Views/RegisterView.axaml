@@ -13,7 +13,10 @@
         <TextBox FontSize="28">Registrate</TextBox>
         <TextBox Watermark="Username" Text="{Binding Username}"/>
         <TextBox Watermark="Password" PasswordChar="*" Text="{Binding Password}"/>
-        <Button Content="Submit" Command="{Binding RegisterCommand }"/>
+
+		<CheckBox Content="Register as Admin" IsChecked="{Binding IsAdminRegistration}"/>
+
+		<Button Content="Submit" Command="{Binding RegisterCommand }"/>
 		<Button Content="You already have an account?" Command="{Binding SwitchLogin }"/>
     </StackPanel>
 </UserControl>
