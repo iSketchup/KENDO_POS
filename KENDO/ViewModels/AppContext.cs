@@ -16,7 +16,8 @@ public  class AppContext
 
     public  AppContext(User? currentUser)
     {
-        User = currentUser;
+        // Aktueller oder leerer User
+        User = currentUser ?? new User();
     }
 
     public async Task FakeInit()

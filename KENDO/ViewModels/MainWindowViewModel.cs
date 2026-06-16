@@ -74,8 +74,6 @@ public partial class MainWindowViewModel : ViewModelBase
     public async Task InitContext(bool fake, Uri? ba)
     {
         // ToDo: User hier reinladen
-        User user = new User(1, "auraman");
-        
         if (!fake)
         {
             
@@ -90,13 +88,14 @@ public partial class MainWindowViewModel : ViewModelBase
                 BaseAddress = ba
             }; 
 
-            AppContext = new AppContext(user); 
+            // Ein leerer User wird erstellt.
+            AppContext = new AppContext(new User());  
             await AppContext.AsyncInit(client);
             
         }
         else
         {
-            AppContext = new AppContext(user);
+            AppContext = new AppContext(new User());
             await AppContext.FakeInit();
         }
         

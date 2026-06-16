@@ -56,7 +56,6 @@ public partial class UserViewModel : ViewModelBase, IContext
         else
         {
             Log.Warning("Login failed");
-            // TODO: Fehlermeldung anzeigen.
             
         }
 
