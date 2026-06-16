@@ -1,10 +1,11 @@
-﻿using System;
-using System.Net.Http;
+﻿using BCrypt.Net;
 using Main.Models;
+using Serilog;
+using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using System.Linq;
-using BCrypt.Net;
+using System.Net.Http;
+using System.Threading.Tasks;
 
 namespace Main.ViewModels;
 
@@ -118,9 +119,10 @@ public static class Userhandling
         User? user = await apiService.GetLogin(name, pswd);
         
         // Ist ein Passwort vorhanden?
-        if (user == null || string.IsNullOrWhiteSpace(user.passwd)) return false;
+        if (user == null || string.IsNullOrWhiteSpace(user.passwd)) return null;
         else
         {
+            Log.Debug($"API-Response erhalten. User: {user.UserName}, IsAdmin im Frontend: {user.is_admin}");
             bool ok = BCrypt.Net.BCrypt.Verify(pswd, user.passwd);
             return ok ? user : null; // falls ok dann user falls !ok => false
         }

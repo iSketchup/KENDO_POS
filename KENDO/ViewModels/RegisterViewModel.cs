@@ -57,7 +57,7 @@ public partial class RegisterViewModel : ViewModelBase, IContext
             appContext.User.UserName = Username;
 
             // Wenn du das IsAdmin Flag auch im C# Model hast, kannst du es hier gleich setzen:
-            appContext.User.IsAdmin = IsAdminRegistration;
+            appContext.User.is_admin = IsAdminRegistration;
 
             GoToFrontPage();
         }

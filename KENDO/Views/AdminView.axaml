@@ -1,0 +1,18 @@
+﻿<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="Main.Views.AdminView">
+    <Grid Margin="20" RowDefinitions="Auto, *">
+        <StackPanel Grid.Row="0" Spacing="5" Margin="0,0,0,20">
+            <TextBlock FontSize="26" FontWeight="Bold" Foreground="Red" Text="Admin Dashboard"/>
+            <TextBlock FontSize="14" Text="Hier kannst du das System verwalten und User kontrollieren."/>
+        </StackPanel>
+        
+        <Border Grid.Row="1" Background="#1e1e1e" CornerRadius="8" Padding="15">
+            <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" 
+                       Text="[Hier die Liste aus AdminHandling.GetAllUserNames() einbinden]"/>
+        </Border>
+    </Grid>
+</UserControl>

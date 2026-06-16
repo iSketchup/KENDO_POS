@@ -20,6 +20,7 @@ public partial class MainWindowViewModel : ViewModelBase
     private UserViewModel UserViewModel { get; set; }
     private RegisterViewModel RegisterViewModel { get; set; }
     private UserChangeViewModel UserChangeViewModel { get; set; } 
+    private AdminViewModel AdminViewModel { get; set; }
     
     private AppContext AppContext { get; set; }
 
@@ -60,6 +61,7 @@ public partial class MainWindowViewModel : ViewModelBase
         UserViewModel = new UserViewModel(_navigation);
         RegisterViewModel = new RegisterViewModel(_navigation);
         UserChangeViewModel = new UserChangeViewModel(_navigation);
+        AdminViewModel = new AdminViewModel(_navigation);
         
         
         
@@ -103,6 +105,7 @@ public partial class MainWindowViewModel : ViewModelBase
         await UserViewModel.UpdateContexts(AppContext);
         await UserChangeViewModel.UpdateContexts(AppContext);
         await RegisterViewModel.UpdateContexts(AppContext);
+        await AdminViewModel.UpdateContexts(AppContext);
     }
 
     
@@ -115,7 +118,7 @@ public partial class MainWindowViewModel : ViewModelBase
             Page.Register => RegisterViewModel,
             Page.Login => UserViewModel,
             Page.Change => UserChangeViewModel,
-            Page.Admin => AdminView,
+            Page.Admin => AdminViewModel,
             _ => CurrentViewModel
         };
     }   
