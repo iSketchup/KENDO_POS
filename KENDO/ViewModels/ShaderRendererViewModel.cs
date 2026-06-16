@@ -24,6 +24,10 @@ public partial class ShaderRendererViewModel : ViewModelBase
 
     [ObservableProperty] private ObservableCollection<ImageDropSlotViewModel> _imageDropSlots = new() ;
     
+    public LikesViewModel Like { get; } = new LikesViewModel(); 
+    
+    public TagViewModel Tag { get; } = new TagViewModel(); 
+    
     
     private readonly NavigationService _navigation;
     
@@ -117,6 +121,8 @@ public partial class ShaderRendererViewModel : ViewModelBase
 
         
         Document.Text = Shader.ShaderCode;
+        Like.SetContext(Shader.ShaderLikes);
+        Tag.SetContext(Shader.ShaderTags);
     }
     
     [RelayCommand]

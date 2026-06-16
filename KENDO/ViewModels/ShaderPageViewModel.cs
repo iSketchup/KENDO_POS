@@ -31,7 +31,7 @@ public partial class ShaderPageViewModel : ViewModelBase
         Shader shader = await AppContext.GetShaderById(shader_id);
         
         ShaderRenderer.UpdateContexts(shader);
-        Comments.SetContext(shader);
+        Comments.SetContext(shader, appContext);
     }
     
     [RelayCommand]

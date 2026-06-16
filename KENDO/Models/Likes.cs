@@ -5,7 +5,8 @@ namespace Main.Models;
 
 public class Likes
 {
-
+    private ILikeRepository _likeRepository;
+    
     public int amount { get; set; } = 0;
     public bool liked_by_u {get; set;} = false;
 

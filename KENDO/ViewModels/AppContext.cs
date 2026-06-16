@@ -13,6 +13,12 @@ public  class AppContext
     
     private IShaderRepository shaderRepository;
     
+    private ILikeRepository likeRepository;
+    
+    private ICommentRepository commentRepository;
+    
+    private ITagRepository tagRepository;
+    
 
     public  AppContext(User? currentUser)
     {
@@ -24,6 +30,9 @@ public  class AppContext
     {
         Log.Logger.Information("Loading fake repo");
         shaderRepository = new ShaderRepositoryFake();
+        likeRepository = new LikeRepositoryFake();
+        commentRepository = new CommentRepositoryFake();
+        tagRepository = new TagRepositoryFake();
 
     }
 
@@ -31,6 +40,9 @@ public  class AppContext
     {
         Log.Logger.Information("Loading rest repo");
         shaderRepository = new ShaderRepositoryRest(client);
+        likeRepository = new LikeRepositoryRest(client);
+        commentRepository = new CommentRepositoryRest(client);
+        tagRepository = new TagRepositoryRest(client);
         
 
     }
@@ -59,4 +71,10 @@ public  class AppContext
     {
         return (await shaderRepository.CreateNewShader(User, shaderName)).ShaderId;
     }
+
+    public async Task CreateComment(int shader_id, string CommentText)
+    {
+        await commentRepository.AddComment(User.Id, shader_id, CommentText);
+    }
+    
 }

@@ -8,6 +8,7 @@ namespace Main.ViewModels;
 
 public partial class CommentListViewModel : ViewModelBase
 {
+    AppContext appContext { get; set; }
     public Shader? Shader { get; private set; }
     public LikesViewModel Like { get; } = new LikesViewModel(); 
     
@@ -23,27 +24,16 @@ public partial class CommentListViewModel : ViewModelBase
             Shader.ShaderComments.Add(new Comment($"{textBox.Text}", $"Username"));
             textBox.Clear();
         }
-    }
-    
-    [RelayCommand]
-    public void DeleteTag(string tag)
-    {
-        Shader.ShaderTags.Remove(tag);
-    }
-    
-    [RelayCommand]
-    public void AddTag(TextBox textBox)
-    {
-        if (textBox.Text != "")
-        {
-            Shader.ShaderTags.Add(textBox.Text);
-            textBox.Clear();
-        }
+
+        appContext.CreateComment(Shader.ShaderId, textBox.Text);
 
     }
     
-    public void SetContext(Shader s)
+
+    
+    public void SetContext(Shader s, AppContext app)
     {
+        appContext = app;
         this.Shader = s;
         Like.SetContext(Shader.ShaderLikes);  
         Tag.SetContext(Shader.ShaderTags);

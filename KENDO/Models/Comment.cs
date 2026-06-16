@@ -1,34 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
+using System.Linq;
+using System.Net.Http;
+using System.Net.Http.Json;
+using System.Threading.Tasks;
+using Serilog;
 
 namespace Main.Models;
 
+// DTOs matching the FastAPI Pydantic models
+
 public class Comment
 {
-    public int Id { get; private set; }
-    public string Text { get; private set; }
-    public string Author { get; private set; }
-    
-    
-    public Comment(string text, string author)
-    {
-        Text = text;
-        Author = author;
-    }
-    
-    public Comment(string text, string author, int id) : base()
-    {
-        Id = id;
-    }
+    public string CommentText { get; set; }
+    public string CommentAuthor { get; set; }
+   
 
-    public override string ToString()
+    public Comment(string commentText, string commentAuthor)
     {
-        return $"{Author}: {Text}";
-    }
-
-    public static ObservableCollection<Comment> LoadComments(int ShaderID)
-    {
-        throw new NotImplementedException();
+        CommentText = commentText;
+        CommentAuthor = commentAuthor;
     }
 }

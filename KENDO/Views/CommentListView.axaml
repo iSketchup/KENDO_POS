@@ -9,8 +9,15 @@
 
     <DockPanel Margin="10 5 10 10">
         <DockPanel DockPanel.Dock="Top" MaxHeight="45" Margin="0 0 0 5">
-            <ContentControl Content="{Binding Like}" />
-            <ContentControl Content="{Binding Tag}" />
+            <ContentControl DockPanel.Dock="Left" Content="{Binding Like}" />
+                <TextBox FontSize="8" MaxHeight="15" MaxWidth="50"
+                         Margin="0 0 5 0" Name="TagTextBox" DockPanel.Dock="Left" />
+                <Button Content="Add" FontSize="10" Margin="0 0 5 0"
+                        Command="{Binding Tag.AddTag}"
+                        CommandParameter="{Binding ElementName=TagTextBox }" HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        DockPanel.Dock="Left" />
+            <ContentControl DockPanel.Dock="Left" Content="{Binding Tag}" />
         </DockPanel>
         <Grid DockPanel.Dock="Top" Margin="0 5 0 0 ">
             <Grid.ColumnDefinitions>
@@ -37,8 +44,8 @@
                                 BorderBrush="Blue" BorderThickness="1"
                                 Padding="5">
                             <StackPanel>
-                                <TextBlock Text="{Binding Author}" FontSize="18" MaxWidth="200000" Margin="10,1,1,1" />
-                                <TextBlock Text="{Binding Text}" FontSize="15" />
+                                <TextBlock Text="{Binding CommentAuthor}" FontSize="18" MaxWidth="200000" Margin="10,1,1,1" />
+                                <TextBlock Text="{Binding CommentText}" FontSize="15" />
                             </StackPanel>
                         </Border>
                     </DataTemplate>
