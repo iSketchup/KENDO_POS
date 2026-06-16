@@ -52,22 +52,9 @@ public class ApiService
             new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
     }
 
-    // Holt alle User vom Server
-    public async Task<List<User>> GetAllUsers()
-    {
-        var response = await _client.GetAsync("/api/users"); // Dein API-Pfad
-        if (response.IsSuccessStatusCode)
-        {
-            return await response.Content.ReadFromJsonAsync<List<User>>() ?? new List<User>();
-        }
-        return new List<User>();
-    }
-
-    // Diese Methoden ermöglichen die Verbindung auf den Endpunkt
-    // mit den jeweiligen Methoden.
+    
     public async Task CreateUser(User user)
     {
-        // Bevor man etwas einfügt, wird auf eine Antwort der API gewartet
         HttpResponseMessage result = await _client.PostAsJsonAsync("user/", user);
         result.EnsureSuccessStatusCode();
     }
@@ -95,6 +82,17 @@ public class ApiService
         // Bevor man etwas einfügt, wird auf eine Antwort der API gewartet
         HttpResponseMessage result = await _client.PostAsJsonAsync("admin/", user);
         result.EnsureSuccessStatusCode();
+    }
+    
+
+    public async Task<List<User>> GetAllUsers()
+    {
+        var response = await _client.GetAsync("/admin"); 
+        if (response.IsSuccessStatusCode)
+        {
+            return await response.Content.ReadFromJsonAsync<List<User>>() ?? new List<User>();
+        }
+        return new List<User>();
     }
 
     // ******************

@@ -37,15 +37,12 @@ public partial class RegisterViewModel : ViewModelBase, IContext
     {
         bool ok = false;
 
-        // NEU: Unterscheidung zwischen Admin und User
         if (IsAdminRegistration)
         {
-            // Leitet die Anfrage an deinen Admin-Router im Python-Backend weiter
             ok = await AdminHandling.AddAdmin(Username, Password);
         }
         else
         {
-            // Leitet die Anfrage an deinen normalen User-Router weiter
             ok = await Userhandling.AddUser(Username, Password);
         }
 
@@ -53,13 +50,20 @@ public partial class RegisterViewModel : ViewModelBase, IContext
         {
             Log.Information($"Register successful. IsAdmin: {IsAdminRegistration}");
 
-            // Hier den AppContext mit dem Namen füllen
             appContext.User.UserName = Username;
 
-            // Wenn du das IsAdmin Flag auch im C# Model hast, kannst du es hier gleich setzen:
             appContext.User.is_admin = IsAdminRegistration;
-
-            GoToFrontPage();
+            
+            if (appContext.User.is_admin)
+            {
+                Log.Information("User is Admin. Navigating to AdminView...");
+                _navigation.Navigate(Page.Admin);
+            }
+            else
+            {
+                Log.Information("User is Standard User. Navigating to FrontPage...");
+                _navigation.Navigate(Page.Front);
+            }
         }
         else
         {

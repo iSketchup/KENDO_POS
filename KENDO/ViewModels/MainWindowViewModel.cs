@@ -121,6 +121,12 @@ public partial class MainWindowViewModel : ViewModelBase
             Page.Admin => AdminViewModel,
             _ => CurrentViewModel
         };
+        
+        if (page == Page.Admin)
+        {
+            // Startet das Laden im Hintergrund, sobald man auf die Admin-Seite wechselt
+            _ = AdminViewModel.LoadAllUsers(); 
+        }
     }   
     
 

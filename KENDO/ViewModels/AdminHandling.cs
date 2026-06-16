@@ -5,12 +5,13 @@ using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using Serilog;
 
 namespace Main.ViewModels
 {
     public static class AdminHandling
     {
-        // Nutzt denselben HttpClient oder ApiService wie dein Userhandling
+        
         private static HttpClient client = new HttpClient(new SocketsHttpHandler
         {
             PooledConnectionLifetime = TimeSpan.FromMinutes(15),
@@ -26,16 +27,18 @@ namespace Main.ViewModels
         private static ApiService apiService = new ApiService(client);
 
 
-        // Holt alle User, gibt aber NUR die Benutzernamen zurück.
+        
         public async static Task<List<string>> GetAllUserNames()
         {
             List<User> allUsers = await apiService.GetAllUsers();
 
-
+            // **** KI Teil
+            // Hier habe ich gefragt, wie ich am besten alle User gefiltert nach dem Namen zurückgeben kann.
             return allUsers
                 .Where(u => !string.IsNullOrEmpty(u.UserName))
                 .Select(u => u.UserName!)
                 .ToList();
+            // ****
         }
 
         public async static Task<bool> AddAdmin(string name, string pswd)
@@ -43,10 +46,10 @@ namespace Main.ViewModels
             if (string.IsNullOrWhiteSpace(pswd) || pswd.Length < 8)
                 return false;
 
-            // 1. Passwort hashen (genau wie beim User)
+            
             string hashed = BCrypt.Net.BCrypt.HashPassword(pswd);
 
-            // 2. User-Objekt bauen
+            
             User newAdmin = new User { UserName = name, passwd = hashed, is_admin = true };
 
             await apiService.CreateAdmin(newAdmin);
@@ -54,32 +57,15 @@ namespace Main.ViewModels
             return true;
         }
 
-        // Holt alle Benutzernamen, die einen bestimmten Suchbegriff enthalten.
-        public async static Task<List<string>> FilterUsersByName(string searchTerm)
-        {
-            if (string.IsNullOrWhiteSpace(searchTerm))
-            {
-                return await GetAllUserNames();
-            }
-
-            List<User> allUsers = await apiService.GetAllUsers();
-
-            return allUsers
-                .Where(u => u.UserName != null && u.UserName.Contains(searchTerm, StringComparison.OrdinalIgnoreCase))
-                .Select(u => u.UserName!)
-                .ToList();
-        }
-
-
-        // Löscht einen User anhand seines Namens.
+        /* Ist im AdminViewModel selbst implementiert
         public async static Task<bool> DeleteUserByAdmin(string username)
         {
             if (string.IsNullOrEmpty(username))
                 return false;
 
-            // Nutzt die bestehende Löschlogik deiner API
+            
             await apiService.DeleteUser(username);
             return true;
-        }
+        }*/
     }
 }

@@ -76,7 +76,7 @@ public static class Userhandling
     public async static Task<bool> ChangeUser(string username, string name, string newpswd)
     {
         string PasswordToSend;
-        // Das veränderte Passwort sollte auch gehasht werden
+        
         if (newpswd == "")
         {
             PasswordToSend = "";

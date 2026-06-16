@@ -12,7 +12,7 @@ namespace Main.Tests
         public async Task VaidateLogin_ExistingUser_ReturnsNotNull()
         {
 
-            bool result = await Userhandling.ValidateLogin("Daniel", "123HTL12");
+            User? result = await Userhandling.ValidateLogin("Daniel", "123HTL12");
 
 
             Assert.NotNull(result);
@@ -23,10 +23,10 @@ namespace Main.Tests
         public async Task VaidateLogin_UnknownUser_ReturnsNull()
         {
 
-            bool result = await Userhandling.ValidateLogin("Walser", "DanHTLWal");
+            User? result = await Userhandling.ValidateLogin("Walser", "DanHTLWal");
 
 
-            Assert.False(result);
+            Assert.Null(result);
         }
 
 
@@ -81,10 +81,10 @@ namespace Main.Tests
             try
             {
                 await Userhandling.ChangeUser(originalUsername, newUsername, password);
-                bool loginWithOldName = await Userhandling.ValidateLogin(originalUsername, password);
+                User? loginWithOldName = await Userhandling.ValidateLogin(originalUsername, password);
 
 
-                Assert.False(loginWithOldName);
+                Assert.Null(loginWithOldName);
             }
             finally
             {
