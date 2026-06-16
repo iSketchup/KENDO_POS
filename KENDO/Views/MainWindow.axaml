@@ -22,24 +22,32 @@
             <ColumnDefinition Width="*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="20*"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="20*"></RowDefinition>
         </Grid.RowDefinitions>
         
-        <ContentControl Grid.Row="0" Content="{Binding CurrentViewModel}"></ContentControl>
+        <ContentControl Grid.Row="1" Content="{Binding CurrentViewModel}"></ContentControl>
         
-        <StackPanel Grid.Row="1" Orientation="Horizontal" Background="CadetBlue">
-            <Button Background="PowderBlue" Content="Remove Account"
-                    Command="{Binding RemoveUser}"></Button>
-            <Button Background="PowderBlue" Content="Change Accountdata"
-                    Command="{Binding ChangeUser}"></Button>
-            <Button Background="PowderBlue" Content="LogOut"
-                    Command="{Binding LogOut}"></Button>
-            <Button Background="PowderBlue" Content="Front Page"
+        
+
+        <StackPanel Grid.Row="0" Orientation="Horizontal" Background="CadetBlue">
+            
+            <Button Content="Account">
+                <Button.Flyout>
+                    <MenuFlyout>
+                        <MenuItem Header="Delete Acount" Command="{Binding RemoveUser}"/>
+                        <MenuItem Header="Change User" Command="{Binding ChangeUser}"/>
+                        <MenuItem Header="Sign out" Command="{Binding LogOut}"/>
+                    </MenuFlyout>
+                </Button.Flyout>
+            </Button>
+
+            
+            <Button Content="Front Page"
                     Command="{Binding GoToFrontPage}"></Button>
-            <Label Content="Use Fake Repo: " Background="PowderBlue" Height="32"
+            <Label Content="Use Fake Repo: " Height="32"
                    VerticalContentAlignment="Center"></Label>
-            <ToggleSwitch Background="PowderBlue"
+            <ToggleSwitch
                           IsChecked="{Binding UseFakeRepo}" 
                           Command="{Binding SwitchLoaded}"></ToggleSwitch>
             
