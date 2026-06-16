@@ -9,7 +9,7 @@
 
     
     
-    <StackPanel Margin="10" Spacing="15" Background="AliceBlue">
+    <StackPanel Margin="10" Spacing="15">
         <TextBox FontSize="28">Login</TextBox>
         <TextBox Watermark="Username" Text="{Binding Username}"/>
         <TextBox Watermark="Password" PasswordChar="*" Text="{Binding Password}"/>
