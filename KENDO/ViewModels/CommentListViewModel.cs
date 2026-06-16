@@ -19,9 +19,9 @@ public partial class CommentListViewModel : ViewModelBase
     [RelayCommand]
     public void AddComment(TextBox textBox)
     {
-        if (textBox.Text.Length > 0)
+        if (!string.IsNullOrWhiteSpace(textBox?.Text))
         {
-            Shader.ShaderComments.Add(new Comment($"{textBox.Text}", $"Username"));
+            Shader.ShaderComments.Add(new Comment($"{textBox.Text}", appContext.User.UserName));
             textBox.Clear();
         }
 

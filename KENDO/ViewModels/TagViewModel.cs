@@ -9,7 +9,7 @@ namespace Main.ViewModels;
 
 public partial class TagViewModel : ViewModelBase
 {
-    public ObservableCollection<string> shaderTags { get; set; }
+    public ObservableCollection<string> shaderTags { get; set; } = new();
     
     public TagViewModel() { }
     
@@ -20,9 +20,9 @@ public partial class TagViewModel : ViewModelBase
     }
     
     [RelayCommand]
-    public void AddTag(TextBox textBox)
+    public void AddTag(TextBox? textBox)
     {
-        if (textBox.Text.Length > 0)
+        if (!string.IsNullOrWhiteSpace(textBox?.Text))
         {
             shaderTags.Add(textBox.Text);
             textBox.Clear();
