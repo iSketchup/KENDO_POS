@@ -42,12 +42,14 @@ public partial class UserViewModel : ViewModelBase, IContext
         
         User? loggedInUser = await Userhandling.ValidateLogin(Username, Password);
 
-        if (loggedInUser != null)
+        if (loggedInUser.UserName != null && loggedInUser.passwd != null)
         {
             Log.Information($"Login successful for {loggedInUser.UserName}");
 
-            appContext.User = loggedInUser;
-
+            //appContext.User = loggedInUser;
+            appContext.User.UserName = loggedInUser.UserName;
+            appContext.User.is_admin = loggedInUser.is_admin;
+            
             
             if (appContext.User.is_admin)
             {
