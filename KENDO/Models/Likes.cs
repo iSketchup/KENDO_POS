@@ -3,12 +3,12 @@ using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace Main.Models;
 
-public class Likes
+public partial class Likes : ObservableObject
 {
     private ILikeRepository _likeRepository;
-    
-    public int amount { get; set; } = 0;
-    public bool liked_by_u {get; set;} = false;
+
+    [ObservableProperty] public int _amount = 0;
+    [ObservableProperty] public bool liked_by_u = false;
 
     public static Uri LikedTexture = new ("avares://Main/Assets/heart-solid.png");
 
@@ -22,7 +22,7 @@ public class Likes
     
     public Likes(int amount, bool liked_by_u)
     {
-        this.amount = amount;
+        this.Amount = amount;
         this.liked_by_u = liked_by_u;
     }
     
