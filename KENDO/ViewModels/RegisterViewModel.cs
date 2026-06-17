@@ -39,24 +39,26 @@ public partial class RegisterViewModel : ViewModelBase, IContext
     [RelayCommand]
     public async Task RegisterCommand()
     {
+        // Falls man einen Admin erstellen möchte
+        // (Umgeht das Problem, dass man sich noch separat anmelden muss)
+        User? sign_user = new User();
 
-
-        bool ok = false;
 
         if (IsAdminRegistration)
         {
-            ok = await AdminHandling.AddAdmin(Username, Password);
+            sign_user = await AdminHandling.AddAdmin(Username, Password);
         }
         else
         {
-            ok = await Userhandling.AddUser(Username, Password);
+            sign_user = await Userhandling.AddUser(Username, Password);
         }
 
-        if (ok)
+        if (sign_user != null)
         {
             Log.Information($"Register successful. IsAdmin: {IsAdminRegistration}");
 
             appContext.User.UserName = Username;
+            appContext.User.Id = sign_user.Id;
 
             appContext.User.is_admin = IsAdminRegistration;
             

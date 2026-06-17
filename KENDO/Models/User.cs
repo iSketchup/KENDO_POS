@@ -5,13 +5,17 @@ namespace Main.Models;
 
 public partial class User : ObservableObject
 {
-    public int Id { get; set; }
+    [property: JsonPropertyName("UserId")]
+    [ObservableProperty]
+    private int _id;
+    //public int Id { get; set; }
 
     [property: JsonPropertyName("UserName")]
     [ObservableProperty]
     private string? _userName;
 
     [ObservableProperty]
+    [property: JsonPropertyName("passwd")]
     private string? _passwd;
 
 

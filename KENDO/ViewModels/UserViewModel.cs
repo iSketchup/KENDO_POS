@@ -49,6 +49,7 @@ public partial class UserViewModel : ViewModelBase, IContext
 
             //appContext.User = loggedInUser;
             appContext.User.UserName = loggedInUser.UserName;
+            appContext.User.Id = loggedInUser.Id;
             appContext.User.is_admin = loggedInUser.is_admin;
             
             

@@ -51,15 +51,19 @@ public class ApiService
         string body = await response.Content.ReadAsStringAsync();
 
         return JsonSerializer.Deserialize<User>(
-            body,
-            new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+            body);
     }
 
     
-    public async Task CreateUser(User user)
+    public async Task<User?> CreateUser(User user)
     {
         HttpResponseMessage result = await _client.PostAsJsonAsync("user/", user);
         result.EnsureSuccessStatusCode();
+
+        string body = await result.Content.ReadAsStringAsync();
+        return JsonSerializer.Deserialize<User>(
+            body,
+            new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
     }
 
 

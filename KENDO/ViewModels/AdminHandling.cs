@@ -41,10 +41,10 @@ namespace Main.ViewModels
             // ****
         }
 
-        public async static Task<bool> AddAdmin(string name, string pswd)
+        public async static Task<User?> AddAdmin(string name, string pswd)
         {
             if (string.IsNullOrWhiteSpace(pswd) || pswd.Length < 8)
-                return false;
+                return null;
 
             
             string hashed = BCrypt.Net.BCrypt.HashPassword(pswd);
@@ -54,7 +54,7 @@ namespace Main.ViewModels
 
             await apiService.CreateAdmin(newAdmin);
 
-            return true;
+            return newAdmin;
         }
 
         /* Ist im AdminViewModel selbst implementiert

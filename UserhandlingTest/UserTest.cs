@@ -52,10 +52,10 @@ namespace Main.Tests
 
 
             
-            bool added = await Userhandling.AddUser(user.UserName, user.Passwd);
+            User? added = await Userhandling.AddUser(user.UserName, user.Passwd);
 
 
-            Assert.True(added);
+            Assert.NotNull(added);
         }
 
         // Prüft ob das Login funktioniert

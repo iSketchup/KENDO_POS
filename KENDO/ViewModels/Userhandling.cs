@@ -45,30 +45,30 @@ public static class Userhandling
     private static ApiService apiService = new ApiService(client);
 
 
-    public async static Task<bool> AddUser(string name, string pswd)
+    public async static Task<User?> AddUser(string name, string pswd)
     {
         if (pswd == null)
-            return false;
+            return null;
 
         if (pswd.Length < 8)
-            return false;
+            return null;
         
         
         User? gettingUser = await apiService.GetUserInfo(name, pswd);
         
         if (gettingUser.UserName == name)
         {
-            return false;
+            return null;
         }
 
         string hashed = BCrypt.Net.BCrypt.HashPassword(pswd);
         User user =  new User { UserName = name, Passwd = hashed };
-        
-
-        await apiService.CreateUser(user);
 
 
-        return true;
+        User? createdUser = await apiService.CreateUser(user);
+
+
+        return createdUser;
     }
 
 
