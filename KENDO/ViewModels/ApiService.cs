@@ -36,8 +36,7 @@ public class ApiService
         string body = await response.Content.ReadAsStringAsync();
 
         return JsonSerializer.Deserialize<User>(
-            body,
-            new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+            body);
     }
 
     public async Task<User?> GetUserInfo(string username, string passwd)
