@@ -123,7 +123,7 @@ public partial class ShaderRendererViewModel : ViewModelBase
 
         
         Document.Text = Shader.ShaderCode;
-        Like.SetContext(Shader);
+        Like.SetContext(Shader, appContext);
         Tag.SetContext(Shader, appContext);
     }
     

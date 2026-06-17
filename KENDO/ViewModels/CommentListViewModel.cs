@@ -36,7 +36,7 @@ public partial class CommentListViewModel : ViewModelBase
     {
         appContext = app;
         this.Shader = s;
-        Like.SetContext(Shader);  
+        Like.SetContext(Shader, appContext);  
         Tag.SetContext(Shader, appContext);
     }
 }
