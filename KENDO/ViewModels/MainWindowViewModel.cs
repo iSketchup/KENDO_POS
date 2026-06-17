@@ -91,7 +91,7 @@ public partial class MainWindowViewModel : ViewModelBase
             }; 
 
             // Ein leerer User wird erstellt.
-            AppContext = new AppContext(new User(1,"seba"));  
+            AppContext = new AppContext(new User());  
             await AppContext.AsyncInit(client);
             
         }
@@ -165,6 +165,7 @@ public partial class MainWindowViewModel : ViewModelBase
     public void GoToFrontPage()
     {
         Navigate(Page.Front);
+        FrontPageViewModel.UpdateContexts(AppContext);
         Log.Logger.Information("Page switched");
     }
 

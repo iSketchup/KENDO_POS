@@ -36,13 +36,13 @@ public partial class LikesViewModel : ViewModelBase
         {
             Shader.ShaderLikes.liked_by_u = false;
             LikeTexture = new Bitmap(Helper.OpenImageStream(Likes.NotLikedTexture));
-            Shader.ShaderLikes.amount -= 1;
+            Shader.ShaderLikes.Amount -= 1;
         }
         else
         {
             Shader.ShaderLikes.liked_by_u = true;
             LikeTexture = new Bitmap(Helper.OpenImageStream(Likes.LikedTexture));
-            Shader.ShaderLikes.amount += 1;
+            Shader.ShaderLikes.Amount += 1;
         }
     }
     
