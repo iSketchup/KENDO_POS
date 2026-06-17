@@ -29,7 +29,7 @@ namespace Main.Tests
             User user = new User
             {
                 UserName = "Test",
-                passwd = "Hallo123"
+                Passwd = "Hallo123"
             };
 
             bool deleted = await Userhandling.DeleteUser(user.UserName);
@@ -47,12 +47,12 @@ namespace Main.Tests
             User user = new User
             {
                 UserName = "Test",
-                passwd = "Hallo123"
+                Passwd = "Hallo123"
             };
 
 
             
-            bool added = await Userhandling.AddUser(user.UserName, user.passwd);
+            bool added = await Userhandling.AddUser(user.UserName, user.Passwd);
 
 
             Assert.True(added);

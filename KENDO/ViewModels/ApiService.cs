@@ -34,7 +34,7 @@ public class ApiService
 
     public async Task<User?> GetLogin(string userName, string passwd)
     {
-        User user = new User() { UserName = userName, passwd = passwd };
+        User user = new User() { UserName = userName, Passwd = passwd };
 
         HttpResponseMessage response = await _client.PostAsJsonAsync("user/login", user);
         string body = await response.Content.ReadAsStringAsync();

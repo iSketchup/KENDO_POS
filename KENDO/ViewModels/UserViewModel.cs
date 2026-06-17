@@ -41,7 +41,7 @@ public partial class UserViewModel : ViewModelBase, IContext
     {        
         User? loggedInUser = await Userhandling.ValidateLogin(Username, Password);
 
-        if (loggedInUser.UserName != null && loggedInUser.passwd != null)
+        if (loggedInUser.UserName != null && loggedInUser.Passwd != null)
         {
             Log.Information($"Login successful for {loggedInUser.UserName}");
 

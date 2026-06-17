@@ -27,49 +27,7 @@
         </Grid.RowDefinitions>
         
         <ContentControl Grid.Row="1" Content="{Binding CurrentViewModel}"></ContentControl>
-        
-        
-
-        <StackPanel Grid.Row="0" Orientation="Horizontal" Background="CadetBlue">
-            
-            <Button Content="Account">
-                <Button.Flyout>
-                    <MenuFlyout>
-                        <MenuItem Header="Delete Acount" Command="{Binding RemoveUser}"/>
-                        <MenuItem Header="Change User" Command="{Binding ChangeUser}"/>
-                        <MenuItem Header="Sign out" Command="{Binding LogOut}"/>
-                    </MenuFlyout>
-                </Button.Flyout>
-            </Button>
-
-            
-            <Button Content="New Shader">
-                <Button.Flyout>
-                    <Flyout>
-                        <StackPanel Spacing="8" MinWidth="180">
-                            <TextBox
-                                x:Name="TBNewShaderName"
-                                PlaceholderText="Shader Name" />
-
-                            <Button
-                                Content="Create"
-                                Command="{Binding CreateNewShaderCommand}"
-                                CommandParameter="{Binding Text, ElementName=TBNewShaderName}" />
-                        </StackPanel>
-                    </Flyout>
-                </Button.Flyout>
-            </Button>
-            
-            <Button Content="Front Page"
-                    Command="{Binding GoToFrontPage}"/>
-			<Button Content="Dashboard"
-                    Command="{Binding GoToDashboard}"/>
-            <Label Content="Use Fake Repo: " Height="32"
-                   VerticalContentAlignment="Center"/>
-            <ToggleSwitch
-                          IsChecked="{Binding UseFakeRepo}" 
-                          Command="{Binding SwitchLoaded}"/>
-            
-        </StackPanel>
+        <views:TabBarView Grid.Row="0"></views:TabBarView>
+   
     </Grid>
 </Window>

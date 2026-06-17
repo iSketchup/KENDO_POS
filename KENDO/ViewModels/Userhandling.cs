@@ -62,7 +62,7 @@ public static class Userhandling
         }
 
         string hashed = BCrypt.Net.BCrypt.HashPassword(pswd);
-        User user =  new User { UserName = name, passwd = hashed };
+        User user =  new User { UserName = name, Passwd = hashed };
         
 
         await apiService.CreateUser(user);
@@ -92,7 +92,7 @@ public static class Userhandling
         }
 
 
-        User updatedUserPass = new User { UserName = name, passwd = PasswordToSend };
+        User updatedUserPass = new User { UserName = name, Passwd = PasswordToSend };
 
 
         await apiService.ChangeUser(username, updatedUserPass);

@@ -1,16 +1,24 @@
 ﻿using System.Text.Json.Serialization;
+using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace Main.Models;
 
-public class User
+public partial class User : ObservableObject
 {
-    
     public int Id { get; set; }
 
-    [JsonPropertyName("UserName")] // Dient dazu den username korrekt an den Server weiterzugeben
-                // Das Json Property UserName wird für den Server auf die Alias geändert (UserName ...)
-    public string? UserName { get; set; }
-    public string? passwd { get; set; }
+    [NotifyPropertyChangedFor(nameof(LoggedIn))]
+    [property: JsonPropertyName("UserName")]
+    [ObservableProperty]
+    private string? _userName;
+
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(LoggedIn))]
+    private string? _passwd;
+
+    public bool LoggedIn =>
+        !string.IsNullOrWhiteSpace(UserName) &&
+        !string.IsNullOrWhiteSpace(Passwd);
 
     [JsonPropertyName("is_admin")]
     public bool is_admin { get; set; }

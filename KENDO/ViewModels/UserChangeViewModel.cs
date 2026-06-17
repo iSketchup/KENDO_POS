@@ -33,7 +33,7 @@ public partial class UserChangeViewModel: ViewModelBase
             Log.Information("Userdata was changed");
 
             appContext.User.UserName = Username;
-            appContext.User.passwd = Password;
+            appContext.User.Passwd = Password;
 
             Homepage();
         }

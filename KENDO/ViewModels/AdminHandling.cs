@@ -50,7 +50,7 @@ namespace Main.ViewModels
             string hashed = BCrypt.Net.BCrypt.HashPassword(pswd);
 
             
-            User newAdmin = new User { UserName = name, passwd = hashed, is_admin = true };
+            User newAdmin = new User { UserName = name, Passwd = hashed, is_admin = true };
 
             await apiService.CreateAdmin(newAdmin);
 
