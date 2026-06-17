@@ -171,16 +171,40 @@ public partial class MainWindowViewModel : ViewModelBase
 
 
     [RelayCommand]
+    public void GoToDashboard()
+    {
+        if (AppContext.User.is_admin == true)
+        {
+            CurrentViewModel = AdminViewModel;
+        }
+    }
+
+
+    [RelayCommand]
     public void LogOut()
     {
         if (CurrentViewModel is FrontPageViewModel)
+        {
+            AppContext.User.is_admin = false;
             CurrentViewModel = UserViewModel;
+        }
         else if (CurrentViewModel is UserViewModel)
+        {
+            AppContext.User.is_admin = false;
             CurrentViewModel = UserViewModel;
+        }
+            
         else if (CurrentViewModel is RegisterViewModel)
+        {
+            AppContext.User.is_admin = false;
             CurrentViewModel = RegisterViewModel;
+        }
         else
+        {
+            AppContext.User.is_admin = false;
             CurrentViewModel = UserViewModel;
+        }
+            
 
 
         Log.Logger.Information("Back to the Login");
