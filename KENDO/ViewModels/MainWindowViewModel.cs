@@ -21,8 +21,8 @@ public partial class MainWindowViewModel : ViewModelBase
     private RegisterViewModel RegisterViewModel { get; set; }
     private UserChangeViewModel UserChangeViewModel { get; set; } 
     private AdminViewModel AdminViewModel { get; set; }
-    
-    private AppContext AppContext { get; set; }
+
+    [ObservableProperty] private AppContext _appContext;
 
     // private string CurrentUserName => AppContext?.User.UserName ?? "";
 
@@ -31,7 +31,7 @@ public partial class MainWindowViewModel : ViewModelBase
     private Uri baseadress = new("https://localhost:8000/");
     
     private readonly NavigationService _navigation = new();
-
+    
 
     public MainWindowViewModel()
     {
@@ -65,7 +65,7 @@ public partial class MainWindowViewModel : ViewModelBase
         
         
         
-        await InitContext(UseFakeRepo,baseadress);
+        //await InitContext(UseFakeRepo,baseadress);
         
         CurrentViewModel = UserViewModel;
         //CurrentViewModel = FrontPageViewModel;

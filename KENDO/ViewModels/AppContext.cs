@@ -2,14 +2,15 @@
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
+using CommunityToolkit.Mvvm.ComponentModel;
 using Main.Models;
 using Serilog;
 
 namespace Main.ViewModels;
 
-public  class AppContext
+public partial  class AppContext : ObservableObject
 {
-    public User User { get; set; }
+    [ObservableProperty] private User _user;
     
     private IShaderRepository shaderRepository;
     
@@ -18,6 +19,7 @@ public  class AppContext
     private ICommentRepository commentRepository;
     
     private ITagRepository tagRepository;
+    
     
 
     public  AppContext(User? currentUser)

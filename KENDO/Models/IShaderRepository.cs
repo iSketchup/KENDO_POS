@@ -95,7 +95,15 @@ public class ShaderRepositoryRest : IShaderRepository
             Log.Logger.Error("PUT failed {StatusCode}: {Body}", result.StatusCode, body);
         }
 
-        result.EnsureSuccessStatusCode();
+        try
+        {
+
+            result.EnsureSuccessStatusCode();
+        }
+        catch (HttpRequestException e)
+        {
+            Log.Logger.Fatal("User is not allowed to write this"+ e);
+        }
     }
 
     public async Task<Shader> CreateNewShader(User user, string ShaderName)

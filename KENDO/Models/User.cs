@@ -7,18 +7,13 @@ public partial class User : ObservableObject
 {
     public int Id { get; set; }
 
-    [NotifyPropertyChangedFor(nameof(LoggedIn))]
     [property: JsonPropertyName("UserName")]
     [ObservableProperty]
     private string? _userName;
 
     [ObservableProperty]
-    [NotifyPropertyChangedFor(nameof(LoggedIn))]
     private string? _passwd;
 
-    public bool LoggedIn =>
-        !string.IsNullOrWhiteSpace(UserName) &&
-        !string.IsNullOrWhiteSpace(Passwd);
 
     [JsonPropertyName("is_admin")]
     public bool is_admin { get; set; }

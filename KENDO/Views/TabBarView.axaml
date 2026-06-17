@@ -23,7 +23,7 @@
             
             
             
-        <StackPanel x:Name="Visibility" IsVisible="True" Orientation="Horizontal">
+        <StackPanel x:Name="Visibility"  Orientation="Horizontal">
                 
             <Button Content="New Shader">
                 <Button.Flyout>
@@ -47,7 +47,7 @@
             
         </StackPanel>
             
-        <StackPanel Orientation="Horizontal" IsVisible="{Binding AppContext.User.LoggedIn}">
+        <StackPanel Orientation="Horizontal">
             <Label Content="Use Fake Repo: " Height="32"
                    VerticalContentAlignment="Center" />
             <ToggleSwitch
