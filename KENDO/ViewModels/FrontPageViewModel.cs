@@ -18,6 +18,7 @@ public partial class FrontPageViewModel: ViewModelBase, IContext
    public FilterSelectionViewModel FilterSelection { get; set; } = new();
    
    
+   
    [ObservableProperty] 
    private ObservableCollection<ShaderRendererViewModel> _shaderPages = new ();
     

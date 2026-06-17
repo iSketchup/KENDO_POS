@@ -13,5 +13,24 @@
         <FluentTheme />
         
         <StyleInclude Source="avares://AvaloniaEdit/Themes/Fluent/AvaloniaEdit.xaml" />
+        
+           
+        <!-- ChatGPT generierte Button classe-->
+        <Style Selector="Button.iconButton">
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="Padding" Value="0" />
+            <Setter Property="Cursor" Value="Hand" />
+
+            <Setter Property="Template">
+                <ControlTemplate>
+                    <ContentPresenter Content="{TemplateBinding Content}"
+                                      HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                      VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
+                </ControlTemplate>
+            </Setter>
+        </Style>
     </Application.Styles>
+          
+             
 </Application>

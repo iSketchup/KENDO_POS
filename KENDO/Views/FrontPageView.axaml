@@ -38,16 +38,20 @@
                         <StackPanel Orientation="Vertical"  Margin="25" >
                             <ContentControl Width="300" Height="300" Content="{Binding}"/>
                             
-                            <Label>
-                                <Label.Content>
-                                    <MultiBinding StringFormat="Shader : {0},      Likes : {1}">
-                                        <Binding Path="Shader.ShaderName"></Binding>
-                                        <Binding Path="Shader.ShaderLikes"></Binding>
-                                    </MultiBinding>
-                                </Label.Content>
-                            </Label>
+                            <Label Content="{Binding Shader.ShaderName}" FontWeight="DemiBold"></Label>
+                            <DockPanel>
+                                <Label DockPanel.Dock="Left" FontStyle="Oblique">
+                                    <Label.Content>
+                                        <!-- Binding Path="Shader.ShaderLikes.Amount"></-->
+                                        Author: sigma
+                                    </Label.Content>
+                                </Label>
+                                
+                                <ContentControl DockPanel.Dock="Right" Content="{Binding Like}"></ContentControl>
+                                
+                            </DockPanel>
                             
-                            <!--<v:LikesView DataContext="{Binding Shader.ShaderLikes}"/>-->
+                            
                             <v:TagView DataContext="{Binding Tag}"/>
                         </StackPanel>
                     </Button> 
