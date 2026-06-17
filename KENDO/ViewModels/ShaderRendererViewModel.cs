@@ -121,8 +121,7 @@ public partial class ShaderRendererViewModel : ViewModelBase
 
         
         Document.Text = Shader.ShaderCode;
-        Like.SetContext(Shader.ShaderLikes);
-        Tag.SetContext(Shader.ShaderTags);
+        Like.SetContext(Shader);
     }
     
     [RelayCommand]

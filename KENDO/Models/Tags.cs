@@ -8,19 +8,4 @@ public class Tags
 {
     public List<string> Taglist { get; set; }
 
-    public void Add(string TagName)
-    {
-        
-    }
-
-    public void LoadAll()
-    {
-        throw new NotImplementedException();
-    }
-
-    public static ObservableCollection<string> LoadByShader(int ShaderID)
-    {
-        throw new NotImplementedException();
-    }
-    
 }

@@ -11,6 +11,6 @@
             <Image Source="{Binding LikeTexture}"  
                    Stretch="Uniform" VerticalAlignment="Center" HorizontalAlignment="Center"/>
         </Button>
-        <Label Content="{Binding Like.amount}" />
+        <Label Content="{Binding Shader.ShaderLikes.amount}" />
     </StackPanel>
 </UserControl>

@@ -77,4 +77,14 @@ public  class AppContext
         await commentRepository.AddComment(User.Id, shader_id, CommentText);
     }
     
+    public async Task CreatTag(string tagName)
+    {
+        await tagRepository.CreateTag(tagName);
+    }
+
+    public async Task<Tag> CreateAndAssignTag(string tagName, int shaderId, int userId)
+    {
+        return (await tagRepository.CreateAndAssignTag(tagName, shaderId, userId));
+    }
+    
 }

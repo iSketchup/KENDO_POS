@@ -14,7 +14,8 @@ public partial class Shader : ObservableObject
     public string ShaderName {get; set;}
     public string ShaderCode {get; set;}
     public ObservableCollection<string> ShaderTags {get; set;} = new();
-    public  Likes ShaderLikes {get; set;} = new(); 
+    
+    [ObservableProperty] public  Likes _shaderLikes = new(); 
     public ObservableCollection<Comment> ShaderComments { get; set; } = new();
     
     [ObservableProperty] public ObservableCollection<Uri> _shaderTextures = new();

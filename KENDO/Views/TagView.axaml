@@ -10,7 +10,7 @@
     <Panel>
         
         <ScrollViewer HorizontalScrollBarVisibility="Auto" DockPanel.Dock="Left">
-            <ItemsRepeater ItemsSource="{Binding shaderTags}">
+            <ItemsRepeater ItemsSource="{Binding shader.ShaderTags}">
                 <ItemsRepeater.Layout>
                     <StackLayout Spacing="5"
                                  Orientation="Horizontal" />

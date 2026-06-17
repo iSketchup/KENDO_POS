@@ -8,35 +8,21 @@ using Serilog;
 
 namespace Main.Models;
 
-// DTOs matching the FastAPI Pydantic models
 public class LikeCreateDto
 {
     public int user_id { get; set; }
     public int shader_id { get; set; }
 }
 
-public class LikeStatusDto
+public class LikeDto
 {
     public int amount { get; set; }
     public bool liked_by_u { get; set; }
 }
 
-// Domain model used elsewhere in the app
-public class LikeStatus
-{
-    public int Amount { get; set; }
-    public bool LikedByUser { get; set; }
-
-    public LikeStatus(int amount, bool likedByUser)
-    {
-        Amount = amount;
-        LikedByUser = likedByUser;
-    }
-}
-
 public interface ILikeRepository
 {
-    Task<LikeStatus> GetLikes(int userId, int shaderId);
+    Task<Likes> GetLikes(int userId, int shaderId);
     Task ToggleLike(int userId, int shaderId);
     Task RemoveLike(int userId, int shaderId);
 }
@@ -45,17 +31,16 @@ public class LikeRepositoryRest : ILikeRepository
 {
     private HttpClient client;
 
-    // Dependency Injection
     public LikeRepositoryRest(HttpClient client)
     {
         this.client = client;
     }
 
-    public async Task<LikeStatus> GetLikes(int userId, int shaderId)
+    public async Task<Likes> GetLikes(int userId, int shaderId)
     {
-        var dto = await client.GetFromJsonAsync<LikeStatusDto>($"{userId}/{shaderId}/likes/");
+        var dto = await client.GetFromJsonAsync<LikeDto>($"{userId}/{shaderId}/likes/");
 
-        return new LikeStatus(dto.amount, dto.liked_by_u);
+        return new Likes(dto.amount, dto.liked_by_u);
     }
 
     public async Task ToggleLike(int userId, int shaderId)
@@ -77,9 +62,7 @@ public class LikeRepositoryRest : ILikeRepository
     public async Task RemoveLike(int userId, int shaderId)
     {
         var dto = new LikeCreateDto { user_id = userId, shader_id = shaderId };
-
-        // HttpClient.DeleteAsync has no body overload, but your endpoint
-        // requires a LikesCreate body, so we build the request manually.
+        
         var request = new HttpRequestMessage(HttpMethod.Delete, $"{userId}/{shaderId}/likes/")
         {
             Content = JsonContent.Create(dto)
@@ -107,12 +90,12 @@ public class LikeRepositoryFake : ILikeRepository
         (1, 2),
     };
 
-    public Task<LikeStatus> GetLikes(int userId, int shaderId)
+    public Task<Likes> GetLikes(int userId, int shaderId)
     {
         var amount = likes.Count(l => l.ShaderId == shaderId);
         var likedByUser = likes.Any(l => l.ShaderId == shaderId && l.UserId == userId);
 
-        return Task.FromResult(new LikeStatus(amount, likedByUser));
+        return Task.FromResult(new Likes(amount, likedByUser));
     }
 
     public Task ToggleLike(int userId, int shaderId)
