@@ -8,14 +8,19 @@
             x:DataType="vm:FilterSelectionViewModel">
     <Grid>
         <Grid.RowDefinitions>
+            <RowDefinition Height="2*" />
             <RowDefinition Height="*" />
             <RowDefinition Height="*" />
+            <RowDefinition Height="2*" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
-        <Label  >Sort By Likes</Label>
-        <ToggleSwitch Grid.Row="0" Grid.Column="1"></ToggleSwitch>
+        <Label Grid.Row="1" Grid.Column="0">Sort By Likes </Label>
+        <ToggleSwitch Grid.Row="1" Grid.Column="1"></ToggleSwitch>
+        <Label Grid.Row="2" Grid.Column="0">Filter By Username</Label>
+        <TextBox PlaceholderText="Username" Grid.Row="2" Grid.Column="1"></TextBox>
+        
     </Grid>
 </UserControl>
