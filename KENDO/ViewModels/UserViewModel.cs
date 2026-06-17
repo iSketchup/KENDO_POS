@@ -1,13 +1,14 @@
-﻿using System;
-using System.Globalization;
-using System.Threading.Tasks;
-using Avalonia.Data.Converters;
+﻿using Avalonia.Data.Converters;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Main.Models;
 using Main.Views;
 using OpenTK.Graphics.ES11;
 using Serilog;
+using System;
+using System.Globalization;
+using System.Net.Http;
+using System.Threading.Tasks;
 
 namespace Main.ViewModels;
 
@@ -17,7 +18,9 @@ public partial class UserViewModel : ViewModelBase, IContext
     private string _username = "";
     [ObservableProperty]
     private string _password = "";
-    
+    [ObservableProperty]
+    private string? url;
+
     private AppContext appContext;
 
     
@@ -36,9 +39,41 @@ public partial class UserViewModel : ViewModelBase, IContext
     }
 
 
+
+    private async Task<bool> ConnectToServer()
+    {
+        if (!Uri.TryCreate(Url, UriKind.Absolute, out var uri))
+            return false;
+
+        var handler = new HttpClientHandler();
+
+        handler.ServerCertificateCustomValidationCallback =
+            HttpClientHandler.DangerousAcceptAnyServerCertificateValidator;
+
+        HttpClient client = new HttpClient(handler)
+        {
+            BaseAddress = uri
+        };
+
+        Userhandling.SetApiService(new ApiService(client));
+
+        appContext = new AppContext(new User());
+        await appContext.AsyncInit(client);
+
+        return true;
+    }
+
+
     [RelayCommand]
     public async Task LoginCommand()
-    {        
+    {
+        if (!await ConnectToServer())
+        {
+            Log.Warning("Ungültige Server-URL");
+            return;
+        }
+
+
         User? loggedInUser = await Userhandling.ValidateLogin(Username, Password);
 
         if (loggedInUser.UserName != null && loggedInUser.passwd != null)
@@ -67,6 +102,7 @@ public partial class UserViewModel : ViewModelBase, IContext
             
         }
     }
+
 
     public async Task UpdateContexts(AppContext appContext)
     {
