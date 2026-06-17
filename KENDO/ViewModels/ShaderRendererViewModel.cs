@@ -24,7 +24,8 @@ public partial class ShaderRendererViewModel : ViewModelBase
 
     [ObservableProperty] private ObservableCollection<ImageDropSlotViewModel> _imageDropSlots = new() ;
     
-    public LikesViewModel Like { get; } = new LikesViewModel(); 
+    [ObservableProperty]
+    private LikesViewModel _like = new LikesViewModel(); 
     
     public TagViewModel Tag { get; } = new TagViewModel(); 
     
