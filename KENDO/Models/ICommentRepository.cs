@@ -11,6 +11,7 @@ namespace Main.Models;
 
 public partial class CommentCreateDto
 {
+    [System.Text.Json.Serialization.JsonPropertyName("CommentText")]
     public string CommentText { get; set; }
 }
 
@@ -58,7 +59,7 @@ public class CommentRepositoryRest : ICommentRepository
 
     public async Task AddComment(int userId, int shaderId, string commentText)
     {
-        var dto = new CommentCreateDto { CommentText = commentText};
+        var dto = new CommentCreateDto { CommentText = commentText };
 
         var result = await client.PostAsJsonAsync($"{userId}/{shaderId}/comments/", dto);
 

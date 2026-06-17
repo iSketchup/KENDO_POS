@@ -91,7 +91,7 @@ public partial class MainWindowViewModel : ViewModelBase
             }; 
 
             // Ein leerer User wird erstellt.
-            AppContext = new AppContext(new User());  
+            AppContext = new AppContext(new User(1,"seba"));  
             await AppContext.AsyncInit(client);
             
         }

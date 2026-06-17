@@ -47,7 +47,7 @@
                                 </Label.Content>
                             </Label>
                             
-                            <v:LikesView DataContext="{Binding Shader.ShaderLikes}"/>
+                            <!--<v:LikesView DataContext="{Binding Shader.ShaderLikes}"/>-->
                             <v:TagView DataContext="{Binding Tag}"/>
                         </StackPanel>
                     </Button> 

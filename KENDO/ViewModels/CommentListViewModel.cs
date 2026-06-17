@@ -8,7 +8,7 @@ namespace Main.ViewModels;
 
 public partial class CommentListViewModel : ViewModelBase
 {
-    AppContext appContext { get; set; }
+    private AppContext appContext { get; set; }
     public Shader? Shader { get; private set; }
     public LikesViewModel Like { get; } = new LikesViewModel(); 
     
@@ -22,10 +22,11 @@ public partial class CommentListViewModel : ViewModelBase
         if (!string.IsNullOrWhiteSpace(textBox?.Text))
         {
             Shader.ShaderComments.Add(new Comment($"{textBox.Text}", appContext.User.UserName));
+            appContext.CreateComment(Shader.ShaderId, textBox.Text);
             textBox.Clear();
         }
 
-        appContext.CreateComment(Shader.ShaderId, textBox.Text);
+        
 
     }
     
@@ -35,7 +36,7 @@ public partial class CommentListViewModel : ViewModelBase
     {
         appContext = app;
         this.Shader = s;
-        Like.SetContext(Shader.ShaderLikes);  
-        Tag.SetContext(Shader.ShaderTags);
+        Like.SetContext(Shader);  
+        Tag.SetContext(Shader, appContext);
     }
 }

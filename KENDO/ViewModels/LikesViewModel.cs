@@ -10,17 +10,16 @@ namespace Main.ViewModels;
 
 public partial class LikesViewModel : ViewModelBase
 { 
-    [ObservableProperty] 
-    private Likes _like;
+    public Shader? Shader { get; private set; }
 
     [ObservableProperty] private Bitmap _likeTexture;
     
     public LikesViewModel() { }
     
-    public void SetContext(Likes like)
+    public void SetContext(Shader shader)
     {
-        Like = like;
-        if (Like.liked_by_u)
+        Shader = shader;
+        if (Shader.ShaderLikes.liked_by_u)
         {
             LikeTexture = new Bitmap(Helper.OpenImageStream(Likes.LikedTexture));
         }
@@ -33,17 +32,17 @@ public partial class LikesViewModel : ViewModelBase
     [RelayCommand]
     public void UserLiked()
     {
-        if (Like.liked_by_u)
+        if (Shader.ShaderLikes.liked_by_u)
         {
-            Like.liked_by_u = false;
+            Shader.ShaderLikes.liked_by_u = false;
             LikeTexture = new Bitmap(Helper.OpenImageStream(Likes.NotLikedTexture));
-            Like.amount -= 1;
+            Shader.ShaderLikes.amount -= 1;
         }
         else
         {
-            Like.liked_by_u = true;
+            Shader.ShaderLikes.liked_by_u = true;
             LikeTexture = new Bitmap(Helper.OpenImageStream(Likes.LikedTexture));
-            Like.amount += 1;
+            Shader.ShaderLikes.amount += 1;
         }
     }
     
