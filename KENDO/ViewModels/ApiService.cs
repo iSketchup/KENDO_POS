@@ -8,22 +8,26 @@ using System.Text;
 using System.Collections.Generic;
 using System.IO.Pipelines;
 using System.Threading.Tasks;
+using Serilog;
 
 namespace Main.ViewModels;
 
 public class ApiService
 {
-    private string apiKey = Environment.GetEnvironmentVariable("KENDO_KEY");
+    private string apiKey;
     private HttpClient _client;
 
     public ApiService(HttpClient client)
     {
         _client = client;
 
+        apiKey = Environment.GetEnvironmentVariable("KENDO_KEY");
         if (string.IsNullOrEmpty(apiKey))
         {
-            throw new Exception("Api Key was nof found");
+            Log.Logger.Fatal("API_KEY environment variable not Found");
+            throw new KeyNotFoundException();
         }
+
 
         _client.DefaultRequestHeaders.Add("X-API-KEY", apiKey);
     }

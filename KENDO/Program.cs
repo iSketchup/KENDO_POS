@@ -1,5 +1,6 @@
 ﻿using Avalonia;
 using System;
+using DotNetEnv;
 using Avalonia.OpenGL;
 
 namespace Main;
@@ -17,6 +18,7 @@ sealed class Program
 
     public static AppBuilder BuildAvaloniaApp()
     {
+        Env.TraversePath().Load();
         var builder = AppBuilder.Configure<App>()
             .UsePlatformDetect()
             .WithInterFont()
