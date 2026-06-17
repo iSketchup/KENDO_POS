@@ -18,9 +18,6 @@ public partial class UserViewModel : ViewModelBase, IContext
     private string _username = "";
     [ObservableProperty]
     private string _password = "";
-    [ObservableProperty]
-    private string? url;
-
     private AppContext appContext;
 
     
@@ -38,41 +35,11 @@ public partial class UserViewModel : ViewModelBase, IContext
         GoToRegister();
     }
 
-
-
-    private async Task<bool> ConnectToServer()
-    {
-        if (!Uri.TryCreate(Url, UriKind.Absolute, out var uri))
-            return false;
-
-        var handler = new HttpClientHandler();
-
-        handler.ServerCertificateCustomValidationCallback =
-            HttpClientHandler.DangerousAcceptAnyServerCertificateValidator;
-
-        HttpClient client = new HttpClient(handler)
-        {
-            BaseAddress = uri
-        };
-
-        Userhandling.SetApiService(new ApiService(client));
-
-        appContext = new AppContext(new User());
-        await appContext.AsyncInit(client);
-
-        return true;
-    }
-
+    
 
     [RelayCommand]
     public async Task LoginCommand()
     {
-        if (!await ConnectToServer())
-        {
-            Log.Warning("Ungültige Server-URL");
-            return;
-        }
-
 
         User? loggedInUser = await Userhandling.ValidateLogin(Username, Password);
 

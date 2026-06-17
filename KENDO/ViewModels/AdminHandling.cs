@@ -21,7 +21,7 @@ namespace Main.ViewModels
             }
         })
         {
-            BaseAddress = new Uri("https://127.0.0.1:8000")
+            BaseAddress = MainWindowViewModel.baseadress
         };
 
         private static ApiService apiService = new ApiService(client);
