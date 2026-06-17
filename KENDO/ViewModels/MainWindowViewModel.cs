@@ -251,6 +251,7 @@ public partial class MainWindowViewModel : ViewModelBase
         
         int newShaderId = await AppContext.CreateNewShader(shaderName);
         
+        FrontPageViewModel.UpdateContexts(AppContext);
         NavigateId(newShaderId);
     }
 

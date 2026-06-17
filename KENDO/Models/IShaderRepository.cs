@@ -6,6 +6,7 @@ using System.Net.Http;
 using System.Net.Http.Json;
 using System.Text.Json;
 using System.Threading.Tasks;
+using System.Web;
 using Serilog;
 
 namespace Main.Models;
@@ -16,7 +17,13 @@ public interface IShaderRepository
     Task<Shader> GetShaderById(User user, int id);
     Task UpdateShader(int uid, Shader shader);
     Task<Shader> CreateNewShader(User user, string ShaderName);
-    
+
+    Task <List<Shader>> GetShadersByFilter(
+        int userId,
+        string? shaderUserName = null,
+        string? shaderName = null,
+        IEnumerable<string>? tags = null);
+
 }
 
 public class ShaderRepositoryRest : IShaderRepository
@@ -136,6 +143,46 @@ public class ShaderRepositoryRest : IShaderRepository
             new(dto.ShaderTextures.Select(t => t.Texture64))
         ) ?? null;
     }
+    
+    // AI how do i get shaders with filters
+    
+    public async Task<List<Shader>> GetShadersByFilter(
+        int userId,
+        string? shaderUserName = null,
+        string? shaderName = null,
+        IEnumerable<string>? tags = null)
+    {
+        var query = HttpUtility.ParseQueryString(string.Empty);
+
+        if (!string.IsNullOrWhiteSpace(shaderUserName))
+            query["shader_user_name"] = shaderUserName;
+
+        if (!string.IsNullOrWhiteSpace(shaderName))
+            query["shader_name"] = shaderName;
+
+        if (tags is not null)
+        {
+            foreach (var tag in tags)
+                query.Add("tags", tag);
+        }
+
+        var url = $"{userId}/shaders/filter/?{query}";
+
+        var dtos = await client.GetFromJsonAsync<List<ShaderGetDto>>(url);
+
+        return dtos?.Select(MapToShader).ToList() ?? new List<Shader>();
+    }
+
+    private static Shader MapToShader(ShaderGetDto dto) =>
+        Shader.ShaderFactory(
+            dto.ShaderId,
+            dto.ShaderCode,
+            dto.ShaderName,
+            new(dto.ShaderTags),
+            dto.ShaderLikes,
+            new(dto.ShaderComments),
+            new(dto.ShaderTextures.Select(t => t.Texture64))
+        );
 
 }
 
@@ -219,6 +266,15 @@ public class ShaderRepositoryFake : IShaderRepository
     }
 
     public Task<Shader> CreateNewShader(User user, string ShaderName)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<List<Shader>> GetShadersByFilter(
+        int userId,
+        string? shaderUserId = null,
+        string? shaderName = null,
+        IEnumerable<string>? tags = null)
     {
         throw new NotImplementedException();
     }

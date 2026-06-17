@@ -44,8 +44,7 @@ public interface ITagRepository
 public class TagRepositoryRest : ITagRepository
 {
     private HttpClient client;
-
-    // Dependency Injection
+    
     public TagRepositoryRest(HttpClient client)
     {
         this.client = client;

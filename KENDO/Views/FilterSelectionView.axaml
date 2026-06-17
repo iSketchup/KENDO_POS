@@ -11,6 +11,7 @@
             <RowDefinition Height="2*" />
             <RowDefinition Height="*" />
             <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
             <RowDefinition Height="2*" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
@@ -20,7 +21,10 @@
         <Label Grid.Row="1" Grid.Column="0">Sort By Likes </Label>
         <ToggleSwitch Grid.Row="1" Grid.Column="1"></ToggleSwitch>
         <Label Grid.Row="2" Grid.Column="0">Filter By Username</Label>
-        <TextBox PlaceholderText="Username" Grid.Row="2" Grid.Column="1"></TextBox>
-        
+        <TextBox PlaceholderText="Username" Name="ShaderUserTextBox" Grid.Row="2" Grid.Column="1"></TextBox>
+        <Label Grid.Row="3" Grid.Column="0">Filter By Username</Label>
+        <TextBox PlaceholderText="Shadername" Name="ShaderNameTextBox" Grid.Row="2" Grid.Column="1"></TextBox>
+        <Button Grid.Row="4" Grid.Column="1" Command="{Binding SetFilterParametersCommand}"
+                CommandParameter="{Binding ElementName=ShaderUserTextBox}">Filter</Button>
     </Grid>
 </UserControl>

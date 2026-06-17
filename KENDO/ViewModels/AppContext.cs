@@ -49,10 +49,17 @@ public partial  class AppContext : ObservableObject
 
     }
 
+    public async Task<List<Shader>> GetShadersByFilter(string? shaderUsername = null, string? shaderName = null, IEnumerable<string>? tags = null)
+    {
+        return await shaderRepository.GetShadersByFilter(User.Id,shaderUsername); 
+    }
+    
     public async Task<List<Shader>> GetAllShaders()
     {
-        return await shaderRepository.GetAllShaders(User);   
+        return await shaderRepository.GetAllShaders(User); 
     }
+    
+    
 
     public async Task<Shader?> GetShaderById(int shaderid)
     {
