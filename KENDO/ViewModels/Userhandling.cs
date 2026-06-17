@@ -42,8 +42,12 @@ public static class Userhandling
         BaseAddress = new Uri("https://127.0.0.1:8000")
     };
 
-    private static ApiService apiService = new ApiService(client);
-    
+    public static ApiService ApiService { get; private set; }
+
+    public static void SetApiService(ApiService apiService)
+    {
+        ApiService = apiService;
+    }
 
     public async static Task<bool> AddUser(string name, string pswd)
     {
@@ -54,7 +58,7 @@ public static class Userhandling
             return false;
         
         
-        User? gettingUser = await apiService.GetUserInfo(name, pswd);
+        User? gettingUser = await ApiService.GetUserInfo(name, pswd);
 
         if (gettingUser.UserName == name)
         {
@@ -65,7 +69,7 @@ public static class Userhandling
         User user =  new User { UserName = name, Passwd = hashed };
         
 
-        await apiService.CreateUser(user);
+        await ApiService.CreateUser(user);
 
 
         return true;
@@ -95,7 +99,7 @@ public static class Userhandling
         User updatedUserPass = new User { UserName = name, Passwd = PasswordToSend };
 
 
-        await apiService.ChangeUser(username, updatedUserPass);
+        await ApiService.ChangeUser(username, updatedUserPass);
         return true;
     }
 
@@ -108,7 +112,7 @@ public static class Userhandling
         if (username == null)
             return false;
         
-        await apiService.DeleteUser(username);
+        await ApiService.DeleteUser(username);
         return true;
     }
 
@@ -116,7 +120,7 @@ public static class Userhandling
 
     public async static Task<User?> ValidateLogin(string name, string pswd)
     {
-        User? user = await apiService.GetLogin(name, pswd);
+        User? user = await ApiService.GetLogin(name, pswd);
 
         // Ist ein Passwort vorhanden?
         //if (user == null || string.IsNullOrWhiteSpace(user.passwd)) return null;

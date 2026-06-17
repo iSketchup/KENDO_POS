@@ -1,8 +1,10 @@
-﻿using System.Threading.Tasks;
-using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Main.Models;
 using Serilog;
+using System;
+using System.Net.Http;
+using System.Threading.Tasks;
 
 namespace Main.ViewModels;
 
@@ -13,6 +15,8 @@ public partial class RegisterViewModel : ViewModelBase, IContext
 
     [ObservableProperty]
     private string _password = "";
+    [ObservableProperty]
+    private string? url;
 
     // NEU: Eigenschaft für die Checkbox im UI
     [ObservableProperty]
@@ -32,9 +36,44 @@ public partial class RegisterViewModel : ViewModelBase, IContext
         GoLogin();
     }
 
+
+
+    private async Task<bool> ConnectToServer()
+    {
+        if (!Uri.TryCreate(Url, UriKind.Absolute, out var uri))
+            return false;
+
+        var handler = new HttpClientHandler();
+
+        handler.ServerCertificateCustomValidationCallback =
+            HttpClientHandler.DangerousAcceptAnyServerCertificateValidator;
+
+        HttpClient client = new HttpClient(handler)
+        {
+            BaseAddress = uri
+        };
+
+        Userhandling.SetApiService(new ApiService(client));
+
+        appContext = new AppContext(new User());
+        await appContext.AsyncInit(client);
+
+        return true;
+    }
+
+
+
     [RelayCommand]
     public async Task RegisterCommand()
     {
+        if (!await ConnectToServer())
+        {
+            Log.Warning("Ungültige Server-URL");
+            return;
+        }
+
+
+
         bool ok = false;
 
         if (IsAdminRegistration)
