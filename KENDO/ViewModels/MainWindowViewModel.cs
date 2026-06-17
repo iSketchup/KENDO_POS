@@ -165,6 +165,7 @@ public partial class MainWindowViewModel : ViewModelBase
     public void GoToFrontPage()
     {
         Navigate(Page.Front);
+        FrontPageViewModel.UpdateContexts(AppContext);
         Log.Logger.Information("Page switched");
     }
 
