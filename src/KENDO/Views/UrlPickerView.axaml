@@ -1,0 +1,37 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="clr-namespace:Main.ViewModels"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="Main.Views.UrlPickerView"           
+             x:DataType="vm:UrlPickerViewModel">
+    
+    <Grid>
+        
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+			<RowDefinition Height="20*"></RowDefinition>
+        </Grid.RowDefinitions>
+        
+        <Label Grid.Row="0" Content="Pick Url"></Label>
+        <TextBox Grid.Row="1" PlaceholderText="IP: 127.0.0.1" Text="{Binding Url}"></TextBox>
+        <TextBox Grid.Row="2" PlaceholderText="Port: 8000" Text="{Binding Port}"></TextBox>
+
+		<TextBlock Grid.Row="4" FontSize="24" Text="{Binding ErrorMessage}"
+           Foreground="Red"
+           HorizontalAlignment="Center"
+           Margin="0,10,0,0"
+           TextWrapping="Wrap"/>
+        
+        <Button Grid.Row="3" Content="Submit" Command="{Binding Submit}" IsDefault="True"/>
+        
+    
+    </Grid>
+</UserControl>

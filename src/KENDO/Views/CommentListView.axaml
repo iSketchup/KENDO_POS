@@ -1,0 +1,76 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="clr-namespace:Main.ViewModels"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="Main.Views.CommentListView"
+             x:DataType="vm:CommentListViewModel">
+
+    <DockPanel Margin="10 5 10 10">
+        <DockPanel DockPanel.Dock="Top" MaxHeight="45" Margin="0 0 0 5">
+            <ContentControl DockPanel.Dock="Left" Content="{Binding Like}" />
+                <TextBox FontSize="8" MaxHeight="15" MaxWidth="50"
+                         Margin="0 0 5 0" Name="TagTextBox" DockPanel.Dock="Left" >
+                                      
+                    <TextBox.KeyBindings>
+                        <KeyBinding Gesture="Enter"
+                                    Command="{Binding Tag.AddTag}"
+                                    CommandParameter="{Binding ElementName=TagTextBox }" />
+                    </TextBox.KeyBindings>
+                </TextBox>
+                         
+                <Button Content="Add" FontSize="10" Margin="0 0 5 0"
+                        Command="{Binding Tag.AddTag}"
+                        CommandParameter="{Binding ElementName=TagTextBox }" HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        DockPanel.Dock="Left" />
+            <ContentControl DockPanel.Dock="Left" Content="{Binding Tag}" />
+        </DockPanel>
+        <Grid DockPanel.Dock="Top" Margin="0 5 0 0 ">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="3*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <TextBox CornerRadius="5" x:Name="CommentTextTextBox"
+                     PlaceholderText="Add comment Text"
+                     BorderBrush="Blue" BorderThickness="1"
+                     Padding="5"
+                     MinLines="2" TextWrapping="Wrap"
+                     Grid.Column="0" >
+                
+                
+                <TextBox.KeyBindings>
+                    <KeyBinding Gesture="Enter"
+                                Command="{Binding AddCommentCommand}" 
+                                CommandParameter="{Binding ElementName=CommentTextTextBox }"/>
+                </TextBox.KeyBindings>
+                
+            </TextBox>
+                     
+                     
+            <Button Name="CommentButton" Content="Comment"
+                    Command="{Binding AddCommentCommand}"
+                    CommandParameter="{Binding ElementName=CommentTextTextBox }" Grid.Column="1"
+                    VerticalAlignment="Center" HorizontalAlignment="Center" />
+        </Grid>
+        <TextBlock DockPanel.Dock="Top" Margin="10 10 10 0" FontSize="17">Comments:</TextBlock>
+        <ScrollViewer VerticalScrollBarVisibility="Auto" DockPanel.Dock="Top">
+            <ItemsRepeater ItemsSource="{Binding Shader.ShaderComments}">
+                <ItemsRepeater.ItemTemplate>
+                    <DataTemplate>
+                        <Border Margin="5,10,5,0"
+                                CornerRadius="5"
+                                BorderBrush="Blue" BorderThickness="1"
+                                Padding="5">
+                            <StackPanel>
+                                <TextBlock Text="{Binding CommentAuthor}" FontSize="18" MaxWidth="200000" Margin="10,1,1,1" />
+                                <TextBlock Text="{Binding CommentText}" FontSize="15" />
+                            </StackPanel>
+                        </Border>
+                    </DataTemplate>
+                </ItemsRepeater.ItemTemplate>
+            </ItemsRepeater>
+        </ScrollViewer>
+    </DockPanel>
+</UserControl>

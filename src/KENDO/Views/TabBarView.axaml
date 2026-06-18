@@ -1,0 +1,60 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="clr-namespace:Main.ViewModels"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="Main.Views.TabBarView"
+             x:DataType="vm:TabBarViewModel">
+         
+
+    <Grid  Background="CadetBlue" >
+            
+        
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+        
+        <Button Grid.Column="4" Content="{Binding AppContext.User.UserName}">
+            <Button.Flyout>
+                <MenuFlyout>
+                    <MenuItem Header="Delete Acount" Command="{Binding RemoveUser}"/>
+                    <MenuItem Header="Settings" Command="{Binding ChangeUser}"/>
+                    <MenuItem Header="Sign out" Command="{Binding LogOut}"/>
+                    <MenuItem Header="Admin Dashboard" Command="{Binding GoToDashboard}" IsVisible="{Binding AppContext.User.IsAdmin}"/>
+                </MenuFlyout>
+            </Button.Flyout>
+        </Button>
+            
+            
+                
+            <Button Grid.Column="1"  Content="New Shader" DockPanel.Dock="Top">
+                <Button.Flyout>
+                    <Flyout>
+                        <StackPanel Spacing="8" MinWidth="180">
+                            <TextBox
+                                x:Name="TBNewShaderName"
+                                PlaceholderText="Shader Name" />
+
+                            <Button
+                                Content="Create"
+                                Command="{Binding CreateNewShaderCommand}"
+                                CommandParameter="{Binding Text, ElementName=TBNewShaderName}" />
+                        </StackPanel>
+                    </Flyout>
+                </Button.Flyout>
+            </Button>
+            
+            <Button Grid.Column="0" Content="Front Page"
+                    Command="{Binding GoToFrontPage}"/>
+            
+            
+    </Grid>
+</UserControl>

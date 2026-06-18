@@ -1,0 +1,23 @@
+﻿<UserControl xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:vm="clr-namespace:Main.ViewModels"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="Main.Views.UserChangeView"
+        x:DataType="vm:UserChangeViewModel">
+    
+    <StackPanel Margin="10" Spacing="15">
+        <TextBox FontSize="28">Change Userdata</TextBox>
+        <TextBox Watermark="Username" Text="{Binding Username}"/>
+        <TextBox Watermark="Password" PasswordChar="*" Text="{Binding Password}"/>
+
+		<TextBlock FontSize="16" TextWrapping="Wrap">
+			<Run Text="• To Change the password you must include the username" />
+		</TextBlock>
+
+		<Button Content="Submit" Command="{Binding ChangeUser }"/>
+        <Button Content="Go back" Command="{Binding Homepage }"/>
+    </StackPanel>
+    
+</UserControl>
