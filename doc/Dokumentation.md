@@ -320,6 +320,35 @@ Bilder können den Shader hinzugefügt werden
 
 ### 5.2 Bedienungsanleitung
 
+1. Verbindet man sich mit dem Server per IP-Adresse und Port des Servers.
+
+2. Loggt man sich ein oder man Registriert als User.
+    - Registrieren erreicht man durch **you dont have an account?**
+
+3. Beim Button mit dem Account Name (User Name) kann man folgendes auswählen:
+    - Löschen eines Users
+    - Abmelden 
+    - Bearbeiten eines Users
+    - Dashboard (geht aber nur als Admin)
+
+4. per Frontpage kommt man ins Hauptmenü
+
+5. Per New Shader kann man einen eigenen Shader erstellen
+
+6. Im Hauptmenü kann man auf die shader klicken und bearbeiten
+
+7. Bei den Shadern kann man folgendes machen:
+    - Herz: liken
+    - auf dem Kommentarfeld kommentare schreiben
+    - neben dem Add button kann man Tags reinschreiben und hinzufügen
+    - Beim Plus namens **Texture0** kann man ein eigenes Bild hinzufügen
+    - mit save kann man den Shader speichern
+
+8. Im Hauptmenü kann man noch weiteres machen:
+    - Nach likes filtern 
+    - Nach dem Usernamen filtern
+    - Nach dem Shadernamen filtern
+
 # TODO
 
 
