@@ -276,7 +276,9 @@ Der Besitzer eines Shaders kann Tags zu den Shadern verweisen.
 
 ## 3 Lastenheft
 ### 3.1 Kurzbeschreibung
-
+Programm um Shader zu rendern via Code Editor. Man kann aber auch Bilder hinzufügen und diese bearbeiten.
+Zusätzlich kann man auch Shader kommentieren und liken.
+Der Besitzer eines Shaders kann Tags zu den Shadern verweisen.
 
 ### 3.2 Skizzen
 
@@ -349,7 +351,6 @@ Bilder können den Shader hinzugefügt werden
     - Nach dem Usernamen filtern
     - Nach dem Shadernamen filtern
 
-# TODO
 
 
 ## 6 Bekannte Bugs, Probleme
