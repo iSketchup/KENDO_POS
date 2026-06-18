@@ -31,7 +31,7 @@ Betreuer: Lukas Diem, Christof Bauer, David Bechtold
   - [3.1 Kurzbeschreibung](#31-kurzbeschreibung)
   - [3.2 Skizzen](#32-skizzen)
 - [4. Pflichtenheft](#4-pflichtenheft)
-  - [4.1 UML-Diagramme](#41-uml)
+  - [4.1 Dependency-Diagramme](#41-Dependency_Diagramm)
   - [4.2 Umsetzungsdetails](#42-umsetzungsdetail)
   - [4.3 Ergebnisse & Interpretation](#43-ergebnisse-intepretation)
 - [5. Anleitung](#5-anleitung)
@@ -285,21 +285,21 @@ Der Besitzer eines Shaders kann Tags zu den Shadern verweisen.
 
 ### 3.2 Skizzen
 
-# TODO
+![Skizze.png]
 
 
 ## 4. Pflichtenheft
 
 
 
-### 4.1 UML 
+### 4.1 Dependency_Diagramm
 
-# TODO
+![Relationshipmodle.png]
 
 
 ### 4.2 Umsetzungsdetail
 
-# TODO
+TODO
 
 ### 4.3 Ergebnisse, Intepretation
 
@@ -313,19 +313,21 @@ Bilder können den Shader hinzugefügt werden
 ## 5. Anleitung
 ### 5.1 Installationsanleitung
 
-1. Requirements auf der Server-Seite installieren.
+1. DBI repo den POS_Abgabe_Brnach Clonen
+   
+2. Requirements auf der Server-Seite installieren.
 
-2. Testdatenbank anlegen, wenn vorhanden (DB wird sowieso durch den Server erzeugt.)
+3. Testdatenbank laden in dem man init_db.py runt
 
-3. Server starten
+4. Server starten
 
-4. Auf den Bin Folder drücken
+5. Auf den Bin Folder drücken
 
-5. As.exe ausführen
+6. As.exe ausführen
 
 ### 5.2 Bedienungsanleitung
 
-1. Verbindet man sich mit dem Server per IP-Adresse und Port des Servers.
+1. Verbindet man sich mit dem Server per IP-Adresse und Port des Servers (default=127.0.0.1:8000).
 
 2. Loggt man sich ein oder man Registriert als User.
     - Registrieren erreicht man durch **you dont have an account?**
@@ -350,7 +352,6 @@ Bilder können den Shader hinzugefügt werden
     - mit save kann man den Shader speichern
 
 8. Im Hauptmenü kann man noch weiteres machen:
-    - Nach likes filtern 
     - Nach dem Usernamen filtern
     - Nach dem Shadernamen filtern
 
@@ -358,13 +359,27 @@ Bilder können den Shader hinzugefügt werden
 
 ## 6 Bekannte Bugs, Probleme
 
-  
-  # TODO
+   Manchmal stürtz unser Programm ab, wahrscheinlich wegen dem schlechten ladevorgang von bildern
 
 
 ## 7 Erweiterungsmöglichkeiten
 
-  
-# TODO
+- Follows​
 
-Repo: https://github.com/iSketchup/AS.git
+- Private Shaders --- Publishing System​
+
+- User Settings​
+ 
+- Per profile view ​
+
+- Guest mode
+
+- shader profile pics
+  
+- user profile pics
+
+
+
+
+POSRepo: https://github.com/iSketchup/KENDO_POS
+DBIRepo: https://github.com/iSketchup/KENDO_DBI
