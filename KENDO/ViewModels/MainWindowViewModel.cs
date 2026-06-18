@@ -21,6 +21,7 @@ public partial class MainWindowViewModel : ViewModelBase
     private RegisterViewModel RegisterViewModel { get; set; }
     private UserChangeViewModel UserChangeViewModel { get; set; } 
     private AdminViewModel AdminViewModel { get; set; }
+    private UrlPickerViewModel UrlPickerViewModel { get; set; }
 
     [ObservableProperty] private AppContext _appContext;
 
@@ -63,19 +64,30 @@ public partial class MainWindowViewModel : ViewModelBase
         RegisterViewModel = new RegisterViewModel(_navigation);
         UserChangeViewModel = new UserChangeViewModel(_navigation);
         AdminViewModel = new AdminViewModel(_navigation);
+        UrlPickerViewModel = new UrlPickerViewModel(_navigation);
         
         
         
-        await InitContext(UseFakeRepo,baseadress);
         
         Log.Logger.Debug("switching to user ViewModel");
-        CurrentViewModel = UserViewModel;
+        CurrentViewModel = UrlPickerViewModel;
+    }
+
+    public async void SetContext()
+    {
+        await FrontPageViewModel.UpdateContexts(AppContext);
+        await UserViewModel.UpdateContexts(AppContext);
+        await UserChangeViewModel.UpdateContexts(AppContext);
+        await RegisterViewModel.UpdateContexts(AppContext);
+        await AdminViewModel.UpdateContexts(AppContext);
+
     }
     
-    
-    public async Task InitContext(bool fake, Uri? ba)
+    public static async Task<AppContext> InitContext(bool fake)
     {
         // ToDo: User hier reinladen
+
+        AppContext appContext;
         if (!fake)
         {
             
@@ -87,32 +99,29 @@ public partial class MainWindowViewModel : ViewModelBase
             
             HttpClient client = new HttpClient(handler)
             {
-                BaseAddress = ba
+                BaseAddress = baseadress
             }; 
 
             // Ein leerer User wird erstellt.
-            AppContext = new AppContext(new User());  
-            await AppContext.AsyncInit(client);
+            appContext = new AppContext(new User());  
+            await appContext.AsyncInit(client);
             
         }
         else
         {
-            AppContext = new AppContext(new User());
-            await AppContext.FakeInit();
+            appContext = new AppContext(new User());
+            await appContext.FakeInit();
         }
         
-        await FrontPageViewModel.UpdateContexts(AppContext);
-        await UserViewModel.UpdateContexts(AppContext);
-        await UserChangeViewModel.UpdateContexts(AppContext);
-        await RegisterViewModel.UpdateContexts(AppContext);
-        await AdminViewModel.UpdateContexts(AppContext);
-        
-        Log.Logger.Information("fniishe init context");
+        return appContext;
     }
 
     
-    private void Navigate(Page page)
+    private async void Navigate(Page page)
     {
+       AppContext =  await InitContext(UseFakeRepo);
+       SetContext();
+       
         CurrentViewModel = page switch
         {
             Page.User => UserViewModel,
@@ -234,7 +243,7 @@ public partial class MainWindowViewModel : ViewModelBase
     {
         try
         {
-            await InitContext(UseFakeRepo,baseadress);
+            await InitContext(UseFakeRepo);
             Log.Logger.Information("Switched Repo Load status");
         }
         catch (HttpRequestException e)
