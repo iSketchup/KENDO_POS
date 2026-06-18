@@ -39,5 +39,8 @@
       <Compile Update="Views\LikesView.axaml.cs">
         <DependentUpon>LikesView.axaml</DependentUpon>
       </Compile>
+      <Compile Update="Views\UrlPickerView.axaml.cs">
+        <DependentUpon>UrlPickerView.axaml</DependentUpon>
+      </Compile>
     </ItemGroup>
 </Project>

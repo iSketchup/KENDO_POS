@@ -10,8 +10,8 @@ namespace Main.ViewModels;
 
 public partial  class AppContext : ObservableObject
 {
-    [ObservableProperty] private User _user;
-    
+    public User User { get; private set; }
+
     private IShaderRepository shaderRepository;
     
     private ILikeRepository likeRepository;
@@ -26,6 +26,14 @@ public partial  class AppContext : ObservableObject
     {
         // Aktueller oder leerer User
         User = currentUser ?? new User();
+    }
+
+    public void SetUser(User loggedInUser)
+    {
+        if (loggedInUser != null)
+        {
+            this.User = loggedInUser;
+        }
     }
 
     public async Task FakeInit()

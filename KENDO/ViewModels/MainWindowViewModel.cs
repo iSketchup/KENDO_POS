@@ -15,6 +15,8 @@ public partial class MainWindowViewModel : ViewModelBase
     [ObservableProperty] 
     private ViewModelBase _currentViewModel;
 
+    public User User { get; private set; }
+
     private FrontPageViewModel FrontPageViewModel { get; set; } 
     private ShaderPageViewModel ShaderPageViewModel { get; set; }
     private UserViewModel UserViewModel { get; set; }
@@ -83,7 +85,7 @@ public partial class MainWindowViewModel : ViewModelBase
 
     }
     
-    public static async Task<AppContext> InitContext(bool fake)
+    public static async Task<AppContext> InitContext(bool fake, User? currentUser)
     {
         // ToDo: User hier reinladen
 
@@ -100,16 +102,16 @@ public partial class MainWindowViewModel : ViewModelBase
             HttpClient client = new HttpClient(handler)
             {
                 BaseAddress = baseadress
-            }; 
+            };
 
             // Ein leerer User wird erstellt.
-            appContext = new AppContext(new User());  
+            appContext = new AppContext(currentUser);
             await appContext.AsyncInit(client);
             
         }
         else
         {
-            appContext = new AppContext(new User());
+            appContext = new AppContext(currentUser);
             await appContext.FakeInit();
         }
         
@@ -119,7 +121,9 @@ public partial class MainWindowViewModel : ViewModelBase
     
     private async void Navigate(Page page)
     {
-       AppContext =  await InitContext(UseFakeRepo);
+        User? currentUser = AppContext?.User;
+
+       AppContext =  await InitContext(UseFakeRepo, currentUser);
        SetContext();
        
         CurrentViewModel = page switch
@@ -243,7 +247,7 @@ public partial class MainWindowViewModel : ViewModelBase
     {
         try
         {
-            await InitContext(UseFakeRepo);
+            await InitContext(UseFakeRepo, User);
             Log.Logger.Information("Switched Repo Load status");
         }
         catch (HttpRequestException e)
