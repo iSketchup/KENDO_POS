@@ -96,9 +96,14 @@ public partial  class AppContext : ObservableObject
         await likeRepository.ToggleLike(User.Id, shaderId);
     }
     
-    public async Task<Tag> CreateAndAssignTag(string tagName, int shaderId, int userId)
+    public async Task CreateAndAssignTag(string tagName, int shaderId, int userId)
     {
-        return (await tagRepository.CreateAndAssignTag(tagName, shaderId, userId));
+        await tagRepository.CreateAndAssignTag(tagName, shaderId, userId);
+    }
+
+    public async Task DeleteTagByName(string tagname)
+    {
+        await tagRepository.DeleteTagByName(tagname);
     }
     
 }

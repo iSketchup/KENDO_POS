@@ -18,8 +18,9 @@ public partial class TagViewModel : ViewModelBase
     public TagViewModel() { }
     
     [RelayCommand]
-    public void DeleteTag(string tag)
+    public async void DeleteTag(string tag)
     {
+        await appContext.DeleteTagByName(tag);
         shader.ShaderTags.Remove(tag);
     }
     
@@ -28,9 +29,9 @@ public partial class TagViewModel : ViewModelBase
     {
         if (!string.IsNullOrWhiteSpace(textBox?.Text))
         {
+            await appContext.CreateAndAssignTag(textBox.Text, shader.ShaderId, appContext.User.Id);
             shader.ShaderTags.Add(textBox.Text);
-            //await appContext.CreateAndAssignTag(textBox.Text, shader.ShaderId, appContext.User.Id);
-            await appContext.CreatTag(textBox.Text);
+            //await appContext.CreatTag(textBox.Text);
             textBox.Clear();
         }
     }

@@ -25,8 +25,8 @@ public partial class FilterSelectionViewModel : ViewModelBase
         this.shaderName = shaderName;
         this.tags = tags;
         
-        Shaders = await appContext.GetShadersByFilter(shaderNameTextBox.Text);
-        FpViewModel.UpdateContexts(appContext);
+        //Shaders = await appContext.GetShadersByFilter(shaderNameTextBox.Text);
+        FpViewModel.UpdateContexts(appContext, shaderUserName, shaderName, tags);
         
         shaderNameTextBox.Clear();
     }

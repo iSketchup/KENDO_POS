@@ -37,8 +37,8 @@ public interface ITagRepository
     Task<Tag> GetTagById(int tagId);
     Task<Tag> CreateTag(string tagName);
     Task DeleteTagById(int tagId);
-    Task DeleteTagByName(int tagId);
-    Task<Tag> CreateAndAssignTag(string tagName, int shaderId, int userId);
+    Task DeleteTagByName(string tagName);
+    Task CreateAndAssignTag(string tagName, int shaderId, int userId);
 }
 
 public class TagRepositoryRest : ITagRepository
@@ -113,9 +113,9 @@ public class TagRepositoryRest : ITagRepository
 
         result.EnsureSuccessStatusCode();
     }
-    public async Task DeleteTagByName(int tagId)
+    public async Task DeleteTagByName(string tagName)
     {
-        var result = await client.DeleteAsync($"tags/{tagId}");
+        var result = await client.DeleteAsync($"tags/{tagName}");
 
         if (!result.IsSuccessStatusCode)
         {
@@ -127,52 +127,34 @@ public class TagRepositoryRest : ITagRepository
     }
     
     //AI:  How could i create and assign a tag with one methode
-    
-    public async Task<Tag> CreateAndAssignTag(string tagName, int shaderId, int userId)
+
+    public async Task CreateAndAssignTag(string tagName, int shaderId, int userId)
     {
-        Tag tag;
+        Tag? tag;
 
         var createResult = await client.PostAsJsonAsync("tags/", new TagCreateDto { TagName = tagName });
+        var body = await createResult.Content.ReadAsStringAsync();
 
-        if (createResult.StatusCode == System.Net.HttpStatusCode.Conflict)
+        if (!createResult.IsSuccessStatusCode)
         {
-            var allTags = await GetAllTags();
-            tag = allTags.Find(t => t.TagName == tagName);
-
-            if (tag is null)
-            {
-                throw new InvalidOperationException($"Tag '{tagName}' reported as duplicate but not found.");
-            }
+            Log.Logger.Error("POST tag failed {StatusCode}: {Body}", createResult.StatusCode, body);
+            createResult.EnsureSuccessStatusCode();
         }
-        else
-        {
-            var body = await createResult.Content.ReadAsStringAsync();
 
-            if (!createResult.IsSuccessStatusCode)
-            {
-                Log.Logger.Error("POST tag failed {StatusCode}: {Body}", createResult.StatusCode, body);
-                createResult.EnsureSuccessStatusCode();
-            }
-
-            var created = await createResult.Content.ReadFromJsonAsync<TagResponseDto>();
-            tag = new Tag(created.TagId, created.TagName);
-        }
-        
+        var created = await createResult.Content.ReadFromJsonAsync<TagResponseDto>();
+        tag = new Tag(created.TagId, created.TagName);
         
         var linkResult = await client.PostAsync(
-            $"{userId}/shaders/shadertag/{shaderId}?tag_id={tag.TagId}",
+            $"{userId}/shaders/shadertag/{shaderId}/{tag.TagId}",
             null);
 
-        if (!linkResult.IsSuccessStatusCode && linkResult.StatusCode != System.Net.HttpStatusCode.BadRequest)
+        if (!linkResult.IsSuccessStatusCode)
         {
-            var body = await linkResult.Content.ReadAsStringAsync();
+            body = await linkResult.Content.ReadAsStringAsync();
             Log.Logger.Error("POST shadertag failed {StatusCode}: {Body}", linkResult.StatusCode, body);
             linkResult.EnsureSuccessStatusCode();
         }
-
-        return tag;
     }
-    
 }
 
 public class TagRepositoryFake : ITagRepository
@@ -208,12 +190,12 @@ public class TagRepositoryFake : ITagRepository
         throw new NotImplementedException();
     }
 
-    public Task DeleteTagByName(int tagId)
+    public Task DeleteTagByName(string tagName)
     {
         throw new NotImplementedException();
     }
     
-    public Task<Tag> CreateAndAssignTag(string tagName, int shaderId, int userId)
+    public Task  CreateAndAssignTag(string tagName, int shaderId, int userId)
     {
         throw new NotImplementedException();
     }
