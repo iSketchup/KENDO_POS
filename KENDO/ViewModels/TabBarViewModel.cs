@@ -67,7 +67,6 @@ public partial class TabBarViewModel : ViewModelBase, IContext
     [RelayCommand]
     public void ChangeUser()
     {
-        AppContext.User = new User();
         _navigation.NavigateRequested(Page.Change);
 
     }

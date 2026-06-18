@@ -11,7 +11,12 @@
         <TextBox FontSize="28">Change Userdata</TextBox>
         <TextBox Watermark="Username" Text="{Binding Username}"/>
         <TextBox Watermark="Password" PasswordChar="*" Text="{Binding Password}"/>
-        <Button Content="Submit" Command="{Binding ChangeUser }"/>
+
+		<TextBlock FontSize="16" TextWrapping="Wrap">
+			<Run Text="• To Change the password you must include the username" />
+		</TextBlock>
+
+		<Button Content="Submit" Command="{Binding ChangeUser }"/>
         <Button Content="Go back" Command="{Binding Homepage }"/>
     </StackPanel>
     
