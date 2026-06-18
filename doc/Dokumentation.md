@@ -1,8 +1,218 @@
+# Dokumentation POS-Projekt
+**Projektgruppe:** Daniel Walser, Luis Kaufmann, Luis Birnbaumer
+
+  
+
+**Klasse:** 3AHIF
+
+  
+
+**Jahr:** 2025/26
+
+  
+  
+
+- Projektitel: Kendo (Shader Renderer)
+
+- Projetkidee: Programm um Shader zu rendern via Code Editor.
+
+  
+
+Betreuer: Lukas Diem, Christof Bauer, David Bechtold
+
+## 1. Inhaltsverzeichnis
+- [Kurzbeschreibung](#kurzbeschreibung)
+- [Systemanforderungen (Must-Haves / Nice-Haves)](#must-haves)
+- [2. Projektzeitplan](#2-projektzeitplan)
+  - [2.1 Luis Kaufmann](#luis-kaufmann)
+  - [2.2 Luis Birnbaumer](#luis-birnbaumer)
+  - [2.3 Daniel Walser](#daniel-walser)
+- [3. Lastenheft](#3-lastenheft)
+  - [3.1 Kurzbeschreibung](#31-kurzbeschreibung)
+  - [3.2 Skizzen](#32-skizzen)
+- [4. Pflichtenheft](#4-pflichtenheft)
+  - [4.1 UML-Diagramme](#41-uml)
+  - [4.2 Umsetzungsdetails](#42-umsetzungsdetail)
+  - [4.3 Ergebnisse & Interpretation](#43-ergebnisse-intepretation)
+- [5. Anleitung](#5-anleitung)
+  - [5.1 Installationsanleitung](#51-installationsanleitung)
+  - [5.2 Bedienungsanleitung](#52-bedienungsanleitung)
+- [6. Bekannte Bugs & Probleme](#6-bekannte-bugs-probleme)
+- [7. Erweiterungsmöglichkeiten](#7-erweiterungsmöglichkeiten)
+
+
+
+## 1.1 Kurzbeschreibung:
+Programm um Shader zu rendern via Code Editor. Man kann aber auch Bilder hinzufügen und diese bearbeiten.
+Zusätzlich kann man auch Shader kommentieren und liken.
+Der Besitzer eines Shaders kann Tags zu den Shadern verweisen.
+
+
+## 1.2 Must-Haves
+- Shaders​
+
+- Kommentarsystem​
+
+- Tagsystem​
+
+- Code Editor ​
+
+- Userhandling​
+
+
+## 1.3 Nice-Haves
+
+- Likes​
+
+- Follows​
+
+- Tags​
+
+- Private Shaders --- Publishing System​
+
+- User Settings​
+ 
+- Per profile view ​
+
+- Guest mode
+
+
+## 1.4 Very-unlikely-to-have
+
+- shader profile pics
+- user profile pics
 
 
 
 ## 2. Projektzeitplan
 
+### Luis Kaufmann
+| Datum | Commit-Nachricht | Bearbeiter |
+| :--- | :--- | :--- |
+| 24.05.2026 | added a button for submitting the current code | Kaufmann |
+| 24.05.2026 | hot keys | Kaufmann |
+| 24.05.2026 | Shaders now reload on button press | Kaufmann |
+| 24.05.2026 | Merge remote-tracking branch 'origin/main' | Kaufmann |
+| 25.05.2026 | made Texture work | Kaufmann |
+| 25.05.2026 | added a sample Texture | Kaufmann |
+| 25.05.2026 | tuff ass minion | Kaufmann |
+| 25.05.2026 | added sampling from multiple textures | Kaufmann |
+| 25.05.2026 | jiggle physics | Kaufmann |
+| 27.05.2026 | wip refacctoring | Kaufmann |
+| 27.05.2026 | fix for comments | Kaufmann |
+| 27.05.2026 | clean mvvm structure + hot reloads | Kaufmann |
+| 28.05.2026 | added a proper TextEditor -> Avalonia Edit with highlighting | Kaufmann |
+| 28.05.2026 | added Assets | Kaufmann |
+| 28.05.2026 | Renamed for unified Syntax | Kaufmann |
+| 28.05.2026 | Merge remote-tracking branch 'origin/main' | Kaufmann |
+| 28.05.2026 | restyling | Kaufmann |
+| 31.05.2026 | Merge remote-tracking branch 'origin/main' | Kaufmann |
+| 31.05.2026 | changed styling to be system dependend | Kaufmann |
+| 31.05.2026 | implemented App Context | Kaufmann |
+| 31.05.2026 | init Texture dropables | Kaufmann |
+| 31.05.2026 | added a shaderRepository + a quick test | Kaufmann |
+| 31.05.2026 | init FrontPage | Kaufmann |
+| 31.05.2026 | restructuring to enable an ez front and shader page switch | Kaufmann |
+| 31.05.2026 | added a fake repo | Kaufmann |
+| 01.06.2026 | shaders now are ac pulled from the repo | Kaufmann |
+| 01.06.2026 | added a logger | Kaufmann |
+| 01.06.2026 | UI Update for switching fake load status | Kaufmann |
+| 01.06.2026 | added a switch logic for fake laod status | Kaufmann |
+| 01.06.2026 | Log added | Kaufmann |
+| 01.06.2026 | Merge remote-tracking branch 'origin/main' | Kaufmann |
+| 01.06.2026 | failsafed for repos status switching if uri isnt reached | Kaufmann |
+| 01.06.2026 | logging | Kaufmann |
+| 03.06.2026 | init user view | Kaufmann |
+| 03.06.2026 | Context is now loaded out of main | Kaufmann |
+| 03.06.2026 | Merge remote-tracking branch 'origin/main' | Kaufmann |
+| 03.06.2026 | bugfix it now shows | Kaufmann |
+| 03.06.2026 | bugfix | Kaufmann |
+| 03.06.2026 | bugfix when reloading fake | Kaufmann |
+| 03.06.2026 | Added a Main Menu | Kaufmann |
+| 03.06.2026 | cleanup | Kaufmann |
+| 03.06.2026 | wip | Kaufmann |
+| 03.06.2026 | context updating | Kaufmann |
+| 03.06.2026 | wip | Kaufmann |
+| 03.06.2026 | bugfix | Kaufmann |
+| 05.06.2026 | Working Navigation from everywhere | Kaufmann |
+| 05.06.2026 | multi-binding for shader on the FrontPage | Kaufmann |
+| 05.06.2026 | Scrollable main page | Kaufmann |
+| 05.06.2026 | debug info | Kaufmann |
+| 05.06.2026 | wiindows compatibility | Kaufmann |
+| 05.06.2026 | scaling is now taken into acount | Kaufmann |
+| 06.06.2026 | reworked polling logic | Kaufmann |
+| 08.06.2026 | textures are now loaded from the Shaders TesUris List -> they can be loaded from the db | Kaufmann |
+| 08.06.2026 | icon added | Kaufmann |
+| 09.06.2026 | https implementation | Kaufmann |
+| 09.06.2026 | wip | Kaufmann |
+| 09.06.2026 | temporary fix ignores https untrustwothynes | Kaufmann |
+| 09.06.2026 | wip | Kaufmann |
+| 09.06.2026 | naming | Kaufmann |
+| 09.06.2026 | adjusted shader structur for jason deseriallization | Kaufmann |
+| 09.06.2026 | wow names | Kaufmann |
+| 10.06.2026 | File input | Kaufmann |
+| 10.06.2026 | wip | Kaufmann |
+| 10.06.2026 | Merge remote-tracking branch 'origin/main' | Kaufmann |
+| 10.06.2026 | Dropslots now directly coralate with the texture so switchting them switches the texture | Kaufmann |
+| 11.06.2026 | refactoring | Kaufmann |
+| 11.06.2026 | textures loaded now display their name | Kaufmann |
+| 11.06.2026 | bugfixe dropslot naming | Kaufmann |
+| 11.06.2026 | Merge remote-tracking branch 'origin/main' | Kaufmann |
+| 11.06.2026 | fixed a debug button | Kaufmann |
+| 14.06.2026 | holy wip | Kaufmann |
+| 14.06.2026 | wip | Kaufmann |
+| 14.06.2026 | pics are encoded and saved in the db loading will start soon | Kaufmann |
+| 15.06.2026 | made Shaders load correctly from the server | Kaufmann |
+| 15.06.2026 | postable shaders hurray | Kaufmann |
+| 15.06.2026 | deleted test files | Kaufmann |
+| 16.06.2026 | styling | Kaufmann |
+| 16.06.2026 | Restyling | Kaufmann |
+| 16.06.2026 | fixt a problem with loading fake shaders | Kaufmann |
+| 16.06.2026 | added new shader functionality | Kaufmann |
+| 16.06.2026 | Merge remote-tracking branch 'origin/main' | Kaufmann |
+| 16.06.2026 | Styling | Kaufmann |
+| 17.06.2026 | fixt userhandling files not finding .env variables | Kaufmann |
+| 17.06.2026 | Going to Front page now refreshes everything | Kaufmann |
+| 17.06.2026 | Styling | Kaufmann |
+| 17.06.2026 | Merge remote-tracking branch 'origin/main' | Kaufmann |
+| 17.06.2026 | wip | Kaufmann |
+| 17.06.2026 | Merge remote-tracking branch 'origin/main' | Kaufmann |
+| 17.06.2026 | fix god? | Kaufmann |
+| 17.06.2026 | revert | Kaufmann |
+| 18.06.2026 | cleanup | Kaufmann |
+| 18.06.2026 | added a url picker | Kaufmann |
+| 18.06.2026 | Styling | Kaufmann |
+| 18.06.2026 | Styling | Kaufmann |
+| 18.06.2026 | styling | Kaufmann |
+| 18.06.2026 | Merge remote-tracking branch 'origin/main' | Kaufmann |
+
+
+### Luis Birnbaumer
+| Datum | Commit-Nachricht | Bearbeiter |
+| :--- | :--- | :--- |
+| 27.05.2026 | WIP displaying the comments section | Luis BIRNBAUMER |
+| 27.05.2026 | Comment section now working | Luis BIRNBAUMER |
+| 28.05.2026 | Creation of Comments works | Luis BIRNBAUMER |
+| 31.05.2026 | Added tags and updated UI | Luis BIRNBAUMER |
+| 01.06.2026 | fixed scrollviewer for taglist | Luis BIRNBAUMER |
+| 03.06.2026 | WIP FilterSelection created | Luis BIRNBAUMER |
+| 11.06.2026 | Created Like Button and Display in ShaderPage | Luis BIRNBAUMER |
+| 13.06.2026 | Tag Delete Finally works | Luis BIRNBAUMER |
+| 15.06.2026 | Created a Tagview + viewmodel | Luis BIRNBAUMER |
+| 15.06.2026 | added theme | Luis BIRNBAUMER |
+| 16.06.2026 | created repositroies for comment, likes, tags and created tagview | Luis BIRNBAUMER |
+| 16.06.2026 | fixed crash when pressing add before typing in the textbox | Luis BIRNBAUMER |
+| 17.06.2026 | fixed the comment post and added tag post | Luis BIRNBAUMER |
+| 17.06.2026 | fixed like amount not updating | Luis BIRNBAUMER |
+| 17.06.2026 | deleted "seba" being the base user | Luis BIRNBAUMER |
+| 17.06.2026 | Fixed GetShaderByFilters with the ShaderAuthor parameter | Luis BIRNBAUMER |
+| 17.06.2026 | Implemented repository for likes | Luis BIRNBAUMER |
+| 18.06.2026 | fixed filter view ui | Luis BIRNBAUMER |
+| 18.06.2026 | doesnt crash when deleting a tag | Luis BIRNBAUMER |
+| 18.06.2026 | Merge remote-tracking branch 'origin/main' | Luis BIRNBAUMER |
+
+
+### Daniel Walser
 | Datum | Commit-Nachricht | Bearbeiter |
 | :--- | :--- | :--- |
 | 21.05.2026 | Hier sind mal die Klassen für vom UML (Teil 1). | Daniel WALSER |
@@ -61,3 +271,67 @@
 | 18.06.2026 | Dashboard: Admin kann sich nicht selbst löschen. | Daniel WALSER |
 | 18.06.2026 | Merge branch 'main' of https://github.com/iSketchup/KENDO_POS | Daniel WALSER |
 | 18.06.2026 | Merge | Daniel WALSER |
+
+
+
+## 3 Lastenheft
+### 3.1 Kurzbeschreibung
+
+
+### 3.2 Skizzen
+
+# TODO
+
+
+## 4. Pflichtenheft
+
+
+
+### 4.1 UML 
+
+# TODO
+
+
+### 4.2 Umsetzungsdetail
+
+# TODO
+
+### 4.3 Ergebnisse, Intepretation
+
+Login und Registrieren funktioniert
+Verbindung zum Server funktioniert
+Löschen und Bearbeiten von Usern geht
+Kommentare und Likes sowie Tags gehen auch
+Shader kann man veröffentlichen und erstellen
+Bilder können den Shader hinzugefügt werden
+
+## 5. Anleitung
+### 5.1 Installationsanleitung
+
+1. Requirements auf der Server-Seite installieren.
+
+2. Testdatenbank anlegen, wenn vorhanden (DB wird sowieso durch den Server erzeugt.)
+
+3. Server starten
+
+4. Auf den Bin Folder drücken
+
+5. As.exe ausführen
+
+### 5.2 Bedienungsanleitung
+
+# TODO
+
+
+## 6 Bekannte Bugs, Probleme
+
+  
+  # TODO
+
+
+## 7 Erweiterungsmöglichkeiten
+
+  
+# TODO
+
+Repo: https://github.com/iSketchup/AS.git
