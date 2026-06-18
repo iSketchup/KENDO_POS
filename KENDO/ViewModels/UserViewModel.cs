@@ -15,6 +15,8 @@ namespace Main.ViewModels;
 public partial class UserViewModel : ViewModelBase, IContext
 {
     [ObservableProperty]
+    private string _errorMessage = "";
+    [ObservableProperty]
     private string _username = "";
     [ObservableProperty]
     private string _password = "";
@@ -40,6 +42,30 @@ public partial class UserViewModel : ViewModelBase, IContext
     [RelayCommand]
     public async Task LoginCommand()
     {
+        ErrorMessage = "";
+
+        if (string.IsNullOrEmpty(Username) || Username.Contains(" "))
+        {
+            ErrorMessage = "username must not be empty or contain any whitespaces";
+            Log.Warning("Register failed: Invalid Username");
+            return;
+        }
+
+
+        if (string.IsNullOrEmpty(Password) || Password.Contains(" "))
+        {
+            ErrorMessage = "password must not be empty or contain any whitespaces";
+            Log.Warning("Register failed: Password contains spaces");
+            return;
+        }
+
+
+        if (Password.Length < 8)
+        {
+            ErrorMessage = "Password must be 8 characters long.";
+            Log.Warning("Register failed: Password too short");
+            return;
+        }
 
         User? loggedInUser = await Userhandling.ValidateLogin(Username, Password);
 
@@ -63,8 +89,8 @@ public partial class UserViewModel : ViewModelBase, IContext
         }
         else
         {
+            ErrorMessage = "Login failed: wrong username or password";
             Log.Warning("Login failed: Wrong username or password");
-            
         }
     }
 

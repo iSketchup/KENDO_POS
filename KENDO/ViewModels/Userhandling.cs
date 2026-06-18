@@ -47,7 +47,10 @@ public static class Userhandling
 
     public async static Task<User?> AddUser(string name, string pswd)
     {
-        if (pswd == null)
+        if (pswd == null || pswd.Contains(" "))
+            return null;
+
+        if (name == null || pswd.Contains(" "))
             return null;
 
         if (pswd.Length < 8)

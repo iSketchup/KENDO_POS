@@ -11,6 +11,9 @@ namespace Main.ViewModels;
 public partial class RegisterViewModel : ViewModelBase, IContext
 {
     [ObservableProperty]
+    private string _errorMessage = "";
+
+    [ObservableProperty]
     private string _username = "";
 
     [ObservableProperty]
@@ -39,6 +42,33 @@ public partial class RegisterViewModel : ViewModelBase, IContext
     [RelayCommand]
     public async Task RegisterCommand()
     {
+        ErrorMessage = "";
+
+
+        if (string.IsNullOrEmpty(Username) || Username.Contains(" "))
+        {
+            ErrorMessage = "username must not be empty or contain any whitespaces";
+            Log.Warning("Register failed: Invalid Username");
+            return;
+        }
+
+
+        if (string.IsNullOrEmpty(Password) || Password.Contains(" "))
+        {
+            ErrorMessage = "password must not be empty or contain any whitespaces";
+            Log.Warning("Register failed: Password contains spaces");
+            return;
+        }
+
+
+        if (Password.Length < 8)
+        {
+            ErrorMessage = "Password must be 8 characters long.";
+            Log.Warning("Register failed: Password too short");
+            return;
+        }
+
+
         // Falls man einen Admin erstellen möchte
         // (Umgeht das Problem, dass man sich noch separat anmelden muss)
         User? sign_user = new User();
@@ -75,6 +105,7 @@ public partial class RegisterViewModel : ViewModelBase, IContext
         }
         else
         {
+            ErrorMessage = "Registration failed. This username is already used.";
             Log.Warning("Register failed");
             // TODO: Fehlermeldung in der UI anzeigen (z.B. über ein weiteres ObservableProperty)
         }

@@ -17,10 +17,17 @@
             <RowDefinition Height="*"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
+			<RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
         
         <TextBox Grid.Row="1" PlaceholderText="IP: 0.0.0.0" Text="{Binding Url}"></TextBox>
         <TextBox Grid.Row="2" PlaceholderText="Port: 8000" Text="{Binding Port}"></TextBox>
+
+		<TextBlock Grid.Row="4" FontSize="24" Text="{Binding ErrorMessage}"
+           Foreground="Red"
+           HorizontalAlignment="Center"
+           Margin="0,10,0,0"
+           TextWrapping="Wrap"/>
         
         <Button Content="Submit" Command="{Binding Submit}"/>
         

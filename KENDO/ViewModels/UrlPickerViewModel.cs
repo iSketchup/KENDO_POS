@@ -12,7 +12,8 @@ namespace Main.ViewModels;
 
 public partial class UrlPickerViewModel :ViewModelBase
 {
-
+    [ObservableProperty]
+    private string _errorMessage = "";
     [ObservableProperty] private string _url = "";
     [ObservableProperty] private string _port = "";
     
@@ -95,6 +96,7 @@ public partial class UrlPickerViewModel :ViewModelBase
         catch (Exception e)
         {
             Log.Logger.Fatal("Exception while checking server connection" + e);
+            ErrorMessage = "Could not connect ot server";
             Url = "Could not connect to server";
             return false;
         }

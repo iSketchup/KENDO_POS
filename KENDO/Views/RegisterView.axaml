@@ -13,7 +13,23 @@
         <TextBox FontSize="28">Register</TextBox>
         <TextBox Watermark="Username" Text="{Binding Username}"/>
         <TextBox Watermark="Password" PasswordChar="*" Text="{Binding Password}"/>
-
+		
+		
+		<!--Alternative zum Label im Avalonia-->
+		<TextBlock FontSize="16" TextWrapping="Wrap">
+			<Run Text="• Password must be 8 characters long" />
+			<LineBreak />
+			<Run Text="• Password must not have whitespaces" />
+		</TextBlock>
+		
+		
+		<TextBlock FontSize="24" Text="{Binding ErrorMessage}"
+           Foreground="Red"
+           HorizontalAlignment="Center"
+           Margin="0,10,0,0"
+           TextWrapping="Wrap"/>
+		
+		
 		<CheckBox Content="Register as Admin" IsChecked="{Binding IsAdminRegistration}"/>
 
 		<Button Content="Submit" Command="{Binding RegisterCommand }"/>
