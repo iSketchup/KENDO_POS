@@ -59,7 +59,7 @@ public partial  class AppContext : ObservableObject
 
     public async Task<List<Shader>> GetShadersByFilter(string? shaderUsername = null, string? shaderName = null, IEnumerable<string>? tags = null)
     {
-        return await shaderRepository.GetShadersByFilter(User.Id,shaderUsername); 
+        return await shaderRepository.GetShadersByFilter(User.Id,shaderUsername, shaderName, tags); 
     }
     
     public async Task<List<Shader>> GetAllShaders()

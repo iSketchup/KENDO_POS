@@ -21,10 +21,12 @@
         <Label Grid.Row="1" Grid.Column="0">Sort By Likes </Label>
         <ToggleSwitch Grid.Row="1" Grid.Column="1"></ToggleSwitch>
         <Label Grid.Row="2" Grid.Column="0">Filter By Username</Label>
-        <TextBox PlaceholderText="Username" Name="ShaderUserTextBox" Grid.Row="2" Grid.Column="1"></TextBox>
-        <Label Grid.Row="3" Grid.Column="0">Filter By Username</Label>
-        <TextBox PlaceholderText="Shadername" Name="ShaderNameTextBox" Grid.Row="3" Grid.Column="1"></TextBox>
-        <Button Grid.Row="4" Grid.Column="1" Command="{Binding SetFilterParametersCommand}"
-                CommandParameter="{Binding ElementName=ShaderUserTextBox}">Filter</Button>
+        <TextBox PlaceholderText="Username" Text="{Binding  shaderUserName}" 
+                 Name="ShaderUserTextBox" Grid.Row="2" Grid.Column="1"/>
+        <Label Grid.Row="3" Grid.Column="0">Filter By Shadername</Label>
+        <TextBox PlaceholderText="Shadername" Text="{Binding shaderName }" 
+                 Name="ShaderNameTextBox" Grid.Row="3" Grid.Column="1"/>
+        <Button Grid.Row="4" Grid.Column="1" 
+                Command="{Binding SetFilterParametersCommand}">Filter</Button>
     </Grid>
 </UserControl>

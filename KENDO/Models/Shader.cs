@@ -13,6 +13,8 @@ public partial class Shader : ObservableObject
     public int ShaderId {get; set;}
     public string ShaderName {get; set;}
     public string ShaderCode {get; set;}
+    
+    public string ShaderAuthor {get; set;}
     public ObservableCollection<string> ShaderTags {get; set;} = new();
     
     [ObservableProperty] private  Likes _shaderLikes = new(); 
@@ -23,13 +25,14 @@ public partial class Shader : ObservableObject
 
 
     public static Shader ShaderFactory(int Id, string Code, string Name, ObservableCollection<string> Tags, Likes likes, ObservableCollection<Comment> Comments,
-        ObservableCollection<Uri> Textures)
+        ObservableCollection<Uri> Textures, string Author)
     {
         return new Shader
         {
             ShaderId = Id,
             ShaderCode = Code,
             ShaderName = Name,
+            ShaderAuthor = Author,
             ShaderTags = Tags,
             ShaderLikes = likes,
             ShaderComments = Comments,
@@ -44,6 +47,8 @@ public class ShaderGetDto
     public int ShaderId { get; set; }
     public string ShaderName { get; set; } = "";
     public string ShaderCode { get; set; } = "";
+    
+    public string ShaderAuthor { get; set; } = "";
     public List<string> ShaderTags { get; set; } = new();
     public Likes ShaderLikes { get; set; } = new();
     public List<Comment> ShaderComments { get; set; } = new();
@@ -56,6 +61,9 @@ public class ShaderUpdateDto
 
     [JsonPropertyName("ShaderName")]
     public string ShaderName { get; set; } = "";
+
+    [JsonPropertyName("ShaderAuthor")] 
+    public string ShaderAuthor { get; set; } = "";
 
     [JsonPropertyName("user_id")]
     public int user_id { get; set; }

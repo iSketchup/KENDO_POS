@@ -9,26 +9,18 @@ public partial class FilterSelectionViewModel : ViewModelBase
 {
     AppContext appContext;
     public List<Shader> Shaders;
-    public string? shaderUserName = null;
-    public string? shaderName = null;
-    public List<string> tags = null;
+    public string? shaderUserName { get; set; } = null;
+    public string? shaderName { get; set; } = null;
+    public List<string> tags { get; set; } 
+    
     public FrontPageViewModel FpViewModel;
     
     
 
     [RelayCommand]
-    public async void SetFilterParameters(TextBox? shaderNameTextBox)
+    public async void SetFilterParameters()
     {
-        if (shaderNameTextBox is null)
-            return;
-        this.shaderUserName = shaderNameTextBox.Text;
-        this.shaderName = shaderName;
-        this.tags = tags;
-        
-        //Shaders = await appContext.GetShadersByFilter(shaderNameTextBox.Text);
         FpViewModel.UpdateContexts(appContext, shaderUserName, shaderName, tags);
-        
-        shaderNameTextBox.Clear();
     }
 
     public void SetContext(AppContext a, List<Shader> shaders, FrontPageViewModel fp)

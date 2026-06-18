@@ -33,8 +33,6 @@
                     <WrapPanel Orientation="Horizontal"/>
                 </ItemsPanelTemplate>
             </ItemsControl.ItemsPanel>
-            
-            
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
                     <Button Command="{Binding GoToThisShader}">
@@ -45,17 +43,14 @@
                             <DockPanel>
                                 <Label DockPanel.Dock="Left" FontStyle="Oblique">
                                     <Label.Content>
-                                        <!-- Binding Path="Shader.ShaderLikes.Amount"></-->
-                                        Author: sigma
+                                        <MultiBinding StringFormat="Author: {0}">
+                                            <Binding Path="Shader.ShaderAuthor"/>
+                                        </MultiBinding>
                                     </Label.Content>
                                 </Label>
-                                
                                 <ContentControl DockPanel.Dock="Right" Content="{Binding Like}"></ContentControl>
                                 <ContentControl MaxWidth="100" DockPanel.Dock="Right" Content="{Binding Tag}"></ContentControl>
                             </DockPanel>
-                            
-                            
- 
                         </StackPanel>
                     </Button> 
                 </DataTemplate>

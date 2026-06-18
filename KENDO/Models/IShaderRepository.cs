@@ -51,7 +51,8 @@ public class ShaderRepositoryRest : IShaderRepository
                 new(dto.ShaderTags),
                 dto.ShaderLikes,
                 new(dto.ShaderComments),
-                new(dto.ShaderTextures.Select(t => t.Texture64))
+                new(dto.ShaderTextures.Select(t => t.Texture64)),
+                dto.ShaderAuthor
             ));
         }
 
@@ -69,7 +70,8 @@ public class ShaderRepositoryRest : IShaderRepository
             new(dto.ShaderTags),
             dto.ShaderLikes,
             new(dto.ShaderComments),
-            new(dto.ShaderTextures.Select(t => t.Texture64))
+            new(dto.ShaderTextures.Select(t => t.Texture64)),
+            dto.ShaderAuthor
         ) ?? null;
     }
 
@@ -140,7 +142,8 @@ public class ShaderRepositoryRest : IShaderRepository
             new(dto.ShaderTags),
             dto.ShaderLikes,
             new(dto.ShaderComments),
-            new(dto.ShaderTextures.Select(t => t.Texture64))
+            new(dto.ShaderTextures.Select(t => t.Texture64)),
+            dto.ShaderAuthor
         ) ?? null;
     }
     
@@ -181,7 +184,8 @@ public class ShaderRepositoryRest : IShaderRepository
             new(dto.ShaderTags),
             dto.ShaderLikes,
             new(dto.ShaderComments),
-            new(dto.ShaderTextures.Select(t => t.Texture64))
+            new(dto.ShaderTextures.Select(t => t.Texture64)),
+            dto.ShaderAuthor
         );
 
 }
@@ -247,9 +251,9 @@ public class ShaderRepositoryFake : IShaderRepository
     {
         return  new List<Shader>()
         {
-            Shader.ShaderFactory(1,sampleCode1, "Dino", new(), new(67, false), new ObservableCollection<Comment>(), samplePaths),
-            Shader.ShaderFactory(2,sampleCode2, "chillax", new(), new(67, false), new ObservableCollection<Comment>(), samplePaths),
-            Shader.ShaderFactory(3,sampleCode3, "evilmaxxing", new(), new(67, false), new ObservableCollection<Comment>(), samplePaths),
+            Shader.ShaderFactory(1,sampleCode1, "Dino", new(), new(67, false), new ObservableCollection<Comment>(), samplePaths, "sigma"),
+            Shader.ShaderFactory(2,sampleCode2, "chillax", new(), new(67, false), new ObservableCollection<Comment>(), samplePaths, "sigma"),
+            Shader.ShaderFactory(3,sampleCode3, "evilmaxxing", new(), new(67, false), new ObservableCollection<Comment>(), samplePaths, "bigii"),
         };
         
     }

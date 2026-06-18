@@ -20,7 +20,7 @@ public partial class TagViewModel : ViewModelBase
     [RelayCommand]
     public async void DeleteTag(string tag)
     {
-        //await appContext.DeleteTagByName(tag, appContext.User.Id, shader.ShaderId);
+        await appContext.DeleteTagByName(tag, appContext.User.Id, shader.ShaderId);
         shader.ShaderTags.Remove(tag);
     }
     
