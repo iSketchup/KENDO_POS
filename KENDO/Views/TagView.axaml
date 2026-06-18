@@ -19,14 +19,16 @@
                     <DataTemplate x:DataType="x:String">
                         <Border Margin="0,0,0,0"
                                 CornerRadius="5"
-                                BorderBrush="Gray" BorderThickness="1"
+                                BorderBrush="Gray" BorderThickness="0"
                                 Padding="3">
                             <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="{Binding  }" FontSize="10" />
                                 <!-- AI: How do Change the DataContext for axaml elements-->
-                                <Button Content="X" MaxWidth="15" MaxHeight="15" VerticalAlignment="Top"
+                                <Button Content="X" MaxWidth="15" MaxHeight="15" VerticalAlignment="Top" Classes="iconButton"
                                         Command="{ReflectionBinding $parent[UserControl].DataContext.DeleteTagCommand}"
                                         CommandParameter="{Binding}" />
+                                
+                                
+                                <TextBlock Text="{Binding  }" FontSize="10" />
                             </StackPanel>
                         </Border>
                     </DataTemplate>
