@@ -23,11 +23,11 @@ public static class Userhandling
 */
     // *****
     private static HttpClient client = new HttpClient(
-        // *****
-        // KI-Teil: Claude
-        // Prompt: Wie verhindere ich in C# bei HttpClient zuverlässig Socket-Timeouts bzw.
-        // wie konfiguriere ich Timeouts und Connection-Reuse korrekt mit SocketsHttpHandler,
-        // ohne dass die Anwendung bei Netzwerkproblemen abstürzt?
+            // *****
+            // KI-Teil: Claude
+            // Prompt: Wie verhindere ich in C# bei HttpClient zuverlässig Socket-Timeouts bzw.
+            // wie konfiguriere ich Timeouts und Connection-Reuse korrekt mit SocketsHttpHandler,
+            // ohne dass die Anwendung bei Netzwerkproblemen abstürzt?
             new SocketsHttpHandler
             {
                 PooledConnectionLifetime = TimeSpan.FromMinutes(15),
@@ -37,42 +37,38 @@ public static class Userhandling
                 }
             }
         )
-    // *****
-    {
-        BaseAddress = new Uri("https://127.0.0.1:8000")
-    };
+        // *****
+        {
+            BaseAddress = MainWindowViewModel.baseadress
+        };
 
-    public static ApiService ApiService { get; private set; }
+    private static ApiService apiService = new ApiService(client);
 
-    public static void SetApiService(ApiService apiService)
-    {
-        ApiService = apiService;
-    }
 
-    public async static Task<bool> AddUser(string name, string pswd)
+    public async static Task<User?> AddUser(string name, string pswd)
     {
         if (pswd == null)
-            return false;
+            return null;
 
         if (pswd.Length < 8)
-            return false;
+            return null;
         
         
-        User? gettingUser = await ApiService.GetUserInfo(name, pswd);
-
+        User? gettingUser = await apiService.GetUserInfo(name, pswd);
+        
         if (gettingUser.UserName == name)
         {
-            return false;
+            return null;
         }
 
         string hashed = BCrypt.Net.BCrypt.HashPassword(pswd);
         User user =  new User { UserName = name, Passwd = hashed };
-        
-
-        await ApiService.CreateUser(user);
 
 
-        return true;
+        User? createdUser = await apiService.CreateUser(user);
+
+
+        return createdUser;
     }
 
 
@@ -99,7 +95,7 @@ public static class Userhandling
         User updatedUserPass = new User { UserName = name, Passwd = PasswordToSend };
 
 
-        await ApiService.ChangeUser(username, updatedUserPass);
+        await apiService.ChangeUser(username, updatedUserPass);
         return true;
     }
 
@@ -112,7 +108,7 @@ public static class Userhandling
         if (username == null)
             return false;
         
-        await ApiService.DeleteUser(username);
+        await apiService.DeleteUser(username);
         return true;
     }
 
@@ -120,7 +116,7 @@ public static class Userhandling
 
     public async static Task<User?> ValidateLogin(string name, string pswd)
     {
-        User? user = await ApiService.GetLogin(name, pswd);
+        User? user = await apiService.GetLogin(name, pswd);
 
         // Ist ein Passwort vorhanden?
         //if (user == null || string.IsNullOrWhiteSpace(user.passwd)) return null;

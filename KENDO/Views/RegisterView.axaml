@@ -11,7 +11,6 @@
     
     <StackPanel Margin="10" Spacing="15">
         <TextBox FontSize="28">Register</TextBox>
-		<TextBox Watermark="type in the url for the server:" Text="{Binding Url}"/>
         <TextBox Watermark="Username" Text="{Binding Username}"/>
         <TextBox Watermark="Password" PasswordChar="*" Text="{Binding Password}"/>
 

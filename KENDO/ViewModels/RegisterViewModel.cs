@@ -15,8 +15,6 @@ public partial class RegisterViewModel : ViewModelBase, IContext
 
     [ObservableProperty]
     private string _password = "";
-    [ObservableProperty]
-    private string? url;
 
     // NEU: Eigenschaft für die Checkbox im UI
     [ObservableProperty]
@@ -38,58 +36,29 @@ public partial class RegisterViewModel : ViewModelBase, IContext
 
 
 
-    private async Task<bool> ConnectToServer()
-    {
-        if (!Uri.TryCreate(Url, UriKind.Absolute, out var uri))
-            return false;
-
-        var handler = new HttpClientHandler();
-
-        handler.ServerCertificateCustomValidationCallback =
-            HttpClientHandler.DangerousAcceptAnyServerCertificateValidator;
-
-        HttpClient client = new HttpClient(handler)
-        {
-            BaseAddress = uri
-        };
-
-        Userhandling.SetApiService(new ApiService(client));
-
-        appContext = new AppContext(new User());
-        await appContext.AsyncInit(client);
-
-        return true;
-    }
-
-
-
     [RelayCommand]
     public async Task RegisterCommand()
     {
-        if (!await ConnectToServer())
-        {
-            Log.Warning("Ungültige Server-URL");
-            return;
-        }
+        // Falls man einen Admin erstellen möchte
+        // (Umgeht das Problem, dass man sich noch separat anmelden muss)
+        User? sign_user = new User();
 
-
-
-        bool ok = false;
 
         if (IsAdminRegistration)
         {
-            ok = await AdminHandling.AddAdmin(Username, Password);
+            sign_user = await AdminHandling.AddAdmin(Username, Password);
         }
         else
         {
-            ok = await Userhandling.AddUser(Username, Password);
+            sign_user = await Userhandling.AddUser(Username, Password);
         }
 
-        if (ok)
+        if (sign_user != null)
         {
             Log.Information($"Register successful. IsAdmin: {IsAdminRegistration}");
 
             appContext.User.UserName = Username;
+            appContext.User.Id = sign_user.Id;
 
             appContext.User.is_admin = IsAdminRegistration;
             

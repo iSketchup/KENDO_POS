@@ -49,10 +49,17 @@ public partial  class AppContext : ObservableObject
 
     }
 
+    public async Task<List<Shader>> GetShadersByFilter(string? shaderUsername = null, string? shaderName = null, IEnumerable<string>? tags = null)
+    {
+        return await shaderRepository.GetShadersByFilter(User.Id,shaderUsername); 
+    }
+    
     public async Task<List<Shader>> GetAllShaders()
     {
-        return await shaderRepository.GetAllShaders(User);   
+        return await shaderRepository.GetAllShaders(User); 
     }
+    
+    
 
     public async Task<Shader?> GetShaderById(int shaderid)
     {
@@ -84,6 +91,11 @@ public partial  class AppContext : ObservableObject
         await tagRepository.CreateTag(tagName);
     }
 
+    public async Task TogleLike(int shaderId)
+    {
+        await likeRepository.ToggleLike(User.Id, shaderId);
+    }
+    
     public async Task<Tag> CreateAndAssignTag(string tagName, int shaderId, int userId)
     {
         return (await tagRepository.CreateAndAssignTag(tagName, shaderId, userId));

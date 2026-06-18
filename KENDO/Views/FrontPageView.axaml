@@ -48,11 +48,11 @@
                                 </Label>
                                 
                                 <ContentControl DockPanel.Dock="Right" Content="{Binding Like}"></ContentControl>
-                                
+                                <ContentControl MaxWidth="100" DockPanel.Dock="Right" Content="{Binding Tag}"></ContentControl>
                             </DockPanel>
                             
                             
-                            <v:TagView DataContext="{Binding Tag}"/>
+ 
                         </StackPanel>
                     </Button> 
                 </DataTemplate>

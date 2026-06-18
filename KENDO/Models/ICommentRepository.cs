@@ -72,8 +72,6 @@ public class CommentRepositoryRest : ICommentRepository
 
         result.EnsureSuccessStatusCode();
 
-        // Not parsing a response body here since the endpoint currently
-        // has no response_model and its returned shape isn't guaranteed.
     }
 
     public async Task DeleteComment(int userId, int shaderId, int commentId)

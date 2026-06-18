@@ -10,14 +10,16 @@ namespace Main.ViewModels;
 
 public partial class LikesViewModel : ViewModelBase
 { 
+    AppContext appContext { get; set; }
     public Shader? Shader { get; private set; }
 
     [ObservableProperty] private Bitmap _likeTexture;
     
     public LikesViewModel() { }
     
-    public void SetContext(Shader shader)
+    public void SetContext(Shader shader, AppContext appContext)
     {
+        this.appContext = appContext;
         Shader = shader;
         if (Shader.ShaderLikes.liked_by_u)
         {
@@ -32,6 +34,7 @@ public partial class LikesViewModel : ViewModelBase
     [RelayCommand]
     public void UserLiked()
     {
+        appContext.TogleLike(Shader.ShaderId);
         if (Shader.ShaderLikes.liked_by_u)
         {
             Shader.ShaderLikes.liked_by_u = false;

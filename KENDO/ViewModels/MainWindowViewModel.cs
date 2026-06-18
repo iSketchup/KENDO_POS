@@ -28,7 +28,7 @@ public partial class MainWindowViewModel : ViewModelBase
 
     [ObservableProperty]
     private bool _useFakeRepo= false; 
-    private Uri baseadress = new("https://localhost:8000/");
+    public static Uri baseadress = new("https://127.0.0.1:8000");
     
     private readonly NavigationService _navigation = new();
     
@@ -46,6 +46,7 @@ public partial class MainWindowViewModel : ViewModelBase
             .CreateLogger();
         
         Setup();
+        
     }
 
 
@@ -65,11 +66,10 @@ public partial class MainWindowViewModel : ViewModelBase
         
         
         
-        //await InitContext(UseFakeRepo,baseadress);
+        await InitContext(UseFakeRepo,baseadress);
         
+        Log.Logger.Debug("switching to user ViewModel");
         CurrentViewModel = UserViewModel;
-        //CurrentViewModel = FrontPageViewModel;
-        
     }
     
     
@@ -106,6 +106,8 @@ public partial class MainWindowViewModel : ViewModelBase
         await UserChangeViewModel.UpdateContexts(AppContext);
         await RegisterViewModel.UpdateContexts(AppContext);
         await AdminViewModel.UpdateContexts(AppContext);
+        
+        Log.Logger.Information("fniishe init context");
     }
 
     
@@ -249,6 +251,7 @@ public partial class MainWindowViewModel : ViewModelBase
         
         int newShaderId = await AppContext.CreateNewShader(shaderName);
         
+        FrontPageViewModel.UpdateContexts(AppContext);
         NavigateId(newShaderId);
     }
 

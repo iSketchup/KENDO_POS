@@ -27,23 +27,29 @@ public partial class FrontPageViewModel: ViewModelBase, IContext
        _navigation = navigation;
    }
    
-    public async Task UpdateContexts(AppContext appContext)
+   public Task UpdateContexts(AppContext appContext) =>
+       UpdateContexts(appContext, null, null, null);
+   
+    public async Task UpdateContexts(AppContext appContext, string? shaderUsername = null, string? shaderName = null, IEnumerable<string>? tags = null)
     {
         
         ShaderPages.Clear();
         
         AppContext = appContext;
-
-        List<Shader> shaders =  await AppContext.GetAllShaders();
+        
+        List<Shader> shaders =  await AppContext.GetShadersByFilter(shaderUsername, shaderName, tags);
         
         
         for (int i = 0; i < shaders.Count; i++)
         {
             ShaderRendererViewModel spvm = new ShaderRendererViewModel(_navigation);
-            spvm.UpdateContexts(shaders[i]);
+            spvm.UpdateContexts(shaders[i], appContext);
             ShaderPages.Add(spvm);
             
         }
+        
+        FilterSelection.SetContext(appContext, shaders, this);
+        
     }
 
 }

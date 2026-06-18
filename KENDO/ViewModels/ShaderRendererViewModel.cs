@@ -27,7 +27,8 @@ public partial class ShaderRendererViewModel : ViewModelBase
     [ObservableProperty]
     private LikesViewModel _like = new LikesViewModel(); 
     
-    public TagViewModel Tag { get; } = new TagViewModel(); 
+    [ObservableProperty]
+    private TagViewModel _tag  = new TagViewModel(); 
     
     
     private readonly NavigationService _navigation;
@@ -105,7 +106,7 @@ public partial class ShaderRendererViewModel : ViewModelBase
         }
     }
     
-    public void UpdateContexts(Shader shader)
+    public void UpdateContexts(Shader shader, AppContext appContext)
     {
         Shader = shader;
 
@@ -122,7 +123,8 @@ public partial class ShaderRendererViewModel : ViewModelBase
 
         
         Document.Text = Shader.ShaderCode;
-        Like.SetContext(Shader);
+        Like.SetContext(Shader, appContext);
+        Tag.SetContext(Shader, appContext);
     }
     
     [RelayCommand]
