@@ -17,7 +17,7 @@ public partial class FrontPageViewModel: ViewModelBase, IContext
    
    public FilterSelectionViewModel FilterSelection { get; set; } = new();
    
-   
+   public TabBarViewModel TabBarViewModel { get; set; }
    
    [ObservableProperty] 
    private ObservableCollection<ShaderRendererViewModel> _shaderPages = new ();
@@ -25,6 +25,7 @@ public partial class FrontPageViewModel: ViewModelBase, IContext
    public FrontPageViewModel(NavigationService navigation)
    {
        _navigation = navigation;
+       TabBarViewModel = new(_navigation);
    }
    
    public Task UpdateContexts(AppContext appContext) =>
@@ -49,6 +50,7 @@ public partial class FrontPageViewModel: ViewModelBase, IContext
         }
         
         FilterSelection.SetContext(appContext, shaders, this);
+        await TabBarViewModel.UpdateContexts(appContext);
         
     }
 

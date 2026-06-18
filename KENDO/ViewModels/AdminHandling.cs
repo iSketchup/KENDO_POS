@@ -35,7 +35,7 @@ namespace Main.ViewModels
             // **** KI Teil
             // Hier habe ich gefragt, wie ich am besten alle User gefiltert nach dem Namen zurückgeben kann.
             return allUsers
-                .Where(u => !string.IsNullOrEmpty(u.UserName) && !u.is_admin)
+                .Where(u => !string.IsNullOrEmpty(u.UserName) && !u.IsAdmin)
                 .Select(u => u.UserName!)
                 .ToList();
             // ****
@@ -50,7 +50,7 @@ namespace Main.ViewModels
             string hashed = BCrypt.Net.BCrypt.HashPassword(pswd);
 
             
-            User newAdmin = new User { UserName = name, Passwd = hashed, is_admin = true };
+            User newAdmin = new User { UserName = name, Passwd = hashed, IsAdmin = true };
 
             await apiService.CreateAdmin(newAdmin);
 

@@ -136,7 +136,7 @@ public static class Userhandling
             return null;
         }
 
-        Log.Debug($"API-Response erhalten. User: {user.UserName}, IsAdmin im Frontend: {user.is_admin}");
+        Log.Debug($"API-Response erhalten. User: {user.UserName}, IsAdmin im Frontend: {user.IsAdmin}");
 
         // Einfach den User zurückgeben, da das Backend ihn bereits verifiziert hat
         return user;

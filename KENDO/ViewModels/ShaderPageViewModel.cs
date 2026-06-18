@@ -14,12 +14,14 @@ public partial class ShaderPageViewModel : ViewModelBase
 
     public ShaderRendererViewModel ShaderRenderer { get; }
     public CommentListViewModel Comments { get; } = new CommentListViewModel();
+    public TabBarViewModel TabBarViewModel { get; set; }
 
     public AppContext AppContext { get; private set; }
     
     public ShaderPageViewModel(NavigationService navigation)
     {
         ShaderRenderer = new ShaderRendererViewModel(navigation);
+        TabBarViewModel = new(navigation);
         _navigation = navigation;
     }
 
@@ -32,6 +34,7 @@ public partial class ShaderPageViewModel : ViewModelBase
         
         ShaderRenderer.UpdateContexts(shader, appContext);
         Comments.SetContext(shader, appContext);
+        await TabBarViewModel.UpdateContexts(appContext);
     }
     
     [RelayCommand]

@@ -10,7 +10,7 @@ namespace Main.ViewModels;
 
 public partial  class AppContext : ObservableObject
 {
-    public User User { get; private set; }
+    public User User { get; set; }
 
     private IShaderRepository shaderRepository;
     
