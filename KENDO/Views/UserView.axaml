@@ -30,7 +30,7 @@
            TextWrapping="Wrap"/>
 		
 		
-        <Button Content="Submit" Command="{Binding LoginCommand }"/>
+        <Button Content="Submit" Command="{Binding LoginCommand }" IsDefault="True"/>
 		<Button Content="You don't own a account?" Command="{Binding SwitchRegister }"/>
     </StackPanel>
     

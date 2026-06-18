@@ -157,6 +157,8 @@ public partial class MainWindowViewModel : ViewModelBase
     public async Task RemoveUser()
     {
         // Der aktuelle User wird gelöscht.
+        AppContext = new AppContext(new User());
+
         if (CurrentViewModel is UserChangeViewModel)
             CurrentViewModel = UserChangeViewModel;
 
@@ -198,6 +200,7 @@ public partial class MainWindowViewModel : ViewModelBase
     [RelayCommand]
     public void LogOut()
     {
+        AppContext = new AppContext(new User());
         if (CurrentViewModel is FrontPageViewModel)
         {
             AppContext.User.is_admin = false;

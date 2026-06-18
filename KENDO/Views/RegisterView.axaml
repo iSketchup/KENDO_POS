@@ -32,7 +32,7 @@
 		
 		<CheckBox Content="Register as Admin" IsChecked="{Binding IsAdminRegistration}"/>
 
-		<Button Content="Submit" Command="{Binding RegisterCommand }"/>
+		<Button Content="Submit" Command="{Binding RegisterCommand }" IsDefault="True"/>
 		<Button Content="You already have an account?" Command="{Binding SwitchLogin }"/>
     </StackPanel>
 </UserControl>
