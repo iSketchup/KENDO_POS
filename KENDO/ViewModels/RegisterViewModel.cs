@@ -69,19 +69,11 @@ public partial class RegisterViewModel : ViewModelBase, IContext
         }
 
 
-        // Falls man einen Admin erstellen möchte
         // (Umgeht das Problem, dass man sich noch separat anmelden muss)
         User? sign_user = new User();
 
 
-        if (IsAdminRegistration)
-        {
-            sign_user = await AdminHandling.AddAdmin(Username, Password);
-        }
-        else
-        {
-            sign_user = await Userhandling.AddUser(Username, Password);
-        }
+        sign_user = await Userhandling.AddUser(Username, Password);
 
         if (sign_user != null)
         {

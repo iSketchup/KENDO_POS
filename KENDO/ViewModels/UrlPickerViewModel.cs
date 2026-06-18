@@ -96,7 +96,7 @@ public partial class UrlPickerViewModel :ViewModelBase
         catch (Exception e)
         {
             Log.Logger.Fatal("Exception while checking server connection" + e);
-            ErrorMessage = "Could not connect ot server";
+            ErrorMessage = "Could not connect to server";
             Url = "Could not connect to server";
             return false;
         }
