@@ -19,10 +19,9 @@ public partial class User : ObservableObject
     private string? _passwd;
 
 
-    [JsonPropertyName("is_admin")]
-    public bool is_admin { get; set; }
+    [ObservableProperty] [JsonPropertyName("is_admin")]
+    private bool _isAdmin;
 
-    public object IsAdmin { get; }
 
     public User() { } // ToDo: fix ts, Temp fix for users not being loaded
 

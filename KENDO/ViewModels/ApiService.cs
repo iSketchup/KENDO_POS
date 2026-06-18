@@ -22,6 +22,8 @@ public class ApiService
         _client = client;
 
         apiKey = Environment.GetEnvironmentVariable("KENDO_KEY");
+
+        apiKey = "Aura";
         if (string.IsNullOrEmpty(apiKey))
         {
             Log.Logger.Fatal("API_KEY environment variable not Found");

@@ -5,7 +5,7 @@
              xmlns:vm="clr-namespace:Main.ViewModels"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="Main.Views.TabBarView"
-             x:DataType="vm:MainWindowViewModel">
+             x:DataType="vm:TabBarViewModel">
          
 
     <Grid  Background="CadetBlue" >
@@ -28,19 +28,11 @@
                     <MenuItem Header="Delete Acount" Command="{Binding RemoveUser}"/>
                     <MenuItem Header="Change User" Command="{Binding ChangeUser}"/>
                     <MenuItem Header="Sign out" Command="{Binding LogOut}"/>
-                    <MenuItem Header="Admin Dashboard" Command="{Binding GoToDashboard}"/>
+                    <MenuItem Header="Admin Dashboard" Command="{Binding GoToDashboard}" IsVisible="{Binding AppContext.User.IsAdmin}"/>
                 </MenuFlyout>
             </Button.Flyout>
         </Button>
             
-            
-        <!-- StackPanel Grid.Column="2" Orientation="Horizontal">
-            <Label Content="Use Fake Repo: " Height="32"
-                   VerticalContentAlignment="Center" />
-            <ToggleSwitch
-                IsChecked="{Binding UseFakeRepo}" 
-                Command="{Binding SwitchLoaded}"/>
-        </-->
             
                 
             <Button Grid.Column="1"  Content="New Shader" DockPanel.Dock="Top">

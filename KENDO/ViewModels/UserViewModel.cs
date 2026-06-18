@@ -76,7 +76,7 @@ public partial class UserViewModel : ViewModelBase, IContext
             appContext.SetUser(loggedInUser);
             
             
-            if (appContext.User.is_admin)
+            if (appContext.User.IsAdmin)
             {
                 Log.Information("User is Admin. Navigating to AdminView...");
                 _navigation.Navigate(Page.Admin);
