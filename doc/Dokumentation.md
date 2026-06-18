@@ -3,7 +3,6 @@
 
 ## 2. Projektzeitplan
 
-
 | Datum | Commit-Nachricht | Bearbeiter |
 | :--- | :--- | :--- |
 | 21.05.2026 | Hier sind mal die Klassen für vom UML (Teil 1). | Daniel WALSER |
@@ -53,3 +52,12 @@
 | 17.06.2026 | Jetzt ist es möglich sich mit dem Server zu verbinden, wenn man sich einloggen möchte und einen user anlegen möchte. | Daniel WALSER |
 | 17.06.2026 | Bug FIx: Passwort wurde nicht vom Json versendet. Jetzt wird die ID ans appContext vergeben. | Daniel WALSER |
 | 17.06.2026 | Dokumentation für unser Projekt | Daniel WALSER |
+| 18.06.2026 | Admin kann man im Frontend nicht mehr erstellen. | Daniel WALSER |
+| 18.06.2026 | Userdaten werden entfernt nach Abmelden und Löschen. Absenden kann man im Login und Register per Enter-Taste | Daniel WALSER |
+| 18.06.2026 | Merge branch 'main' of https://github.com/iSketchup/KENDO_POS | Daniel WALSER |
+| 18.06.2026 | Benutzerfreundlichkeit für das Login/Registriern sowie für die Serververbindung ist vorhanden. Jetzt wird auch verhindert, dass falsche Userdaten an den Server verschickt werden. | Daniel WALSER |
+| 18.06.2026 | Merge branch 'main' of https://github.com/iSketchup/KENDO_POS | Daniel WALSER |
+| 18.06.2026 | UserId sollte jetzt weitergeleitet werden. | Daniel WALSER |
+| 18.06.2026 | Dashboard: Admin kann sich nicht selbst löschen. | Daniel WALSER |
+| 18.06.2026 | Merge branch 'main' of https://github.com/iSketchup/KENDO_POS | Daniel WALSER |
+| 18.06.2026 | Merge | Daniel WALSER |
