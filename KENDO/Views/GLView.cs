@@ -35,7 +35,9 @@ public class GLView : OpenGlControlBase
         set
         {
             SetValue(TextureUrisProperty, value);
-            Log.Logger.Information("Got Textures 0 is " + TextureUris[0]);
+
+            if (value.Count > 0)
+                Log.Logger.Information("Got Texture 0: {Texture}", value[0]);
         }
     }
 
@@ -212,7 +214,7 @@ public class GLView : OpenGlControlBase
         GL.Viewport(0, 0, width, height);
         
         GL.Clear(ClearBufferMask.ColorBufferBit);
-
+        
         GL.UseProgram(shaderProgramm);
 
         for( int i =0; i  < textures.Count; i++)
