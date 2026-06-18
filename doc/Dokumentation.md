@@ -316,7 +316,7 @@ Bilder können den Shader hinzugefügt werden
 ## 5. Anleitung
 ### 5.1 Installationsanleitung
 
-1. DBI repo denPOS_Abgabe-Branch Klonene
+1. DBI repo denPOS_Abgabe-Branch Klonen
    
 2. Requirements auf der Server-Seite installieren.
 
@@ -324,9 +324,9 @@ Bilder können den Shader hinzugefügt werden
 
 4. Server starten
 
-5. Auf den Bin Folder drücken
+5. POS repo Klonen
 
-6. As.exe ausführen
+6. scr/Kendo/Bin/release exe ausführen
 
 ### 5.2 Bedienungsanleitung
 
