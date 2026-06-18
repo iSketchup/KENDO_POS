@@ -83,7 +83,10 @@ public partial class RegisterViewModel : ViewModelBase, IContext
             appContext.User.Id = sign_user.Id;
 
             appContext.User.IsAdmin = IsAdminRegistration;
-            
+
+            Username = "";
+            Password = "";
+
             if (appContext.User.IsAdmin)
             {
                 Log.Information("User is Admin. Navigating to AdminView...");

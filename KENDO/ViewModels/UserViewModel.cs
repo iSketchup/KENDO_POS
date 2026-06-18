@@ -74,8 +74,10 @@ public partial class UserViewModel : ViewModelBase, IContext
             Log.Information($"Login successful for {loggedInUser.UserName}");
 
             appContext.SetUser(loggedInUser);
-            
-            
+
+            Username = "";
+            Password = "";
+
             if (appContext.User.IsAdmin)
             {
                 Log.Information("User is Admin. Navigating to AdminView...");

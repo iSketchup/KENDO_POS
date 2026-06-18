@@ -49,7 +49,7 @@ public class ApiService
     {
         User user = new User { UserName = username };
 
-        HttpResponseMessage response = await _client.PostAsJsonAsync($"user/{username}", user);
+        HttpResponseMessage response = await _client.GetAsync($"user/{username}");
         string body = await response.Content.ReadAsStringAsync();
 
         return JsonSerializer.Deserialize<User>(

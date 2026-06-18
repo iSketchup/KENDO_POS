@@ -26,7 +26,7 @@
             <Button.Flyout>
                 <MenuFlyout>
                     <MenuItem Header="Delete Acount" Command="{Binding RemoveUser}"/>
-                    <MenuItem Header="Change User" Command="{Binding ChangeUser}"/>
+                    <MenuItem Header="Settings" Command="{Binding ChangeUser}"/>
                     <MenuItem Header="Sign out" Command="{Binding LogOut}"/>
                     <MenuItem Header="Admin Dashboard" Command="{Binding GoToDashboard}" IsVisible="{Binding AppContext.User.IsAdmin}"/>
                 </MenuFlyout>
