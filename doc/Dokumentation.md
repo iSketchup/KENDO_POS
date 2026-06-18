@@ -285,7 +285,7 @@ Der Besitzer eines Shaders kann Tags zu den Shadern verweisen.
 
 ### 3.2 Skizzen
 
-![Skizze.png]
+![](Skizze.png)
 
 
 ## 4. Pflichtenheft
@@ -294,12 +294,12 @@ Der Besitzer eines Shaders kann Tags zu den Shadern verweisen.
 
 ### 4.1 Dependency_Diagramm
 
-![Relationshipmodle.png]
+![](Relationshipmodle.png)
 
 
 ### 4.2 Umsetzungsdetail
 
-TODO
+Wir haben mithilfe von OpenGL es geschaft, Schaders zu Rendern und die Grundfunktionen wie Liken, Login, Register, Comment, und Tags auszuarbeiten.
 
 ### 4.3 Ergebnisse, Intepretation
 
@@ -313,7 +313,7 @@ Bilder können den Shader hinzugefügt werden
 ## 5. Anleitung
 ### 5.1 Installationsanleitung
 
-1. DBI repo den POS_Abgabe_Brnach Clonen
+1. DBI repo denPOS_Abgabe-Branch 
    
 2. Requirements auf der Server-Seite installieren.
 
