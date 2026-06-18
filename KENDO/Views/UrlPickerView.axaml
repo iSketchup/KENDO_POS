@@ -21,7 +21,7 @@
         </Grid.RowDefinitions>
         
         <Label Grid.Row="0" Content="Pick Url"></Label>
-        <TextBox Grid.Row="1" PlaceholderText="IP: 0.0.0.0" Text="{Binding Url}"></TextBox>
+        <TextBox Grid.Row="1" PlaceholderText="IP: 127.0.0.1" Text="{Binding Url}"></TextBox>
         <TextBox Grid.Row="2" PlaceholderText="Port: 8000" Text="{Binding Port}"></TextBox>
 
 		<TextBlock Grid.Row="4" FontSize="24" Text="{Binding ErrorMessage}"

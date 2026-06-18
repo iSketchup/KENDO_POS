@@ -18,8 +18,6 @@
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
-        <Label Grid.Row="1" Grid.Column="0">Sort By Likes </Label>
-        <ToggleSwitch Grid.Row="1" Grid.Column="1"></ToggleSwitch>
         <Label Grid.Row="2" Grid.Column="0">Filter By Username</Label>
         <TextBox PlaceholderText="Username" Text="{Binding  shaderUserName}" 
                  Name="ShaderUserTextBox" Grid.Row="2" Grid.Column="1"/>
