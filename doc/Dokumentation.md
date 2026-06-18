@@ -16,6 +16,9 @@
 
 - Projetkidee: Programm um Shader zu rendern via Code Editor.
 
+##### Systemanforderungen
+- .net10
+- pycharm
   
 
 Betreuer: Lukas Diem, Christof Bauer, David Bechtold
@@ -313,7 +316,7 @@ Bilder können den Shader hinzugefügt werden
 ## 5. Anleitung
 ### 5.1 Installationsanleitung
 
-1. DBI repo denPOS_Abgabe-Branch 
+1. DBI repo denPOS_Abgabe-Branch Klonene
    
 2. Requirements auf der Server-Seite installieren.
 
