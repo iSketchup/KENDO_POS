@@ -35,7 +35,7 @@ namespace Main.ViewModels
             // **** KI Teil
             // Hier habe ich gefragt, wie ich am besten alle User gefiltert nach dem Namen zurückgeben kann.
             return allUsers
-                .Where(u => !string.IsNullOrEmpty(u.UserName))
+                .Where(u => !string.IsNullOrEmpty(u.UserName) && !u.is_admin)
                 .Select(u => u.UserName!)
                 .ToList();
             // ****
