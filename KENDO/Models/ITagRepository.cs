@@ -37,7 +37,7 @@ public interface ITagRepository
     Task<Tag> GetTagById(int tagId);
     Task<Tag> CreateTag(string tagName);
     Task DeleteTagById(int tagId);
-    Task DeleteTagByName(string tagName);
+    Task DeleteTagByName(string tagName, int userId, int shaderId);
     Task CreateAndAssignTag(string tagName, int shaderId, int userId);
 }
 
@@ -113,14 +113,14 @@ public class TagRepositoryRest : ITagRepository
 
         result.EnsureSuccessStatusCode();
     }
-    public async Task DeleteTagByName(string tagName)
+    public async Task DeleteTagByName(string tagName, int userId, int shaderId)
     {
-        var result = await client.DeleteAsync($"tags/{tagName}");
+        var result = await client.DeleteAsync($"{userId}/shaders/shadertag/{shaderId}/{tagName}");
 
         if (!result.IsSuccessStatusCode)
         {
             var body = await result.Content.ReadAsStringAsync();
-            Log.Logger.Error("DELETE tag failed {StatusCode}: {Body}", result.StatusCode, body);
+            Log.Logger.Error("DELETE shadertag failed {StatusCode}: {Body}", result.StatusCode, body);
         }
 
         result.EnsureSuccessStatusCode();
@@ -190,7 +190,7 @@ public class TagRepositoryFake : ITagRepository
         throw new NotImplementedException();
     }
 
-    public Task DeleteTagByName(string tagName)
+    public Task DeleteTagByName(string tagName, int userId, int shaderId)
     {
         throw new NotImplementedException();
     }

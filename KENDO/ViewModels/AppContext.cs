@@ -109,9 +109,9 @@ public partial  class AppContext : ObservableObject
         await tagRepository.CreateAndAssignTag(tagName, shaderId, userId);
     }
 
-    public async Task DeleteTagByName(string tagname)
+    public async Task DeleteTagByName(string tagname, int userId, int shaderId)
     {
-        await tagRepository.DeleteTagByName(tagname);
+        await tagRepository.DeleteTagByName(tagname, userId, shaderId);
     }
     
 }
