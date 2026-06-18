@@ -271,6 +271,9 @@ Der Besitzer eines Shaders kann Tags zu den Shadern verweisen.
 | 18.06.2026 | Dashboard: Admin kann sich nicht selbst löschen. | Daniel WALSER |
 | 18.06.2026 | Merge branch 'main' of https://github.com/iSketchup/KENDO_POS | Daniel WALSER |
 | 18.06.2026 | Merge | Daniel WALSER |
+| 18.06.2026 | Update Doku | Daniel WALSER |
+| 18.06.2026 | Bug Fix und Benutzerfreundlichkeit. | Daniel WALSER |
+| 18.06.2026 | Benutzerfreundlichkeit in den Settings und Userdaten können geändert werden. | Daniel WALSER |
 
 
 
