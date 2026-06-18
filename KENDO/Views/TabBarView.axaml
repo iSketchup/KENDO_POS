@@ -8,7 +8,7 @@
              x:DataType="vm:MainWindowViewModel">
          
 
-    <StackPanel Grid.Row="0" Orientation="Horizontal" Background="CadetBlue">
+    <StackPanel Orientation="Horizontal" Background="CadetBlue">
             
         <Button Content="Account">
             <Button.Flyout>
