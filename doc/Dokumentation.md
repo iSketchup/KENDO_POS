@@ -326,7 +326,12 @@ Bilder können den Shader hinzugefügt werden
 
 5. POS repo Klonen
 
-6. scr/Kendo/Bin/release exe ausführen
+6. Ein Globales Env File erstelllen mit 
+  ```
+  KENDO_KEY=<Gewünschter Schlüssel>
+  ```
+
+7. scr/Kendo/Bin/release exe ausführen
 
 ### 5.2 Bedienungsanleitung
 
