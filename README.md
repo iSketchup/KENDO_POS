@@ -1,3 +1,3 @@
 # KENDO_POS
 
-[Documentation](doc/documentation.md)
+[Documentation](doc/Dokumentation.md)
